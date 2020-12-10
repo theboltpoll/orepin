@@ -21,15 +21,10 @@
   </style>
  </head>
  <body>
- 
-  <div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; right: 0px; top: 0px; transition: all 0.5s ease;">
-   <img src="widget_smile_uxfb.svg">
-  </div>
   
   <script>
    const timeDelay = 3
-  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; 
-  top: 0px; display: none; transition: all 0.5s ease;"><img src="https://widget.uxfeedback.ru/80htih7ckgjiyhdbg7uprqw3/6s3epmkl.png" style="width: 346px !important; height: auto;" width="346"></div>'
+  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; top: 0px; display: none; transition: all 0.5s ease;"><div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; right: 0px; top: 0px; transition: all 0.5s ease;"><img src="widget_smile_uxfb.svg"></div></div>'
   
   const body = document.querySelector('body')
   body.innerHTML += newBlock;
