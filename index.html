@@ -2,7 +2,6 @@
 <html>
  <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0;" />
   <title>HTML5</title>
   <style>
    article, aside, details, figcaption, figure, footer,header,
@@ -12,6 +11,23 @@
   </style>
  </head>
  <body>
+  
+  <script>
+   const timeDelay = 3
+  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; left: 423px; bottom: 0px; display: none; transition: all 0.5s ease;"><img src="https://widget.uxfeedback.ru/80htih7ckgjiyhdbg7uprqw3/6s3epmkl.png" style="width: 173px !important; height: auto;" width="173"></div>'
+  
+  const body = document.querySelector('body')
+  body.innerHTML += newBlock;
+  let timeout
+  window.addEventListener('touchmove', () => {
+    clearTimeout(timeout)
+    document.getElementById('uxs').style.display = "block";
+    timeout = setTimeout(() => {
+      document.getElementById('uxs').style.display = "none";
+    }, timeDelay * 1000)
+  })
+  </script>
+  
   <div>
    <p>Давно выяснено, что при оценке дизайна и композиции читаемый текст мешает сосредоточиться. Lorem Ipsum используют потому, что тот обеспечивает 
     более или менее стандартное заполнение шаблона, а также реальное распределение букв и пробелов в абзацах, которое не получается при простой дубликации 
@@ -49,23 +65,6 @@
     по умолчанию, так что поиск по ключевым словам "lorem ipsum" сразу показывает, как много веб-страниц всё ещё дожидаются своего настоящего рождения. 
     За прошедшие годы текст Lorem Ipsum получил много версий. Некоторые версии появились по ошибке, некоторые - намеренно (например, юмористические варианты).</p>
   </div>
-  
-  
-  <script>
-   const timeDelay = 3
-  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; left: 423px; bottom: 0px; display: none; transition: all 0.5s ease;"><img src="https://widget.uxfeedback.ru/80htih7ckgjiyhdbg7uprqw3/6s3epmkl.png" style="width: 173px !important; height: auto;" width="173"></div>'
-  
-  const body = document.querySelector('body')
-  body.innerHTML += newBlock;
-  let timeout
-  window.addEventListener('touchmove', () => {
-    clearTimeout(timeout)
-    document.getElementById('uxs').style.display = "block";
-    timeout = setTimeout(() => {
-      document.getElementById('uxs').style.display = "none";
-    }, timeDelay * 1000)
-  })
-  </script>
 
  </body>
 </html>
