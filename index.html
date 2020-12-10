@@ -7,7 +7,7 @@
   <style>
    
    article, aside, details, figcaption, figure, footer,header,
-   hgroup, menu, nav, section, div { display: block; transition: all 3s ease; }
+   hgroup, menu, nav, section, div { display: block; }
    html, body { height: 100%; margin: 0; }
    
   p {
@@ -23,7 +23,7 @@
   
   <script>
   const timeDelay = 3
-  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; top: 50%; display: none; transition: all 1s ease;"><img src="widget_smile_uxfb.svg"></div>'
+  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; bottom: 50%; display: none; transition: all 3s ease;"><img src="widget_smile_uxfb.svg"></div>'
   
   const body = document.querySelector('body')
   body.innerHTML += newBlock;
