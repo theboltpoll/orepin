@@ -9,7 +9,7 @@
    article, aside, details, figcaption, figure, footer,header,
    hgroup, menu, nav, section, div { display: block; }
    html, body { height: 100%; margin: 0; }
-   
+   div, img { transition: all 3s ease; }
   p {
       padding: 32px 16px;
       margin: 0;
@@ -37,8 +37,10 @@
   window.addEventListener('touchmove', () => {
     clearTimeout(timeout)
     document.getElementById('uxs').style.display = "block";
+    document.getElementById('uxs').style.opacity = "1";
     timeout = setTimeout(() => {
       document.getElementById('uxs').style.display = "none";
+      document.getElementById('uxs').style.opacity = "0";
     }, timeDelay * 1000)
   })
   </script>
