@@ -29,17 +29,17 @@
   
   <script>
   const timeDelay = 3
-  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; bottom: 250px; display: none; transition: all 3s ease;"><img src="widget_smile_uxfb.svg"></div>'
+  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; bottom: 250px;  transition: all 3s ease;"><img src="widget_smile_uxfb.svg"></div>'
   
   const body = document.querySelector('body')
   body.innerHTML += newBlock;
   let timeout
   window.addEventListener('touchmove', () => {
     clearTimeout(timeout)
-    document.getElementById('uxs').style.display = "block";
+    //document.getElementById('uxs').style.display = "block";
     document.getElementById('uxs').style.opacity = "1";
     timeout = setTimeout(() => {
-      document.getElementById('uxs').style.display = "none";
+      //document.getElementById('uxs').style.display = "none";
       document.getElementById('uxs').style.opacity = "0";
     }, timeDelay * 1000)
   })
