@@ -28,19 +28,20 @@
  <body>
   
   <script>
-  const timeDelay = 3
-  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; bottom: 250px;  transition: all 3s ease;"><img src="widget_smile_uxfb.svg"></div>'
+  const timeDelay = 2
+  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; bottom: 250px; opacity: 0; transition: all 1s ease;"><img src="widget_smile_uxfb.svg"></div>'
   
   const body = document.querySelector('body')
   body.innerHTML += newBlock;
   let timeout
   window.addEventListener('touchmove', () => {
     clearTimeout(timeout)
-    //document.getElementById('uxs').style.display = "block";
-    document.getElementById('uxs').style.opacity = "1";
+    document.getElementById('uxs').style.opacity = "0.9";
+    document.getElementById('uxs').style.transitionDuration = "1s";
     timeout = setTimeout(() => {
-      //document.getElementById('uxs').style.display = "none";
       document.getElementById('uxs').style.opacity = "0";
+      document.getElementById('uxs').style.transitionDuration = "4s";
+      
     }, timeDelay * 1000)
   })
   </script>
