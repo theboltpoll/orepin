@@ -37,26 +37,6 @@
 </script>
  </head>
  <body>
-  
-  <script>
-  const timeDelay = 2
-  const newBlock = '<div id="uxs" class="uxs-wrapper" style="z-index: 999; position: fixed; cursor: pointer; text-align: right; right: 0px; bottom: 250px; opacity: 0; transition: all 1s ease;"><img src="widget_smile_uxfb.svg"></div>'
-  
-  const body = document.querySelector('body')
-  body.innerHTML += newBlock;
-  let timeout
-  window.addEventListener('touchmove', () => {
-    clearTimeout(timeout)
-    document.getElementById('uxs').style.opacity = "0.9";
-    document.getElementById('uxs').style.transitionDuration = "1s";
-    timeout = setTimeout(() => {
-      document.getElementById('uxs').style.opacity = "0";
-      document.getElementById('uxs').style.transitionDuration = "4s";
-      
-    }, timeDelay * 1000)
-  })
-  </script>
-  
   <div>
     <p>Lorem ipsum — классический текст-«рыба». Является искажённым отрывком из философского трактата Марка Туллия Цицерона «О пределах добра и зла», написанного в 45 году до н. э. на латинском языке, обнаружение сходства приписывается Ричарду МакКлинтоку</p>
     <p>Lorem ipsum — классический текст-«рыба». Является искажённым отрывком из философского трактата Марка Туллия Цицерона «О пределах добра и зла», написанного в 45 году до н. э. на латинском языке, обнаружение сходства приписывается Ричарду МакКлинтоку</p>
@@ -66,17 +46,7 @@
     <p>Lorem ipsum — классический текст-«рыба». Является искажённым отрывком из философского трактата Марка Туллия Цицерона «О пределах добра и зла», написанного в 45 году до н. э. на латинском языке, обнаружение сходства приписывается Ричарду МакКлинтоку</p>
     <p>Lorem ipsum — классический текст-«рыба». Является искажённым отрывком из философского трактата Марка Туллия Цицерона «О пределах добра и зла», написанного в 45 году до н. э. на латинском языке, обнаружение сходства приписывается Ричарду МакКлинтоку</p>
   </div>
-  <script>
-    Userback = window.Userback || {};
-    Userback.access_token = '11221|23347|Oj0EyeZYO4QDrDLYCrf81si70';
-    (function(id) {
-        var s = document.createElement('script');
-        s.async = 1;
-        s.src = 'https://static.userback.io/widget/v1.js';
-        var parent_node = document.head || document.body;
-        parent_node.appendChild(s);
-    })('userback-sdk');
-</script>
+
 
  </body>
 </html>
