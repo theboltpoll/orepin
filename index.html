@@ -10,25 +10,106 @@
    hgroup, menu, nav, section, div { display: block; }
    html, body { height: 100%; margin: 0; }
    div, img { transition: all 3s ease; }
-  p {
-      padding: 32px 16px;
-      margin: 0;
-      font-family: Arial;
-      font-size: 24px;
-      line-height: 32px;
-    }
+   
+   body {
+  height: auto;
+  wiight: auto;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(229, 44, 52, 1);
+  font-family: arial;
+}
 
-  p:nth-child(odd) {
-      background-color: black;
-      color: white;
+.content {
+  width: 1224px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 32px 0;
+  background-color: rgba(15, 172, 242, 1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 410px;
+  margin: 0 auto;
+}
+
+input, button {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-geight: 24px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: none;
+}
+
+button {
+  background-color: black;
+  color: white;
+  width: 120px;
+}
+
+@media only screen and (max-width: 1440px) and (min-width: 1281px) {
+  .content {
+    width: auto;
+    margin: 0 128px;
+  } 
+}
+
+@media only screen and (max-width: 1280px) and (min-width: 1001px) {
+  .content {
+    width: auto;
+    margin: 0 60px;
+  }   
+}
+
+
+@media only screen and (max-width: 1000px) and (min-width: 769px) {
+  .content {
+    width: auto;
+    margin: 0 60px;
   }
-   a {color: red;}
-   a:hover {color: orange;}
-   
-   
-   a a {color: green;}
-   a a:hover {color: blue;}
-   
+}
+@media only screen and (max-width: 768px) and (min-width: 481px) {
+  .content {
+    width: auto;
+    margin: 0 24px;
+  }
+}
+
+@media only screen and (max-width: 480px) and (orientation: landscape) {
+  .content {
+    width: auto;
+    margin: 0 16px;
+    padding: 24px 16px;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 416px;
+  }
+}
+
+@media only screen and (max-width: 480px) and (orientation: portrait) {
+  .content {
+    width: auto;
+    margin: 0 16px;
+    padding: 24px 16px;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 416px;
+  }
+  
+  button {
+    width: 100%;
+  }
+}   
   </style>
   <!-- Hotjar Tracking Code for https://theboltpoll.github.io/text_text/ -->
 <script>
@@ -43,11 +124,13 @@
 </script>
  </head>
  <body>
-  <div>
-   <img src='copy_icon.svg'>
-    <p>Lorem ipsum — классический текст-«рыба». Является искажённым отрывком из философского трактата Марка Туллия Цицерона «О пределах добра и зла», написанного в 45 году до н. э. на латинском языке, обнаружение сходства приписывается Ричарду МакКлинтоку</p>
-    <p>Lorem ipsum — классический текст-«рыба». Является искажённым отрывком из философского трактата Марка Туллия Цицерона «О пределах добра и зла», написанного в 45 году до н. э. на латинском языке, обнаружение сходства приписывается Ричарду МакКлинтоку</p>
-    <a href="https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp">ссылка и еще какой то текст и еще одна ссылка внутри <a href="https://qna.habr.com/q/659325">ссылки</a></a>
+  <div class="content">
+    <form>
+      <input type="text"/>
+      <input type="text"/>
+      <input type="text"/>
+      <button>Отправить</button>
+    </form>
   </div>
 
 <!-- begin usabilla live embed code -->
