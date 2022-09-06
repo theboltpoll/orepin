@@ -53,6 +53,17 @@ button {
   width: 100%;
 }
 
+.content::after {
+  content: "min-width: 320px; content-width: auto;";
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  padding: 24px;
+  width: 250px;
+}
+
 @media only screen and (min-width: 480px) {
   form {
     width: 100%;
@@ -62,10 +73,15 @@ button {
   button {
     width: 120px;
   } 
+  .content::after {
+    content: "min-width: 480px; content-width: auto;";
+  }
 }
 
 @media only screen and (min-width: 768px) {
-
+  .content::after {
+    content: "min-width: 768px; content-width: auto;";
+  }
 }
 
 @media only screen and (min-width: 1000px)  {
@@ -73,13 +89,21 @@ button {
     width: 960px;
     margin: 0 auto;
   }
+  .content::after {
+    content: "min-width: 1000px; content-width: 960px;";
+  }
 }
 
 @media only screen and (min-width: 1400px)  {
   .content {
     width: 1200px;
   }
-}  
+  .content::after {
+    content: "min-width: 1400px; content-width: 1200px;";
+  }
+}
+
+  
   </style>
   <!-- Hotjar Tracking Code for https://theboltpoll.github.io/text_text/ -->
 <script>
