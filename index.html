@@ -3,87 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Модальное окно с iframe</title>
+<title>registration</title>
 <style>
  html, body {
     background: #0A2C73;
    }
-/* Стили для модального окна */
-.modal {
-    display: none; /* Скрываем модальное окно по умолчанию */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5); /* Черный полупрозрачный фон */
-}
-
-.modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-/* Стили для кнопки */
-.button {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    padding: 10px 20px;
-    background-color: #E52C34;
-    color: #fff;
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #EC3F47;
-}
-
-/* Стили для кнопки закрытия */
-.close {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    font-size: 24px;
-    cursor: pointer;
-    color: white;
-}
-
 </style>
 </head>
 <body>
 
-<!-- Кнопка для открытия модального окна -->
-<button class="button" onclick="openModal()">Try now</button>
-
-<!-- Модальное окно -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <!-- Закрыть модальное окно -->
-    <span class="close" onclick="closeModal()">&times;</span>
-    <!-- iframe -->
-    <iframe src="https://www.videoask.com/f6f835gwg" allow="camera *; microphone *; autoplay *; encrypted-media *; fullscreen *; display-capture *;" width="100%" height="600px" style="border: none;"></iframe>
-  </div>
-</div>
-
-<script>
-// Функция для открытия модального окна
-function openModal() {
-    document.getElementById('myModal').style.display = 'block';
-}
-
-// Функция для закрытия модального окна
-function closeModal() {
-    document.getElementById('myModal').style.display = 'none';
-}
-</script>
 <!-- Add the code below inside the <body> tags of your HTML page -->
 <script>
 window.VIDEOASK_EMBED_CONFIG = {
