@@ -6,115 +6,68 @@
   <title>Ранжирование — DnD (long‑press)</title>
   <style>
     :root{
-      /* ===== quick theme knobs ===== */
-      --bg: #f3f4f6;             /* app background */
-      --panel: #ffffff;          /* card bg */
-      --text: #0f172a;           /* primary text */
-      --muted: #64748b;          /* secondary text */
-      --brand: #e11d48;          /* CTA */
-      --accent: #2563eb;         /* focus/drag */
-      --outline: #e5e7eb;        /* borders */
-      --radius: 14px;
-      --shadow: 0 4px 20px rgba(0,0,0,.06);
-      --drag-shadow: 0 8px 28px rgba(2,6,23,.20);
-      --item-gap: 10px;
-      --item-pad-y: 12px;        /* list item vertical padding */
-      --item-pad-x: 12px;
-      --number-size: 28px;       /* left number chip */
-      --handle-size: 18px;       /* drag handle dots size */
-      --press-delay: 160ms;      /* long‑press threshold */
-      --scrollbar: 8px;          /* custom scrollbar width */
+      --bg: #f3f4f6;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --outline: #e5e7eb;
+      --shadow: 0 8px 24px rgba(2,6,23,.08);
+      --drag-shadow: 0 10px 28px rgba(2,6,23,.22);
+      --brand: #e34b4b;
+      --chip: #4f46e5;
+      --chip-muted: #94a3b8;
+      --radius: 16px;
+      --item-pad-y: 14px;
+      --item-gap: 12px;
+      --number-size: 28px;
+      --press-delay: 260ms;
+      --swap-anim: 160ms;
+      --scrollbar: 8px;
     }
 
     html,body{ height:100%; }
-    body{
-      margin:0; background:var(--bg); color:var(--text); font: 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
+    body{ margin:0; background:var(--bg); color:var(--text); font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
 
-    /* App frame */
-    .app{
-      position:fixed; inset:0; display:flex; flex-direction:column; max-width:480px; margin:0 auto; box-shadow: var(--shadow);
-      background: var(--bg);
-    }
+    .app{ position:fixed; inset:0; display:flex; flex-direction:column; max-width:480px; margin:0 auto; background:var(--bg); }
 
-    .app__header{
-      position:sticky; top:0; z-index:5; background:var(--panel); border-bottom:1px solid var(--outline);
-      padding:12px 14px; display:flex; align-items:center; gap:8px;
-    }
-    .close-btn{ width:28px; height:28px; border-radius:8px; border:1px solid var(--outline); background:#fff; display:grid; place-items:center; cursor:pointer; }
-    .close-btn:active{ transform:scale(.98); }
+    .app__header{ position:sticky; top:0; z-index:5; background:var(--panel); border-bottom:1px solid var(--outline); padding:12px 14px; display:flex; gap:10px; align-items:center; }
+    .close-btn{ width:28px; height:28px; border-radius:10px; border:1px solid var(--outline); background:#fff; display:grid; place-items:center; }
     .title{ font-weight:700; font-size:16px; }
-    .subtitle{ color:var(--muted); font-size:13px; margin-top:2px; }
+    .subtitle{ color:var(--muted); font-size:13px; }
 
-    .app__content{
-      position:relative; flex:1; overflow-y: scroll; -webkit-overflow-scrolling: touch;
-      padding: 12px 14px 20px;
-      background: var(--bg);
-    }
-
-    /* Always-visible styled scrollbar */
+    .app__content{ position:relative; flex:1; overflow-y:scroll; -webkit-overflow-scrolling:touch; padding:12px 14px 24px; }
     .app__content::-webkit-scrollbar{ width: var(--scrollbar); }
     .app__content::-webkit-scrollbar-thumb{ background:#cbd5e1; border-radius:20px; }
-    .app__content::-webkit-scrollbar-track{ background:transparent; }
 
-    .card{
-      background:var(--panel); border:1px solid var(--outline); border-radius:var(--radius); box-shadow: var(--shadow);
-      padding:12px; overflow:hidden;
-    }
+    .card{ background:var(--panel); border:1px solid var(--outline); border-radius:var(--radius); box-shadow:var(--shadow); padding:12px; }
+    .question{ font-weight:700; font-size:15px; margin:4px 0 12px; }
 
-    .question{ font-weight:700; font-size:15px; margin:2px 0 12px; }
+    .rank-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--item-gap); }
 
-    /* List */
-    .rank-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap: var(--item-gap); }
+    .item{ display:grid; grid-template-columns: 32px 1fr 18px; align-items:center; gap:10px; padding: var(--item-pad-y) 12px; border:1px solid var(--outline); border-radius:14px; background:#fff; touch-action:none; }
+    .item[data-dragging="true"]{ background:#5562ff1a; border-color:#c7d2fe; box-shadow:var(--drag-shadow); cursor:grabbing; }
 
-    .item{ display:grid; grid-template-columns: var(--number-size) 1fr var(--handle-size); align-items:center;
-      gap:10px; padding: var(--item-pad-y) var(--item-pad-x); border:1px solid var(--outline); border-radius:12px; background:#fff;
-      touch-action: none; /* allow pointermove for DnD */
-    }
-    .item[data-dragging="true"]{
-      box-shadow: var(--drag-shadow); border-color: #c7d2fe; background: #eef2ff; cursor:grabbing;
-    }
-
-    .num{
-      width:var(--number-size); height:var(--number-size); border-radius:50%; display:grid; place-items:center; font-weight:700; font-size:13px;
-      color:#fff; background:#475569; flex:0 0 var(--number-size);
-    }
+    .num{ width:var(--number-size); height:var(--number-size); border-radius:999px; display:grid; place-items:center; font-size:12px; font-weight:800; color:#fff; background:var(--chip-muted); }
+    .num[data-state="dash"]{ background:var(--chip-muted); }
+    .num[data-state="number"]{ background:var(--chip); }
 
     .label{ font-size:14px; color:var(--text); }
-    .sub{ display:block; color:var(--muted); font-size:12px; }
+    .handle{ opacity:.55; justify-self:end; }
 
-    .handle{ width:var(--handle-size); height:var(--handle-size); opacity:.55; cursor:grab; justify-self:end; }
-
-    /* Placeholder space when dragging */
-    .placeholder{ border:1px dashed #cbd5e1; border-radius:12px; background:#f8fafc; height:0; margin:0; transition: height .12s ease; }
-
-    /* Controls block */
     .controls{ margin-top:14px; display:grid; gap:10px; }
-    .check{
-      display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--outline); border-radius:12px; padding:10px 12px;
-    }
-    .check input{ width:18px; height:18px; }
+    .check{ display:flex; gap:10px; align-items:center; border:1px solid var(--outline); border-radius:14px; padding:10px 12px; background:#fff; }
 
-    .app__footer{
-      position:sticky; bottom:0; z-index:5; background:var(--panel); border-top:1px solid var(--outline);
-      padding:12px 14px; display:flex; gap:8px; align-items:center; justify-content:space-between;
-    }
-    .cta{ appearance:none; border:none; border-radius:999px; background:var(--brand); color:#fff; font-weight:700; padding:14px 18px; font-size:16px; box-shadow: var(--shadow); cursor:pointer; }
+    .app__footer{ position:sticky; bottom:0; z-index:5; background:var(--panel); border-top:1px solid var(--outline); padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .cta{ appearance:none; border:none; border-radius:999px; background:var(--brand); color:#fff; font-weight:800; padding:14px 18px; font-size:16px; box-shadow:var(--shadow); }
     .brand{ color:var(--muted); font-size:12px; }
 
-    /* Small helpers */
-    .visually-hidden{ position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-
-    @media (min-width: 480px){
-      body{ background: #e2e8f0; }
-      .app{ margin: 0 auto; }
-    }
+    .disabled{ opacity:.55; pointer-events:none; }
   </style>
 </head>
 <body>
   <div class="app" id="app">
-    <header class="app__header" role="banner">
-      <button class="close-btn" aria-label="Закрыть" title="Закрыть" onclick="alert('Закрыть (демо)')">
+    <header class="app__header">
+      <button class="close-btn" aria-label="Закрыть" onclick="alert('Закрыть (демо)')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
       <div>
@@ -127,229 +80,174 @@
       <section class="card" aria-labelledby="q1">
         <h2 class="question" id="q1">Выберите порядок напитков</h2>
         <ol class="rank-list" id="rankList">
-          <!-- Items will be injected from JS for easier numbering -->
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Крепкий чёрный кофе с молоком и корицей</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Традиционный квас с ржаным хлебом и мёдом</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Нежный смузи из манго и ананаса</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Чай с жасмином и мёдом, поданный горячим</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Ароматный чай с лимоном и имбирем</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Классический коктейль Мохито с ромом и свежей мятой</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Шоколадный фраппе с взбитыми сливками</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Классический молочный коктейль с клубникой</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Освежающий лимонад с мятой и лаймом</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
+          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Коктейль Пина Колада с ананасом и кокосом</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
         </ol>
         <div class="controls">
-          <label class="check"><input type="checkbox" id="acceptOrder" /> Принять текущий порядок</label>
+          <label class="check" id="acceptBlock"><input type="checkbox" id="acceptOrder" /> Принять текущий порядок</label>
           <label class="check"><input type="checkbox" id="idk" /> Затрудняюсь ответить</label>
         </div>
       </section>
-      <div style="height: 24px"></div>
+      <div style="height:24px"></div>
     </main>
 
-    <footer class="app__footer" role="contentinfo">
+    <footer class="app__footer">
       <div class="brand">UX Feedback</div>
       <button class="cta" id="submitBtn">Продолжить</button>
     </footer>
   </div>
 
   <script>
-    // ===== Demo Data =====
-    const items = [
-      'Крепкий чёрный кофе с молоком и корицей',
-      'Традиционный квас с ржаным хлебом и мёдом',
-      'Нежный смузи из манго и ананаса',
-      'Чай с жасмином и мёдом, поданный горячим',
-      'Ароматный чай с лимоном и имбирем',
-      'Классический коктейль Мохито с ромом и свежей мятой',
-      'Шоколадный фраппе с взбитыми сливками',
-      'Классический молочный коктейль с клубникой',
-      'Освежающий лимонад с мятой и лаймом',
-      'Коктейль Пина Колада с ананасом и кокосом'
-    ];
+    (function(){
+      // ===== State =====
+      const listEl = document.getElementById('rankList');
+      const scrollArea = document.getElementById('scrollArea');
+      const acceptOrder = document.getElementById('acceptOrder');
+      const acceptBlock = document.getElementById('acceptBlock');
+      const idk = document.getElementById('idk');
 
-    const listEl = document.getElementById('rankList');
+      let numbersAssigned = false; // показаны ли номера
+      let pressTimer=null, sourceEl=null, draggingEl=null, placeholder=null, offsetY=0, currentY=0, raf=null;
+      const PRESS_DELAY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--press-delay')) || 260;
 
-    function renderList(){
-      listEl.innerHTML = '';
-      items.forEach((label, idx)=>{
-        const li = document.createElement('li');
-        li.className = 'item';
-        li.setAttribute('role','listitem');
-        li.dataset.index = idx;
-        li.innerHTML = `
-          <div class="num" aria-hidden="true">${idx+1}</div>
-          <div class="label">${label}</div>
-          <svg class="handle" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg>
-        `;
-        listEl.appendChild(li);
-      });
-    }
+      // ===== Helpers =====
+      function applyNumbers(){
+        [...listEl.querySelectorAll('.item')].forEach((el,i)=>{
+          const numEl = el.querySelector('.num');
+          if(numbersAssigned){ numEl.textContent = i+1; numEl.dataset.state='number'; }
+          else { numEl.textContent = '—'; numEl.dataset.state='dash'; }
+        });
+      }
 
-    renderList();
+      function createPlaceholder(h){ const ph=document.createElement('li'); ph.className='placeholder'; ph.style.height=h+'px'; return ph; }
 
-    // ===== DnD with long‑press =====
-    const scrollArea = document.getElementById('scrollArea');
+      function flip(fromTops){
+        const items = [...listEl.querySelectorAll('.item')];
+        items.forEach(el=>{
+          const dy = (fromTops.get(el)||0) - el.offsetTop;
+          if(dy){
+            el.style.transform = `translateY(${dy}px)`;
+            el.getBoundingClientRect();
+            el.style.transition = 'transform var(--swap-anim) ease';
+            el.style.transform = 'translateY(0)';
+            setTimeout(()=>{ el.style.transition=''; }, 180);
+          }
+        });
+      }
 
-    let draggingEl = null;         // actual element being dragged (cloned proxy)
-    let sourceEl = null;           // original list item
-    let placeholder = null;        // placeholder element
-    let pressTimer = null;         // long‑press timer
-    let startY = 0;                // pointer start Y
-    let currentY = 0;              // pointer current Y
-    let offsetY = 0;               // distance from pointer to element top
-    let raf = null;                // rAF id for autosroll
+      // ===== DnD =====
+      function onPointerDown(e){
+        if(idk.checked) return;
+        const li = e.target.closest('.item');
+        if(!li) return;
+        const startY = (e.touches ? e.touches[0].clientY : e.clientY);
+        pressTimer = setTimeout(()=> beginDrag(li, startY), PRESS_DELAY);
+        const cancel = ()=>{ clearTimeout(pressTimer); pressTimer=null; window.removeEventListener('pointerup', cancel); window.removeEventListener('touchend', cancel); };
+        window.addEventListener('pointerup', cancel, {once:true});
+        window.addEventListener('touchend', cancel, {once:true});
+      }
 
-    const PRESS_DELAY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--press-delay')) || 160;
+      function beginDrag(li, y){
+        const rect = li.getBoundingClientRect();
+        sourceEl = li; sourceEl.dataset.dragging='true';
+        offsetY = y - rect.top; currentY = y;
+        placeholder = createPlaceholder(rect.height);
+        li.after(placeholder);
 
-    function createPlaceholder(height){
-      const ph = document.createElement('li');
-      ph.className = 'placeholder';
-      ph.style.height = height + 'px';
-      return ph;
-    }
+        draggingEl = li.cloneNode(true);
+        Object.assign(draggingEl.style, { position:'fixed', left:rect.left+'px', top:rect.top+'px', width:rect.width+'px', pointerEvents:'none', zIndex:9999 });
+        draggingEl.dataset.dragging='true';
+        document.body.appendChild(draggingEl);
 
-    function onPointerDown(e){
-      const li = e.target.closest('.item');
-      if(!li) return;
+        window.addEventListener('pointermove', onMove);
+        window.addEventListener('touchmove', onMove, {passive:false});
+        window.addEventListener('pointerup', onDrop, {once:true});
+        window.addEventListener('touchend', onDrop, {once:true});
+        raf = requestAnimationFrame(autoscroll);
+      }
 
-      // store initial values
-      startY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+      function onMove(e){
+        if(!draggingEl) return;
+        if(e.cancelable) e.preventDefault();
+        currentY = (e.touches ? e.touches[0].clientY : e.clientY);
+        draggingEl.style.top = (currentY - offsetY) + 'px';
 
-      pressTimer = setTimeout(()=>{
-        beginDrag(li, e);
-      }, PRESS_DELAY);
+        // record positions BEFORE reinsert
+        const beforeMap = new Map([...listEl.querySelectorAll('.item')].map(el=>[el, el.offsetTop]));
 
-      window.addEventListener('pointerup', cancelPress, { once:true });
-      window.addEventListener('touchend', cancelPress, { once:true });
-    }
-
-    function cancelPress(){
-      clearTimeout(pressTimer); pressTimer = null;
-    }
-
-    function beginDrag(li, e){
-      sourceEl = li;
-      sourceEl.dataset.dragging = 'true';
-
-      const rect = li.getBoundingClientRect();
-      const y = e.clientY || (e.touches && e.touches[0].clientY) || rect.top;
-      offsetY = y - rect.top;
-
-      placeholder = createPlaceholder(rect.height);
-      li.after(placeholder);
-
-      // create a clone to move as a drag proxy
-      draggingEl = li.cloneNode(true);
-      draggingEl.style.position = 'fixed';
-      draggingEl.style.left = rect.left + 'px';
-      draggingEl.style.top = rect.top + 'px';
-      draggingEl.style.width = rect.width + 'px';
-      draggingEl.style.pointerEvents = 'none';
-      draggingEl.style.zIndex = 9999;
-      draggingEl.dataset.dragging = 'true';
-      document.body.appendChild(draggingEl);
-
-      currentY = y;
-
-      window.addEventListener('pointermove', onMove);
-      window.addEventListener('touchmove', onMove, {passive:false});
-      window.addEventListener('pointerup', onDrop, { once:true });
-      window.addEventListener('touchend', onDrop, { once:true });
-
-      // Start autoscroll loop
-      raf = requestAnimationFrame(autoscroll);
-    }
-
-    function onMove(e){
-      if(!draggingEl) return;
-      if(e.cancelable) e.preventDefault();
-
-      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-      currentY = clientY;
-
-      const top = clientY - offsetY;
-      draggingEl.style.top = top + 'px';
-
-      // Find new index based on midpoint overlap
-      const listItems = [...listEl.querySelectorAll('.item')].filter(el => el !== sourceEl);
-      const centerY = clientY;
-
-      let insertBefore = null;
-      for(const el of listItems){
-        const r = el.getBoundingClientRect();
-        if(centerY < r.top + r.height/2){
-          insertBefore = el; break;
+        // compute new position by midpoint
+        const others = [...listEl.querySelectorAll('.item')].filter(x=>x!==sourceEl);
+        const center = currentY;
+        let before=null;
+        for(const el of others){
+          const r = el.getBoundingClientRect();
+          if(center < r.top + r.height/2){ before = el; break; }
         }
+        if(before){ listEl.insertBefore(placeholder, before); } else { listEl.appendChild(placeholder); }
+
+        // preview number on the floating chip
+        const index = [...listEl.children].indexOf(placeholder);
+        const numEl = draggingEl.querySelector('.num');
+        if(numEl){ numEl.textContent = index+1; numEl.dataset.state='number'; }
+
+        flip(beforeMap);
       }
-      if(insertBefore){
-        listEl.insertBefore(placeholder, insertBefore);
-      }else{
-        listEl.appendChild(placeholder);
+
+      function onDrop(){
+        cancelAnimationFrame(raf);
+        if(!sourceEl) return;
+        const beforeMap = new Map([...listEl.querySelectorAll('.item')].map(el=>[el, el.offsetTop]));
+        listEl.insertBefore(sourceEl, placeholder);
+        flip(beforeMap);
+        cleanupDrag();
+        numbersAssigned = true; applyNumbers(); acceptBlock.style.display='none';
       }
 
-      // live numbers update
-      updateNumbersPreview();
-    }
+      function cleanupDrag(){
+        draggingEl && draggingEl.remove(); draggingEl=null;
+        placeholder && placeholder.remove(); placeholder=null;
+        if(sourceEl){ sourceEl.dataset.dragging='false'; sourceEl=null; }
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('touchmove', onMove);
+      }
 
-    function onDrop(){
-      cancelAnimationFrame(raf);
+      function autoscroll(){
+        const edge = 56; const rect = scrollArea.getBoundingClientRect();
+        if(currentY < rect.top + edge){ scrollArea.scrollBy({top:-8, behavior:'auto'}); }
+        else if(currentY > rect.bottom - edge){ scrollArea.scrollBy({top:8, behavior:'auto'}); }
+        raf = requestAnimationFrame(autoscroll);
+      }
 
-      if(!draggingEl || !sourceEl || !placeholder) return endDragCleanup();
+      // wire
+      listEl.addEventListener('pointerdown', onPointerDown);
+      listEl.addEventListener('touchstart', onPointerDown, {passive:true});
 
-      // Move original element to placeholder position
-      listEl.insertBefore(sourceEl, placeholder);
-
-      endDragCleanup();
-      updateNumbersCommit();
-    }
-
-    function endDragCleanup(){
-      if(draggingEl){ draggingEl.remove(); draggingEl = null; }
-      if(placeholder){ placeholder.remove(); placeholder = null; }
-      if(sourceEl){ sourceEl.dataset.dragging = 'false'; sourceEl = null; }
-      window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('touchmove', onMove);
-    }
-
-    function updateNumbersPreview(){
-      // Update numbers visually based on current order with placeholder position
-      const children = [...listEl.children];
-      let idx = 1;
-      children.forEach(node =>{
-        if(node.classList.contains('item')){
-          const num = node.querySelector('.num');
-          num.textContent = idx++;
-        } else if(node === placeholder){
-          idx++; // reserve a slot for the dragging item
-        }
+      // ===== Controls =====
+      acceptOrder.addEventListener('change', ()=>{
+        if(acceptOrder.checked){ numbersAssigned = true; applyNumbers(); acceptBlock.style.display='none'; }
       });
-    }
 
-    function updateNumbersCommit(){
-      // After drop, fully renumber (no placeholder at this point)
-      [...listEl.querySelectorAll('.item')].forEach((node, i)=>{
-        node.querySelector('.num').textContent = i+1;
+      idk.addEventListener('change', ()=>{
+        if(idk.checked){ numbersAssigned = false; applyNumbers(); listEl.classList.add('disabled'); }
+        else { listEl.classList.remove('disabled'); }
       });
-    }
 
-    function autoscroll(){
-      if(!draggingEl) return;
-      const edge = 56; // px from top/bottom to start autoscroll
-      const rect = scrollArea.getBoundingClientRect();
-      if(currentY < rect.top + edge){
-        scrollArea.scrollBy({ top: -8, behavior: 'auto'});
-      } else if(currentY > rect.bottom - edge){
-        scrollArea.scrollBy({ top: 8, behavior: 'auto'});
-      }
-      raf = requestAnimationFrame(autoscroll);
-    }
+      document.getElementById('submitBtn').addEventListener('click', ()=>{
+        const order = [...listEl.querySelectorAll('.label')].map(n=>n.textContent.trim());
+        alert((numbersAssigned? 'Порядок:' : 'Пока без порядка:') + '\n\n' + order.map((t,i)=>`${i+1}. ${t}`).join('\n'));
+      });
 
-    // Wire up
-    listEl.addEventListener('pointerdown', onPointerDown);
-    listEl.addEventListener('touchstart', onPointerDown, {passive:true});
-
-    // Initialize with items
-    function initFromItems(){
-      renderList();
-    }
-    initFromItems();
-
-    // Submit demo
-    document.getElementById('submitBtn').addEventListener('click', ()=>{
-      const order = [...listEl.querySelectorAll('.item .label')].map(n => n.textContent.trim());
-      alert('Порядок сохранён (демо):\n\n' + order.map((t,i)=>`${i+1}. ${t}`).join('\n'));
-    });
+      // init visuals
+      applyNumbers();
+    })();
   </script>
 </body>
 </html>
