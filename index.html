@@ -242,7 +242,10 @@
 
       document.getElementById('submitBtn').addEventListener('click', ()=>{
         const order = [...listEl.querySelectorAll('.label')].map(n=>n.textContent.trim());
-        alert((numbersAssigned? 'Порядок:' : 'Пока без порядка:') + '\n\n' + order.map((t,i)=>`${i+1}. ${t}`).join('\n'));
+        alert((numbersAssigned? 'Порядок:' : 'Пока без порядка:') + '
+
+' + order.map((t,i)=>`${i+1}. ${t}`).join('
+'));
       });
 
       // init visuals
