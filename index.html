@@ -1,489 +1,514 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ранжирование вариантов</title>
-  <style>
-    :root {
-      --accent: #3366ff;
-      --bg: #f9f9f9;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      --drag-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-      --radius: 8px;
-      --scrollbar-color: #ccc;
-      --gap-h: 16px;
-    }
-
-    /* Layout */
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-      background: var(--bg);
-    }
-    .container {
-      max-width: 420px;
-      margin: 0 auto;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
-      border: 1px solid #e8e8e8;
-    }
-
-    header {
-      padding: 16px;
-      text-align: center;
-      font-weight: 700;
-      border-bottom: 1px solid #eee;
-      background: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header small {
-      display: block;
-      margin-top: 6px;
-      font-weight: 400;
-      color: #666;
-    }
-
-    .scroll-area {
-      flex: 1;
-      overflow-y: auto;
-      padding: 8px 0 24px;
-      position: relative;
-    }
-
-    /* Controls inside scrolling content (они не фиксированы) */
-    .controls {
-      padding: 8px var(--gap-h) 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .controls .row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .controls label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #333;
-      cursor: pointer;
-      user-select: none;
-    }
-    .controls .secondary {
-      margin-top: 4px;
-      background: #f2f5ff;
-      color: #2f4cff;
-      border: 1px solid #dbe3ff;
-    }
-    .hidden {
-      display: none !important;
-    }
-
-    /* List */
-    ul {
-      list-style: none;
-      margin: 8px 0 0 0;
-      padding: 0;
-      position: relative;
-    }
-    li {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      margin: 6px var(--gap-h);
-      background: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: transform 180ms ease;
-      position: relative;
-      will-change: transform;
-      cursor: grab;
-      touch-action: none; /* для лучшего dnd на тач */
-    }
-    li:active {
-      cursor: grabbing;
-    }
-    /* Индекс-кружок */
-    .index {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #eee;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 12px;
-      color: #333;
-      flex: 0 0 24px;
-    }
-
-    /* «Дыра»: оригинальный элемент остаётся в потоке, но невидим */
-    .ghost {
-      visibility: hidden; /* сохраняет место */
-    }
-
-    /* Летающий клон */
-    .dragging-clone {
-      position: fixed;
-      z-index: 9999;
-      pointer-events: none;
-      background: var(--accent);
-      color: #fff;
-      border-radius: var(--radius);
-      box-shadow: var(--drag-shadow);
-      width: calc(100% - 2 * var(--gap-h));
-      left: 0;
-      right: 0;
-      margin-left: var(--gap-h);
-      margin-right: var(--gap-h);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-    }
-    .dragging-clone .index {
-      background: #fff;
-      color: var(--accent);
-    }
-
-    /* Bottom bar: фиксирована только кнопка Продолжить */
-    footer {
-      position: sticky;
-      bottom: 0;
-      z-index: 10;
-      background: #fff;
-      border-top: 1px solid #eee;
-      padding: 12px var(--gap-h);
-      display: flex;
-      justify-content: center;
-    }
-    #submit-btn {
-      padding: 12px 16px;
-      border: none;
-      border-radius: var(--radius);
-      background: var(--accent);
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      min-width: 200px;
-    }
-
-    /* Scrollbar */
-    .scroll-area::-webkit-scrollbar { width: 8px; }
-    .scroll-area::-webkit-scrollbar-thumb {
-      background: var(--scrollbar-color);
-      border-radius: 4px;
-    }
-
-    /* Disabled state */
-    .disabled li {
-      pointer-events: none;
-      opacity: 0.6;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ранжирование напитков</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.4;
+            touch-action: manipulation;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        header {
+            background-color: #fff;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #007AFF;
+            cursor: pointer;
+        }
+        
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .instruction {
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: #666;
+        }
+        
+        .ranking-list {
+            list-style: none;
+            margin-bottom: 16px;
+        }
+        
+        .ranking-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            touch-action: none;
+        }
+        
+        .ranking-item.dragging {
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: scale(1.02) rotate(2deg);
+        }
+        
+        .ranking-item.placeholder {
+            background-color: transparent;
+            box-shadow: none;
+            border: 1px dashed #ccc;
+        }
+        
+        .ranking-item.disabled {
+            opacity: 0.6;
+        }
+        
+        .item-number {
+            width: 28px;
+            height: 28px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .item-text {
+            flex: 1;
+            font-size: 16px;
+        }
+        
+        .item-dash {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .handle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            flex-shrink: 0;
+        }
+        
+        .handle::after {
+            content: "≡";
+            font-size: 20px;
+        }
+        
+        footer {
+            background-color: #fff;
+            padding: 16px;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        
+        .continue-btn {
+            background-color: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .continue-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .special-buttons {
+            margin-bottom: 16px;
+        }
+        
+        .special-btn {
+            background: none;
+            border: none;
+            color: #007AFF;
+            padding: 12px 0;
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .special-btn:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      Распределите варианты в порядке важности
-      <small>(сверху — более важный, снизу — менее важный)</small>
-    </header>
-
-    <div class="scroll-area" id="scroll-area">
-      <div class="controls" id="controls">
-        <div class="row">
-          <label id="accept-wrap"><input type="checkbox" id="accept-order"/> Принять текущий порядок</label>
-          <label><input type="checkbox" id="unsure"/> Затрудняюсь ответить</label>
+    <div id="app">
+        <header>
+            <div class="header-content">
+                <h1>Ранжирование напитков</h1>
+                <button class="close-btn">Закрыть</button>
+            </div>
+        </header>
+        
+        <div class="content">
+            <p class="instruction">Распределите варианты в порядке важности (сверху — более важный, снизу — менее важный)</p>
+            
+            <ul class="ranking-list">
+                <li class="ranking-item">
+                    <div class="item-number">1</div>
+                    <div class="item-text">Крепкий черный кофе с молоком и корицей</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">2</div>
+                    <div class="item-text">Традиционный квас с ржаным хлебом и медом</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">3</div>
+                    <div class="item-text">Чай с жасмином и медом, поданный горячим</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">4</div>
+                    <div class="item-text">Ароматный чай с лимоном и имбирем</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">5</div>
+                    <div class="item-text">Нежный смузи из манго и ананаса</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">6</div>
+                    <div class="item-text">Классический коктейль Мохито с ромом и свежей мятой</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">7</div>
+                    <div class="item-text">Шоколадный фраппе с взбитыми сливками</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">8</div>
+                    <div class="item-text">Классический молочный коктейль с клубникой</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">9</div>
+                    <div class="item-text">Освежающий лимонад с мятой и лаймом</div>
+                    <div class="handle"></div>
+                </li>
+                <li class="ranking-item">
+                    <div class="item-number">10</div>
+                    <div class="item-text">Коктейль Пина Колада с ананасом и кокосом</div>
+                    <div class="handle"></div>
+                </li>
+            </ul>
+            
+            <div class="special-buttons">
+                <button class="special-btn" id="accept-order">Принять текущий порядок</button>
+                <button class="special-btn" id="difficult-answer">Затрудняюсь ответить</button>
+            </div>
         </div>
-        <button id="restart-btn" class="secondary hidden">Начать заново</button>
-      </div>
-
-      <ul id="sortable-list"></ul>
+        
+        <footer>
+            <button class="continue-btn" disabled>Продолжить</button>
+            <div class="logo">SurveySparrow</div>
+        </footer>
     </div>
 
-    <footer>
-      <button id="submit-btn">Продолжить</button>
-    </footer>
-  </div>
-
-  <script>
-    // --- Data ---
-    const initialItems = [
-      "Крепкий чёрный кофе",
-      "Традиционный зелёный чай",
-      "Коктейль с лимоном и мёдом",
-      "Нежный смузи из манго и мяты",
-      "Ароматный чай с лимоном",
-      "Коктейль Колада с ананасом",
-      "Коктейль Пина Колада с кокосом",
-      "Эспрессо-тоник",
-      "Матча на овсяном молоке",
-      "Имбирный чай"
-    ];
-    let items = [...initialItems];
-
-    // --- Elements ---
-    const list = document.getElementById("sortable-list");
-    const scrollArea = document.getElementById("scroll-area");
-    const acceptOrder = document.getElementById("accept-order");
-    const acceptWrap = document.getElementById("accept-wrap");
-    const unsure = document.getElementById("unsure");
-    const submitBtn = document.getElementById("submit-btn");
-    const restartBtn = document.getElementById("restart-btn");
-
-    // --- State ---
-    let hasInteracted = false;
-    let hasAccepted = false;
-    let unsureFlag = false;
-
-    // DnD state
-    let drag = null; // {startIndex, holeIndex, clone, offsetY, height}
-
-    // --- Render ---
-    function renderList() {
-      list.innerHTML = "";
-      const showNumbers = hasAccepted || hasInteracted;
-
-      items.forEach((text, i) => {
-        const li = document.createElement("li");
-        li.dataset.index = i;
-
-        const idx = document.createElement("div");
-        idx.className = "index";
-        idx.textContent = showNumbers ? (i + 1) : "—";
-
-        const label = document.createElement("span");
-        label.textContent = text;
-
-        li.append(idx, label);
-        list.appendChild(li);
-
-        if (!unsureFlag) {
-          li.addEventListener("mousedown", onPointerDown);
-          li.addEventListener("touchstart", onPointerDown, { passive: false });
-        }
-      });
-
-      list.classList.toggle("disabled", !!unsureFlag);
-    }
-
-    // --- DnD helpers ---
-    function getClientY(e) {
-      if (e.touches && e.touches[0]) return e.touches[0].clientY;
-      if (e.changedTouches && e.changedTouches[0]) return e.changedTouches[0].clientY;
-      return e.clientY;
-    }
-
-    function startDrag(target, clientY) {
-      const startIndex = +target.dataset.index;
-      const rect = target.getBoundingClientRect();
-
-      // Создаём клон, который следует за курсором
-      const clone = target.cloneNode(true);
-      clone.className = "dragging-clone";
-      document.body.appendChild(clone);
-
-      // Позиционируем клон
-      const left = list.getBoundingClientRect().left;
-      clone.style.left = left + "px";
-      clone.style.top = (clientY - (clientY - rect.top)) + "px"; // инициализация
-      const offsetY = clientY - rect.top;
-      clone.style.top = (clientY - offsetY) + "px";
-
-      // Обозначаем «дыру» на месте оригинала
-      target.classList.add("ghost");
-
-      drag = {
-        startIndex,
-        holeIndex: startIndex,
-        clone,
-        offsetY,
-        height: rect.height
-      };
-
-      // После первого действия — скрываем «Принять» и показываем «Начать заново»
-      if (!hasInteracted) {
-        hasInteracted = true;
-        acceptWrap.classList.add("hidden");
-        restartBtn.classList.remove("hidden");
-        renderListNumbersOnly(); // обновить кружки на цифры
-      }
-
-      document.addEventListener("mousemove", onPointerMove);
-      document.addEventListener("mouseup", onPointerUp);
-      document.addEventListener("touchmove", onPointerMove, { passive: false });
-      document.addEventListener("touchend", onPointerUp);
-      document.addEventListener("touchcancel", onPointerUp);
-    }
-
-    function renderListNumbersOnly() {
-      // меняем «—» на числа без полного перерендеринга
-      const showNumbers = hasAccepted || hasInteracted;
-      [...list.children].forEach((li, i) => {
-        const el = li.querySelector(".index");
-        if (el) el.textContent = showNumbers ? (i + 1) : "—";
-      });
-    }
-
-    function onPointerDown(e) {
-      if (unsureFlag) return;
-      e.preventDefault();
-      const li = e.currentTarget;
-      startDrag(li, getClientY(e));
-    }
-
-    function onPointerMove(e) {
-      if (!drag) return;
-      e.preventDefault();
-
-      const y = getClientY(e);
-
-      // Двигаем клон
-      drag.clone.style.top = (y - drag.offsetY) + "px";
-
-      // Автоскролл при подведении к краям видимой области списка
-      const areaRect = scrollArea.getBoundingClientRect();
-      const edge = 28;
-      const scrollStep = 14;
-      if (y < areaRect.top + edge) {
-        scrollArea.scrollTop -= scrollStep;
-      } else if (y > areaRect.bottom - edge) {
-        scrollArea.scrollTop += scrollStep;
-      }
-
-      // Пересчитываем позицию «дыры»
-      const newHole = computeHoleIndex(y);
-      if (newHole !== drag.holeIndex) {
-        drag.holeIndex = newHole;
-        applyShifts();
-      }
-    }
-
-    function computeHoleIndex(clientY) {
-      const children = [...list.children];
-      const start = drag.startIndex;
-
-      // Массив mid-позиций БЕЗ перетаскиваемого элемента
-      const mids = [];
-      for (let i = 0; i < children.length; i++) {
-        if (i === start) continue;
-        const r = children[i].getBoundingClientRect();
-        mids.push({ i, mid: r.top + r.height / 2 });
-      }
-
-      // Сколько mid ниже текущего Y — туда и двигается «дыра»
-      let count = 0;
-      for (let k = 0; k < mids.length; k++) {
-        if (clientY > mids[k].mid) count++;
-        else break;
-      }
-
-      // Вставочная позиция в диапазоне [0..N-1]
-      const N = children.length;
-      return Math.max(0, Math.min(N - 1, count));
-    }
-
-    function applyShifts() {
-      const children = [...list.children];
-      children.forEach((li) => {
-        li.style.transform = "";
-      });
-
-      const from = drag.startIndex;
-      const to = drag.holeIndex;
-      if (to > from) {
-        // Двигаемся вниз: элементы [from+1 .. to] сдвигаются вверх
-        for (let i = from + 1; i <= to; i++) {
-          children[i].style.transform = `translateY(${-drag.height}px)`;
-        }
-      } else if (to < from) {
-        // Двигаемся вверх: элементы [to .. from-1] сдвигаются вниз
-        for (let i = to; i < from; i++) {
-          children[i].style.transform = `translateY(${drag.height}px)`;
-        }
-      }
-    }
-
-    function onPointerUp() {
-      if (!drag) return;
-
-      // Снимаем сдвиги
-      [...list.children].forEach((li) => (li.style.transform = ""));
-
-      // Обновляем порядок данных
-      const moved = items.splice(drag.startIndex, 1)[0];
-      items.splice(drag.holeIndex, 0, moved);
-
-      // Чистим клон и «дыру»
-      drag.clone.remove();
-      const ghostEl = list.querySelector(`li[data-index="${drag.startIndex}"]`);
-      if (ghostEl) ghostEl.classList.remove("ghost");
-
-      drag = null;
-
-      // Полный ререндер списка для фикса индексов и data-index
-      renderList();
-
-      // Снова показать «Начать заново» (если пропало после render)
-      restartBtn.classList.remove("hidden");
-    }
-
-    // --- Controls ---
-    acceptOrder.addEventListener("change", () => {
-      if (acceptOrder.checked) {
-        hasAccepted = true;
-        hasInteracted = true;
-        acceptWrap.classList.add("hidden");
-        restartBtn.classList.remove("hidden");
-        renderList(); // обновим кружки на числа
-      }
-    });
-
-    unsure.addEventListener("change", () => {
-      unsureFlag = unsure.checked;
-      if (unsureFlag) {
-        // Блокируем сортировку и показываем «—»
-        hasAccepted = false;
-        renderList();
-        // Оставляем «Начать заново» на всякий случай — чтобы можно было вернуться
-      } else {
-        renderList();
-      }
-    });
-
-    restartBtn.addEventListener("click", () => {
-      items = [...initialItems];
-      hasInteracted = false;
-      hasAccepted = false;
-      unsureFlag = false;
-      acceptOrder.checked = false;
-      unsure.checked = false;
-      acceptWrap.classList.remove("hidden");
-      restartBtn.classList.add("hidden");
-      renderList();
-      // Прокрутка в начало
-      scrollArea.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    submitBtn.addEventListener("click", () => {
-      if (unsureFlag) {
-        alert("Ответ: затрудняюсь");
-        return;
-      }
-      alert("Текущий порядок:\n" + items.map((t, i) => `${i + 1}. ${t}`).join("\n"));
-    });
-
-    // --- Init ---
-    renderList();
-  </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const list = document.querySelector('.ranking-list');
+            const items = document.querySelectorAll('.ranking-item');
+            const acceptOrderBtn = document.getElementById('accept-order');
+            const difficultAnswerBtn = document.getElementById('difficult-answer');
+            const continueBtn = document.querySelector('.continue-btn');
+            const specialButtons = document.querySelector('.special-buttons');
+            
+            let dragItem = null;
+            let placeholder = null;
+            let isDragging = false;
+            let startY = 0;
+            let startX = 0;
+            let touchStartTime = 0;
+            let dragThreshold = 10; // пикселей для активации drag
+            let timeThreshold = 200; // миллисекунд для активации drag
+            let touchIdentifier = null;
+            let hasInteracted = false;
+            
+            // Инициализация элементов
+            function initItems() {
+                items.forEach(item => {
+                    item.addEventListener('touchstart', handleTouchStart, { passive: false });
+                    item.addEventListener('touchmove', handleTouchMove, { passive: false });
+                    item.addEventListener('touchend', handleTouchEnd);
+                    item.addEventListener('touchcancel', handleTouchEnd);
+                });
+            }
+            
+            // Обработка начала касания
+            function handleTouchStart(e) {
+                if (e.touches.length !== 1) return;
+                
+                const touch = e.touches[0];
+                touchIdentifier = touch.identifier;
+                startY = touch.clientY;
+                startX = touch.clientX;
+                touchStartTime = Date.now();
+                dragItem = e.currentTarget;
+                
+                // Предотвращаем скролл при касании к элементу
+                e.preventDefault();
+            }
+            
+            // Обработка движения касания
+            function handleTouchMove(e) {
+                if (!dragItem || e.touches.length !== 1) return;
+                
+                const touch = Array.from(e.touches).find(t => t.identifier === touchIdentifier);
+                if (!touch) return;
+                
+                const currentY = touch.clientY;
+                const currentX = touch.clientX;
+                const deltaY = Math.abs(currentY - startY);
+                const deltaX = Math.abs(currentX - startX);
+                const elapsedTime = Date.now() - touchStartTime;
+                
+                // Если еще не начали drag и прошло достаточно времени/расстояния
+                if (!isDragging && elapsedTime > timeThreshold && deltaY > dragThreshold && deltaY > deltaX) {
+                    startDrag(touch);
+                    hasInteracted = true;
+                    // Скрываем кнопку "Принять текущий порядок" после первого взаимодействия
+                    if (acceptOrderBtn.parentElement) {
+                        acceptOrderBtn.parentElement.remove();
+                    }
+                }
+                
+                if (isDragging) {
+                    e.preventDefault(); // Предотвращаем скролл во время drag
+                    updateDragPosition(touch);
+                    updatePlaceholderPosition();
+                }
+            }
+            
+            // Начало перетаскивания
+            function startDrag(touch) {
+                isDragging = true;
+                
+                // Создаем placeholder
+                placeholder = document.createElement('li');
+                placeholder.className = 'ranking-item placeholder';
+                placeholder.style.height = `${dragItem.offsetHeight}px`;
+                
+                // Заменяем элемент placeholder'ом
+                dragItem.parentNode.insertBefore(placeholder, dragItem);
+                
+                // Добавляем класс для стилизации перетаскиваемого элемента
+                dragItem.classList.add('dragging');
+                
+                // Устанавливаем начальную позицию
+                updateDragPosition(touch);
+            }
+            
+            // Обновление позиции перетаскиваемого элемента
+            function updateDragPosition(touch) {
+                if (!dragItem) return;
+                
+                const rect = dragItem.getBoundingClientRect();
+                const y = touch.clientY - rect.height / 2;
+                
+                dragItem.style.position = 'absolute';
+                dragItem.style.top = `${y}px`;
+                dragItem.style.left = '0';
+                dragItem.style.width = '100%';
+                dragItem.style.zIndex = '1000';
+            }
+            
+            // Обновление позиции placeholder'а
+            function updatePlaceholderPosition() {
+                if (!placeholder || !dragItem) return;
+                
+                const dragRect = dragItem.getBoundingClientRect();
+                const dragCenterY = dragRect.top + dragRect.height / 2;
+                
+                // Находим элемент, над которым находится перетаскиваемый элемент
+                let newPosition = null;
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    if (item === dragItem || item === placeholder) continue;
+                    
+                    const rect = item.getBoundingClientRect();
+                    const itemCenterY = rect.top + rect.height / 2;
+                    
+                    if (dragCenterY < itemCenterY) {
+                        newPosition = item;
+                        break;
+                    }
+                }
+                
+                // Перемещаем placeholder
+                if (newPosition) {
+                    list.insertBefore(placeholder, newPosition);
+                } else {
+                    list.appendChild(placeholder);
+                }
+            }
+            
+            // Завершение перетаскивания
+            function handleTouchEnd() {
+                if (isDragging && dragItem && placeholder) {
+                    // Вставляем элемент на место placeholder'а
+                    list.insertBefore(dragItem, placeholder);
+                    
+                    // Удаляем placeholder
+                    list.removeChild(placeholder);
+                    
+                    // Сбрасываем стили
+                    dragItem.classList.remove('dragging');
+                    dragItem.style.position = '';
+                    dragItem.style.top = '';
+                    dragItem.style.left = '';
+                    dragItem.style.width = '';
+                    dragItem.style.zIndex = '';
+                    
+                    // Обновляем номера
+                    updateItemNumbers();
+                    
+                    // Активируем кнопку "Продолжить"
+                    continueBtn.disabled = false;
+                }
+                
+                // Сбрасываем состояние
+                isDragging = false;
+                dragItem = null;
+                placeholder = null;
+                touchIdentifier = null;
+            }
+            
+            // Обновление номеров элементов
+            function updateItemNumbers() {
+                const currentItems = document.querySelectorAll('.ranking-item:not(.placeholder)');
+                currentItems.forEach((item, index) => {
+                    const numberElement = item.querySelector('.item-number');
+                    if (numberElement) {
+                        numberElement.textContent = index + 1;
+                    }
+                });
+            }
+            
+            // Обработка кнопки "Принять текущий порядок"
+            acceptOrderBtn.addEventListener('click', function() {
+                updateItemNumbers();
+                continueBtn.disabled = false;
+                this.parentElement.remove();
+            });
+            
+            // Обработка кнопки "Затрудняюсь ответить"
+            difficultAnswerBtn.addEventListener('click', function() {
+                // Заменяем цифры на прочерки
+                items.forEach(item => {
+                    const numberElement = item.querySelector('.item-number');
+                    if (numberElement) {
+                        const dashElement = document.createElement('div');
+                        dashElement.className = 'item-dash';
+                        dashElement.textContent = '—';
+                        item.replaceChild(dashElement, numberElement);
+                    }
+                    
+                    // Деактивируем элементы
+                    item.classList.add('disabled');
+                    item.style.touchAction = 'auto';
+                    
+                    // Удаляем обработчики событий
+                    item.removeEventListener('touchstart', handleTouchStart);
+                    item.removeEventListener('touchmove', handleTouchMove);
+                    item.removeEventListener('touchend', handleTouchEnd);
+                    item.removeEventListener('touchcancel', handleTouchEnd);
+                });
+                
+                // Активируем кнопку "Продолжить"
+                continueBtn.disabled = false;
+                
+                // Удаляем кнопку "Принять текущий порядок", если она еще есть
+                if (acceptOrderBtn.parentElement) {
+                    acceptOrderBtn.parentElement.remove();
+                }
+            });
+            
+            // Обработка кнопки "Продолжить"
+            continueBtn.addEventListener('click', function() {
+                alert('Форма отправлена!');
+            });
+            
+            // Обработка кнопки "Закрыть"
+            document.querySelector('.close-btn').addEventListener('click', function() {
+                alert('Форма закрыта!');
+            });
+            
+            // Инициализация
+            initItems();
+        });
+    </script>
 </body>
 </html>
