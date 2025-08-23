@@ -90,13 +90,16 @@
         .ranking-item.dragging {
             z-index: 100;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transform: scale(1.02) rotate(2deg);
+            transform: scale(1.02);
         }
         
         .ranking-item.placeholder {
             background-color: transparent;
             box-shadow: none;
-            border: 1px dashed #ccc;
+            visibility: hidden;
+            height: 0;
+            padding: 0;
+            margin: 0;
         }
         
         .ranking-item.disabled {
@@ -198,6 +201,16 @@
             font-size: 12px;
             color: #999;
         }
+        
+        .drag-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -275,6 +288,8 @@
             <button class="continue-btn" disabled>Продолжить</button>
             <div class="logo">SurveySparrow</div>
         </footer>
+        
+        <div class="drag-overlay"></div>
     </div>
 
     <script>
@@ -285,22 +300,29 @@
             const difficultAnswerBtn = document.getElementById('difficult-answer');
             const continueBtn = document.querySelector('.continue-btn');
             const specialButtons = document.querySelector('.special-buttons');
+            const dragOverlay = document.querySelector('.drag-overlay');
+            const content = document.querySelector('.content');
             
             let dragItem = null;
             let placeholder = null;
             let isDragging = false;
+            let isScrolling = false;
             let startY = 0;
             let startX = 0;
+            let startScrollTop = 0;
             let touchStartTime = 0;
-            let dragThreshold = 10; // пикселей для активации drag
-            let timeThreshold = 200; // миллисекунд для активации drag
+            let dragThreshold = 8; // пикселей для активации drag
+            let timeThreshold = 300; // миллисекунд для активации drag
             let touchIdentifier = null;
             let hasInteracted = false;
+            let dragActivated = false;
+            let currentY = 0;
+            let initialIndex = 0;
             
             // Инициализация элементов
             function initItems() {
                 items.forEach(item => {
-                    item.addEventListener('touchstart', handleTouchStart, { passive: false });
+                    item.addEventListener('touchstart', handleTouchStart, { passive: true });
                     item.addEventListener('touchmove', handleTouchMove, { passive: false });
                     item.addEventListener('touchend', handleTouchEnd);
                     item.addEventListener('touchcancel', handleTouchEnd);
@@ -315,11 +337,21 @@
                 touchIdentifier = touch.identifier;
                 startY = touch.clientY;
                 startX = touch.clientX;
+                startScrollTop = content.scrollTop;
                 touchStartTime = Date.now();
                 dragItem = e.currentTarget;
                 
-                // Предотвращаем скролл при касании к элементу
-                e.preventDefault();
+                // Запоминаем начальную позицию элемента
+                initialIndex = Array.from(items).indexOf(dragItem);
+                
+                // Сбрасываем флаги
+                isScrolling = true;
+                dragActivated = false;
+                
+                // Создаем невидимый плейсхолдер
+                placeholder = document.createElement('li');
+                placeholder.className = 'ranking-item placeholder';
+                dragItem.parentNode.insertBefore(placeholder, dragItem);
             }
             
             // Обработка движения касания
@@ -329,46 +361,56 @@
                 const touch = Array.from(e.touches).find(t => t.identifier === touchIdentifier);
                 if (!touch) return;
                 
-                const currentY = touch.clientY;
-                const currentX = touch.clientX;
+                currentY = touch.clientY;
                 const deltaY = Math.abs(currentY - startY);
-                const deltaX = Math.abs(currentX - startX);
+                const deltaX = Math.abs(touch.clientX - startX);
                 const elapsedTime = Date.now() - touchStartTime;
                 
-                // Если еще не начали drag и прошло достаточно времени/расстояния
-                if (!isDragging && elapsedTime > timeThreshold && deltaY > dragThreshold && deltaY > deltaX) {
-                    startDrag(touch);
-                    hasInteracted = true;
-                    // Скрываем кнопку "Принять текущий порядок" после первого взаимодействия
-                    if (acceptOrderBtn.parentElement) {
-                        acceptOrderBtn.parentElement.remove();
+                // Если еще не определились с режимом (скролл или drag)
+                if (!dragActivated && isScrolling) {
+                    // Если движение преимущественно вертикальное и превышает порог
+                    if (deltaY > dragThreshold && deltaY > deltaX) {
+                        // Если прошло достаточно времени или движение значительное
+                        if (elapsedTime > timeThreshold || deltaY > 20) {
+                            activateDrag(touch);
+                            e.preventDefault();
+                            return;
+                        }
                     }
+                    
+                    // Продолжаем скроллить
+                    const scrollDelta = startY - touch.clientY;
+                    content.scrollTop = startScrollTop + scrollDelta;
                 }
                 
-                if (isDragging) {
-                    e.preventDefault(); // Предотвращаем скролл во время drag
+                // Если активирован drag
+                if (dragActivated) {
+                    e.preventDefault();
                     updateDragPosition(touch);
-                    updatePlaceholderPosition();
+                    updateItemPositions();
                 }
             }
             
-            // Начало перетаскивания
-            function startDrag(touch) {
+            // Активация перетаскивания
+            function activateDrag(touch) {
+                dragActivated = true;
+                isScrolling = false;
                 isDragging = true;
+                hasInteracted = true;
                 
-                // Создаем placeholder
-                placeholder = document.createElement('li');
-                placeholder.className = 'ranking-item placeholder';
-                placeholder.style.height = `${dragItem.offsetHeight}px`;
-                
-                // Заменяем элемент placeholder'ом
-                dragItem.parentNode.insertBefore(placeholder, dragItem);
+                // Скрываем кнопку "Принять текущий порядок" после первого взаимодействия
+                if (acceptOrderBtn.parentElement) {
+                    acceptOrderBtn.parentElement.remove();
+                }
                 
                 // Добавляем класс для стилизации перетаскиваемого элемента
                 dragItem.classList.add('dragging');
                 
                 // Устанавливаем начальную позицию
                 updateDragPosition(touch);
+                
+                // Активируем оверлей для предотвращения скролла
+                dragOverlay.style.display = 'block';
             }
             
             // Обновление позиции перетаскиваемого элемента
@@ -378,22 +420,22 @@
                 const rect = dragItem.getBoundingClientRect();
                 const y = touch.clientY - rect.height / 2;
                 
-                dragItem.style.position = 'absolute';
+                dragItem.style.position = 'fixed';
                 dragItem.style.top = `${y}px`;
-                dragItem.style.left = '0';
-                dragItem.style.width = '100%';
+                dragItem.style.left = '16px';
+                dragItem.style.width = `calc(100% - 32px)`;
                 dragItem.style.zIndex = '1000';
             }
             
-            // Обновление позиции placeholder'а
-            function updatePlaceholderPosition() {
-                if (!placeholder || !dragItem) return;
+            // Обновление позиций элементов при перетаскивании
+            function updateItemPositions() {
+                if (!dragItem || !placeholder) return;
                 
                 const dragRect = dragItem.getBoundingClientRect();
                 const dragCenterY = dragRect.top + dragRect.height / 2;
                 
                 // Находим элемент, над которым находится перетаскиваемый элемент
-                let newPosition = null;
+                let newIndex = -1;
                 for (let i = 0; i < items.length; i++) {
                     const item = items[i];
                     if (item === dragItem || item === placeholder) continue;
@@ -402,22 +444,31 @@
                     const itemCenterY = rect.top + rect.height / 2;
                     
                     if (dragCenterY < itemCenterY) {
-                        newPosition = item;
+                        newIndex = i;
                         break;
                     }
                 }
                 
-                // Перемещаем placeholder
-                if (newPosition) {
-                    list.insertBefore(placeholder, newPosition);
-                } else {
-                    list.appendChild(placeholder);
+                // Если не нашли позицию, ставим в конец
+                if (newIndex === -1) newIndex = items.length;
+                
+                // Корректируем индекс с учетом плейсхолдера
+                const currentIndex = Array.from(list.children).indexOf(placeholder);
+                if (newIndex > currentIndex) newIndex--;
+                
+                // Перемещаем плейсхолдер на новую позицию
+                if (newIndex >= 0 && newIndex <= list.children.length) {
+                    if (newIndex < list.children.length) {
+                        list.insertBefore(placeholder, list.children[newIndex]);
+                    } else {
+                        list.appendChild(placeholder);
+                    }
                 }
             }
             
             // Завершение перетаскивания
             function handleTouchEnd() {
-                if (isDragging && dragItem && placeholder) {
+                if (dragActivated && dragItem && placeholder) {
                     // Вставляем элемент на место placeholder'а
                     list.insertBefore(dragItem, placeholder);
                     
@@ -439,8 +490,13 @@
                     continueBtn.disabled = false;
                 }
                 
+                // Скрываем оверлей
+                dragOverlay.style.display = 'none';
+                
                 // Сбрасываем состояние
                 isDragging = false;
+                isScrolling = false;
+                dragActivated = false;
                 dragItem = null;
                 placeholder = null;
                 touchIdentifier = null;
