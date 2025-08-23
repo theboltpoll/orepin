@@ -1,256 +1,489 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Ранжирование — DnD (long‑press)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ранжирование вариантов</title>
   <style>
-    :root{
-      --bg: #f3f4f6;
-      --panel: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --outline: #e5e7eb;
-      --shadow: 0 8px 24px rgba(2,6,23,.08);
-      --drag-shadow: 0 10px 28px rgba(2,6,23,.22);
-      --brand: #e34b4b;
-      --chip: #4f46e5;
-      --chip-muted: #94a3b8;
-      --radius: 16px;
-      --item-pad-y: 14px;
-      --item-gap: 12px;
-      --number-size: 28px;
-      --press-delay: 260ms;
-      --swap-anim: 160ms;
-      --scrollbar: 8px;
+    :root {
+      --accent: #3366ff;
+      --bg: #f9f9f9;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --drag-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      --radius: 8px;
+      --scrollbar-color: #ccc;
+      --gap-h: 16px;
     }
 
-    html,body{ height:100%; }
-    body{ margin:0; background:var(--bg); color:var(--text); font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    /* Layout */
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+    }
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+    }
 
-    .app{ position:fixed; inset:0; display:flex; flex-direction:column; max-width:480px; margin:0 auto; background:var(--bg); }
+    header {
+      padding: 16px;
+      text-align: center;
+      font-weight: 700;
+      border-bottom: 1px solid #eee;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header small {
+      display: block;
+      margin-top: 6px;
+      font-weight: 400;
+      color: #666;
+    }
 
-    .app__header{ position:sticky; top:0; z-index:5; background:var(--panel); border-bottom:1px solid var(--outline); padding:12px 14px; display:flex; gap:10px; align-items:center; }
-    .close-btn{ width:28px; height:28px; border-radius:10px; border:1px solid var(--outline); background:#fff; display:grid; place-items:center; }
-    .title{ font-weight:700; font-size:16px; }
-    .subtitle{ color:var(--muted); font-size:13px; }
+    .scroll-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0 24px;
+      position: relative;
+    }
 
-    .app__content{ position:relative; flex:1; overflow-y:scroll; -webkit-overflow-scrolling:touch; padding:12px 14px 24px; }
-    .app__content::-webkit-scrollbar{ width: var(--scrollbar); }
-    .app__content::-webkit-scrollbar-thumb{ background:#cbd5e1; border-radius:20px; }
+    /* Controls inside scrolling content (они не фиксированы) */
+    .controls {
+      padding: 8px var(--gap-h) 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .controls .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .controls label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #333;
+      cursor: pointer;
+      user-select: none;
+    }
+    .controls .secondary {
+      margin-top: 4px;
+      background: #f2f5ff;
+      color: #2f4cff;
+      border: 1px solid #dbe3ff;
+    }
+    .hidden {
+      display: none !important;
+    }
 
-    .card{ background:var(--panel); border:1px solid var(--outline); border-radius:var(--radius); box-shadow:var(--shadow); padding:12px; }
-    .question{ font-weight:700; font-size:15px; margin:4px 0 12px; }
+    /* List */
+    ul {
+      list-style: none;
+      margin: 8px 0 0 0;
+      padding: 0;
+      position: relative;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      margin: 6px var(--gap-h);
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform 180ms ease;
+      position: relative;
+      will-change: transform;
+      cursor: grab;
+      touch-action: none; /* для лучшего dnd на тач */
+    }
+    li:active {
+      cursor: grabbing;
+    }
+    /* Индекс-кружок */
+    .index {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #eee;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 12px;
+      color: #333;
+      flex: 0 0 24px;
+    }
 
-    .rank-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--item-gap); }
+    /* «Дыра»: оригинальный элемент остаётся в потоке, но невидим */
+    .ghost {
+      visibility: hidden; /* сохраняет место */
+    }
 
-    .item{ display:grid; grid-template-columns: 32px 1fr 18px; align-items:center; gap:10px; padding: var(--item-pad-y) 12px; border:1px solid var(--outline); border-radius:14px; background:#fff; touch-action:none; }
-    .item[data-dragging="true"]{ background:#5562ff1a; border-color:#c7d2fe; box-shadow:var(--drag-shadow); cursor:grabbing; }
+    /* Летающий клон */
+    .dragging-clone {
+      position: fixed;
+      z-index: 9999;
+      pointer-events: none;
+      background: var(--accent);
+      color: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--drag-shadow);
+      width: calc(100% - 2 * var(--gap-h));
+      left: 0;
+      right: 0;
+      margin-left: var(--gap-h);
+      margin-right: var(--gap-h);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+    }
+    .dragging-clone .index {
+      background: #fff;
+      color: var(--accent);
+    }
 
-    .num{ width:var(--number-size); height:var(--number-size); border-radius:999px; display:grid; place-items:center; font-size:12px; font-weight:800; color:#fff; background:var(--chip-muted); }
-    .num[data-state="dash"]{ background:var(--chip-muted); }
-    .num[data-state="number"]{ background:var(--chip); }
+    /* Bottom bar: фиксирована только кнопка Продолжить */
+    footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      background: #fff;
+      border-top: 1px solid #eee;
+      padding: 12px var(--gap-h);
+      display: flex;
+      justify-content: center;
+    }
+    #submit-btn {
+      padding: 12px 16px;
+      border: none;
+      border-radius: var(--radius);
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 200px;
+    }
 
-    .label{ font-size:14px; color:var(--text); }
-    .handle{ opacity:.55; justify-self:end; }
+    /* Scrollbar */
+    .scroll-area::-webkit-scrollbar { width: 8px; }
+    .scroll-area::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-color);
+      border-radius: 4px;
+    }
 
-    .controls{ margin-top:14px; display:grid; gap:10px; }
-    .check{ display:flex; gap:10px; align-items:center; border:1px solid var(--outline); border-radius:14px; padding:10px 12px; background:#fff; }
-
-    .app__footer{ position:sticky; bottom:0; z-index:5; background:var(--panel); border-top:1px solid var(--outline); padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .cta{ appearance:none; border:none; border-radius:999px; background:var(--brand); color:#fff; font-weight:800; padding:14px 18px; font-size:16px; box-shadow:var(--shadow); }
-    .brand{ color:var(--muted); font-size:12px; }
-
-    .disabled{ opacity:.55; pointer-events:none; }
+    /* Disabled state */
+    .disabled li {
+      pointer-events: none;
+      opacity: 0.6;
+    }
   </style>
 </head>
 <body>
-  <div class="app" id="app">
-    <header class="app__header">
-      <button class="close-btn" aria-label="Закрыть" onclick="alert('Закрыть (демо)')">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-      <div>
-        <div class="title">Распределите варианты в порядке важности</div>
-        <div class="subtitle">Сверху — более важный, снизу — менее важный</div>
-      </div>
+  <div class="container">
+    <header>
+      Распределите варианты в порядке важности
+      <small>(сверху — более важный, снизу — менее важный)</small>
     </header>
 
-    <main class="app__content" id="scrollArea">
-      <section class="card" aria-labelledby="q1">
-        <h2 class="question" id="q1">Выберите порядок напитков</h2>
-        <ol class="rank-list" id="rankList">
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Крепкий чёрный кофе с молоком и корицей</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Традиционный квас с ржаным хлебом и мёдом</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Нежный смузи из манго и ананаса</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Чай с жасмином и мёдом, поданный горячим</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Ароматный чай с лимоном и имбирем</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Классический коктейль Мохито с ромом и свежей мятой</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Шоколадный фраппе с взбитыми сливками</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Классический молочный коктейль с клубникой</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Освежающий лимонад с мятой и лаймом</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-          <li class="item"><div class="num" data-state="dash">—</div><div class="label">Коктейль Пина Колада с ананасом и кокосом</div><svg class="handle" width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><g fill="currentColor"><circle cx="5" cy="5" r="1.6"/><circle cx="10" cy="5" r="1.6"/><circle cx="15" cy="5" r="1.6"/><circle cx="5" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="15" cy="10" r="1.6"/><circle cx="5" cy="15" r="1.6"/><circle cx="10" cy="15" r="1.6"/><circle cx="15" cy="15" r="1.6"/></g></svg></li>
-        </ol>
-        <div class="controls">
-          <label class="check" id="acceptBlock"><input type="checkbox" id="acceptOrder" /> Принять текущий порядок</label>
-          <label class="check"><input type="checkbox" id="idk" /> Затрудняюсь ответить</label>
+    <div class="scroll-area" id="scroll-area">
+      <div class="controls" id="controls">
+        <div class="row">
+          <label id="accept-wrap"><input type="checkbox" id="accept-order"/> Принять текущий порядок</label>
+          <label><input type="checkbox" id="unsure"/> Затрудняюсь ответить</label>
         </div>
-      </section>
-      <div style="height:24px"></div>
-    </main>
+        <button id="restart-btn" class="secondary hidden">Начать заново</button>
+      </div>
 
-    <footer class="app__footer">
-      <div class="brand">UX Feedback</div>
-      <button class="cta" id="submitBtn">Продолжить</button>
+      <ul id="sortable-list"></ul>
+    </div>
+
+    <footer>
+      <button id="submit-btn">Продолжить</button>
     </footer>
   </div>
 
   <script>
-    (function(){
-      // ===== State =====
-      const listEl = document.getElementById('rankList');
-      const scrollArea = document.getElementById('scrollArea');
-      const acceptOrder = document.getElementById('acceptOrder');
-      const acceptBlock = document.getElementById('acceptBlock');
-      const idk = document.getElementById('idk');
+    // --- Data ---
+    const initialItems = [
+      "Крепкий чёрный кофе",
+      "Традиционный зелёный чай",
+      "Коктейль с лимоном и мёдом",
+      "Нежный смузи из манго и мяты",
+      "Ароматный чай с лимоном",
+      "Коктейль Колада с ананасом",
+      "Коктейль Пина Колада с кокосом",
+      "Эспрессо-тоник",
+      "Матча на овсяном молоке",
+      "Имбирный чай"
+    ];
+    let items = [...initialItems];
 
-      let numbersAssigned = false; // показаны ли номера
-      let pressTimer=null, sourceEl=null, draggingEl=null, placeholder=null, offsetY=0, currentY=0, raf=null;
-      const PRESS_DELAY = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--press-delay')) || 260;
+    // --- Elements ---
+    const list = document.getElementById("sortable-list");
+    const scrollArea = document.getElementById("scroll-area");
+    const acceptOrder = document.getElementById("accept-order");
+    const acceptWrap = document.getElementById("accept-wrap");
+    const unsure = document.getElementById("unsure");
+    const submitBtn = document.getElementById("submit-btn");
+    const restartBtn = document.getElementById("restart-btn");
 
-      // ===== Helpers =====
-      function applyNumbers(){
-        [...listEl.querySelectorAll('.item')].forEach((el,i)=>{
-          const numEl = el.querySelector('.num');
-          if(numbersAssigned){ numEl.textContent = i+1; numEl.dataset.state='number'; }
-          else { numEl.textContent = '—'; numEl.dataset.state='dash'; }
-        });
-      }
+    // --- State ---
+    let hasInteracted = false;
+    let hasAccepted = false;
+    let unsureFlag = false;
 
-      function createPlaceholder(h){ const ph=document.createElement('li'); ph.className='placeholder'; ph.style.height=h+'px'; return ph; }
+    // DnD state
+    let drag = null; // {startIndex, holeIndex, clone, offsetY, height}
 
-      function flip(fromTops){
-        const items = [...listEl.querySelectorAll('.item')];
-        items.forEach(el=>{
-          const dy = (fromTops.get(el)||0) - el.offsetTop;
-          if(dy){
-            el.style.transform = `translateY(${dy}px)`;
-            el.getBoundingClientRect();
-            el.style.transition = 'transform var(--swap-anim) ease';
-            el.style.transform = 'translateY(0)';
-            setTimeout(()=>{ el.style.transition=''; }, 180);
-          }
-        });
-      }
+    // --- Render ---
+    function renderList() {
+      list.innerHTML = "";
+      const showNumbers = hasAccepted || hasInteracted;
 
-      // ===== DnD =====
-      function onPointerDown(e){
-        if(idk.checked) return;
-        const li = e.target.closest('.item');
-        if(!li) return;
-        const startY = (e.touches ? e.touches[0].clientY : e.clientY);
-        pressTimer = setTimeout(()=> beginDrag(li, startY), PRESS_DELAY);
-        const cancel = ()=>{ clearTimeout(pressTimer); pressTimer=null; window.removeEventListener('pointerup', cancel); window.removeEventListener('touchend', cancel); };
-        window.addEventListener('pointerup', cancel, {once:true});
-        window.addEventListener('touchend', cancel, {once:true});
-      }
+      items.forEach((text, i) => {
+        const li = document.createElement("li");
+        li.dataset.index = i;
 
-      function beginDrag(li, y){
-        const rect = li.getBoundingClientRect();
-        sourceEl = li; sourceEl.dataset.dragging='true';
-        offsetY = y - rect.top; currentY = y;
-        placeholder = createPlaceholder(rect.height);
-        li.after(placeholder);
+        const idx = document.createElement("div");
+        idx.className = "index";
+        idx.textContent = showNumbers ? (i + 1) : "—";
 
-        draggingEl = li.cloneNode(true);
-        Object.assign(draggingEl.style, { position:'fixed', left:rect.left+'px', top:rect.top+'px', width:rect.width+'px', pointerEvents:'none', zIndex:9999 });
-        draggingEl.dataset.dragging='true';
-        document.body.appendChild(draggingEl);
+        const label = document.createElement("span");
+        label.textContent = text;
 
-        window.addEventListener('pointermove', onMove);
-        window.addEventListener('touchmove', onMove, {passive:false});
-        window.addEventListener('pointerup', onDrop, {once:true});
-        window.addEventListener('touchend', onDrop, {once:true});
-        raf = requestAnimationFrame(autoscroll);
-      }
+        li.append(idx, label);
+        list.appendChild(li);
 
-      function onMove(e){
-        if(!draggingEl) return;
-        if(e.cancelable) e.preventDefault();
-        currentY = (e.touches ? e.touches[0].clientY : e.clientY);
-        draggingEl.style.top = (currentY - offsetY) + 'px';
-
-        // record positions BEFORE reinsert
-        const beforeMap = new Map([...listEl.querySelectorAll('.item')].map(el=>[el, el.offsetTop]));
-
-        // compute new position by midpoint
-        const others = [...listEl.querySelectorAll('.item')].filter(x=>x!==sourceEl);
-        const center = currentY;
-        let before=null;
-        for(const el of others){
-          const r = el.getBoundingClientRect();
-          if(center < r.top + r.height/2){ before = el; break; }
+        if (!unsureFlag) {
+          li.addEventListener("mousedown", onPointerDown);
+          li.addEventListener("touchstart", onPointerDown, { passive: false });
         }
-        if(before){ listEl.insertBefore(placeholder, before); } else { listEl.appendChild(placeholder); }
-
-        // preview number on the floating chip
-        const index = [...listEl.children].indexOf(placeholder);
-        const numEl = draggingEl.querySelector('.num');
-        if(numEl){ numEl.textContent = index+1; numEl.dataset.state='number'; }
-
-        flip(beforeMap);
-      }
-
-      function onDrop(){
-        cancelAnimationFrame(raf);
-        if(!sourceEl) return;
-        const beforeMap = new Map([...listEl.querySelectorAll('.item')].map(el=>[el, el.offsetTop]));
-        listEl.insertBefore(sourceEl, placeholder);
-        flip(beforeMap);
-        cleanupDrag();
-        numbersAssigned = true; applyNumbers(); acceptBlock.style.display='none';
-      }
-
-      function cleanupDrag(){
-        draggingEl && draggingEl.remove(); draggingEl=null;
-        placeholder && placeholder.remove(); placeholder=null;
-        if(sourceEl){ sourceEl.dataset.dragging='false'; sourceEl=null; }
-        window.removeEventListener('pointermove', onMove);
-        window.removeEventListener('touchmove', onMove);
-      }
-
-      function autoscroll(){
-        const edge = 56; const rect = scrollArea.getBoundingClientRect();
-        if(currentY < rect.top + edge){ scrollArea.scrollBy({top:-8, behavior:'auto'}); }
-        else if(currentY > rect.bottom - edge){ scrollArea.scrollBy({top:8, behavior:'auto'}); }
-        raf = requestAnimationFrame(autoscroll);
-      }
-
-      // wire
-      listEl.addEventListener('pointerdown', onPointerDown);
-      listEl.addEventListener('touchstart', onPointerDown, {passive:true});
-
-      // ===== Controls =====
-      acceptOrder.addEventListener('change', ()=>{
-        if(acceptOrder.checked){ numbersAssigned = true; applyNumbers(); acceptBlock.style.display='none'; }
       });
 
-      idk.addEventListener('change', ()=>{
-        if(idk.checked){ numbersAssigned = false; applyNumbers(); listEl.classList.add('disabled'); }
-        else { listEl.classList.remove('disabled'); }
+      list.classList.toggle("disabled", !!unsureFlag);
+    }
+
+    // --- DnD helpers ---
+    function getClientY(e) {
+      if (e.touches && e.touches[0]) return e.touches[0].clientY;
+      if (e.changedTouches && e.changedTouches[0]) return e.changedTouches[0].clientY;
+      return e.clientY;
+    }
+
+    function startDrag(target, clientY) {
+      const startIndex = +target.dataset.index;
+      const rect = target.getBoundingClientRect();
+
+      // Создаём клон, который следует за курсором
+      const clone = target.cloneNode(true);
+      clone.className = "dragging-clone";
+      document.body.appendChild(clone);
+
+      // Позиционируем клон
+      const left = list.getBoundingClientRect().left;
+      clone.style.left = left + "px";
+      clone.style.top = (clientY - (clientY - rect.top)) + "px"; // инициализация
+      const offsetY = clientY - rect.top;
+      clone.style.top = (clientY - offsetY) + "px";
+
+      // Обозначаем «дыру» на месте оригинала
+      target.classList.add("ghost");
+
+      drag = {
+        startIndex,
+        holeIndex: startIndex,
+        clone,
+        offsetY,
+        height: rect.height
+      };
+
+      // После первого действия — скрываем «Принять» и показываем «Начать заново»
+      if (!hasInteracted) {
+        hasInteracted = true;
+        acceptWrap.classList.add("hidden");
+        restartBtn.classList.remove("hidden");
+        renderListNumbersOnly(); // обновить кружки на цифры
+      }
+
+      document.addEventListener("mousemove", onPointerMove);
+      document.addEventListener("mouseup", onPointerUp);
+      document.addEventListener("touchmove", onPointerMove, { passive: false });
+      document.addEventListener("touchend", onPointerUp);
+      document.addEventListener("touchcancel", onPointerUp);
+    }
+
+    function renderListNumbersOnly() {
+      // меняем «—» на числа без полного перерендеринга
+      const showNumbers = hasAccepted || hasInteracted;
+      [...list.children].forEach((li, i) => {
+        const el = li.querySelector(".index");
+        if (el) el.textContent = showNumbers ? (i + 1) : "—";
+      });
+    }
+
+    function onPointerDown(e) {
+      if (unsureFlag) return;
+      e.preventDefault();
+      const li = e.currentTarget;
+      startDrag(li, getClientY(e));
+    }
+
+    function onPointerMove(e) {
+      if (!drag) return;
+      e.preventDefault();
+
+      const y = getClientY(e);
+
+      // Двигаем клон
+      drag.clone.style.top = (y - drag.offsetY) + "px";
+
+      // Автоскролл при подведении к краям видимой области списка
+      const areaRect = scrollArea.getBoundingClientRect();
+      const edge = 28;
+      const scrollStep = 14;
+      if (y < areaRect.top + edge) {
+        scrollArea.scrollTop -= scrollStep;
+      } else if (y > areaRect.bottom - edge) {
+        scrollArea.scrollTop += scrollStep;
+      }
+
+      // Пересчитываем позицию «дыры»
+      const newHole = computeHoleIndex(y);
+      if (newHole !== drag.holeIndex) {
+        drag.holeIndex = newHole;
+        applyShifts();
+      }
+    }
+
+    function computeHoleIndex(clientY) {
+      const children = [...list.children];
+      const start = drag.startIndex;
+
+      // Массив mid-позиций БЕЗ перетаскиваемого элемента
+      const mids = [];
+      for (let i = 0; i < children.length; i++) {
+        if (i === start) continue;
+        const r = children[i].getBoundingClientRect();
+        mids.push({ i, mid: r.top + r.height / 2 });
+      }
+
+      // Сколько mid ниже текущего Y — туда и двигается «дыра»
+      let count = 0;
+      for (let k = 0; k < mids.length; k++) {
+        if (clientY > mids[k].mid) count++;
+        else break;
+      }
+
+      // Вставочная позиция в диапазоне [0..N-1]
+      const N = children.length;
+      return Math.max(0, Math.min(N - 1, count));
+    }
+
+    function applyShifts() {
+      const children = [...list.children];
+      children.forEach((li) => {
+        li.style.transform = "";
       });
 
-      document.getElementById('submitBtn').addEventListener('click', ()=>{
-        const order = [...listEl.querySelectorAll('.label')].map(n=>n.textContent.trim());
-        alert((numbersAssigned? 'Порядок:' : 'Пока без порядка:') + '
+      const from = drag.startIndex;
+      const to = drag.holeIndex;
+      if (to > from) {
+        // Двигаемся вниз: элементы [from+1 .. to] сдвигаются вверх
+        for (let i = from + 1; i <= to; i++) {
+          children[i].style.transform = `translateY(${-drag.height}px)`;
+        }
+      } else if (to < from) {
+        // Двигаемся вверх: элементы [to .. from-1] сдвигаются вниз
+        for (let i = to; i < from; i++) {
+          children[i].style.transform = `translateY(${drag.height}px)`;
+        }
+      }
+    }
 
-' + order.map((t,i)=>`${i+1}. ${t}`).join('
-'));
-      });
+    function onPointerUp() {
+      if (!drag) return;
 
-      // init visuals
-      applyNumbers();
-    })();
+      // Снимаем сдвиги
+      [...list.children].forEach((li) => (li.style.transform = ""));
+
+      // Обновляем порядок данных
+      const moved = items.splice(drag.startIndex, 1)[0];
+      items.splice(drag.holeIndex, 0, moved);
+
+      // Чистим клон и «дыру»
+      drag.clone.remove();
+      const ghostEl = list.querySelector(`li[data-index="${drag.startIndex}"]`);
+      if (ghostEl) ghostEl.classList.remove("ghost");
+
+      drag = null;
+
+      // Полный ререндер списка для фикса индексов и data-index
+      renderList();
+
+      // Снова показать «Начать заново» (если пропало после render)
+      restartBtn.classList.remove("hidden");
+    }
+
+    // --- Controls ---
+    acceptOrder.addEventListener("change", () => {
+      if (acceptOrder.checked) {
+        hasAccepted = true;
+        hasInteracted = true;
+        acceptWrap.classList.add("hidden");
+        restartBtn.classList.remove("hidden");
+        renderList(); // обновим кружки на числа
+      }
+    });
+
+    unsure.addEventListener("change", () => {
+      unsureFlag = unsure.checked;
+      if (unsureFlag) {
+        // Блокируем сортировку и показываем «—»
+        hasAccepted = false;
+        renderList();
+        // Оставляем «Начать заново» на всякий случай — чтобы можно было вернуться
+      } else {
+        renderList();
+      }
+    });
+
+    restartBtn.addEventListener("click", () => {
+      items = [...initialItems];
+      hasInteracted = false;
+      hasAccepted = false;
+      unsureFlag = false;
+      acceptOrder.checked = false;
+      unsure.checked = false;
+      acceptWrap.classList.remove("hidden");
+      restartBtn.classList.add("hidden");
+      renderList();
+      // Прокрутка в начало
+      scrollArea.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    submitBtn.addEventListener("click", () => {
+      if (unsureFlag) {
+        alert("Ответ: затрудняюсь");
+        return;
+      }
+      alert("Текущий порядок:\n" + items.map((t, i) => `${i + 1}. ${t}`).join("\n"));
+    });
+
+    // --- Init ---
+    renderList();
   </script>
 </body>
 </html>
