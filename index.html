@@ -3,81 +3,91 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Олег Репин — Портфолио</title>
-  <meta name="description" content="Портфолио продуктового дизайнера. Исследования, прототипы, продуктовые решения." />
-
-  <!-- Шрифты -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@600&display=swap" rel="stylesheet">
-
-  <!-- Стили -->
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Олег Репин — портфолио</title>
+  <link rel="stylesheet" href="../css/base.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a href="index.html" class="logo" aria-label="На главную">Олег Репин</a>
-      <nav class="nav" aria-label="Главная навигация">
-        <a href="index.html" class="nav-link is-active">Портфолио</a>
-        <a href="case1.html" class="nav-link">Кейс 1</a>
-        <a href="case2.html" class="nav-link">Кейс 2</a>
-      </nav>
-    </div>
-  </header>
 
-  <main>
+  <!-- включаем хедер -->
+  <div data-include="../partials/header.html"></div>
+
+  <main class="container">
+
+    <!-- ХИРО: аватар + заголовок + абзацы строго по макету -->
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-text">
-          <h1 class="hero-title">Привет! Я продуктовый дизайнер с 8-летним опытом в B2B и B2C продуктах.</h1>
-          <p class="hero-lead">
-            Последние 6 лет развиваю платформу UX Feedback как единственный дизайнер: провожу исследования
-            (интервью, UX-тесты, бенчмаркинг), проектирую и запускаю решения, сопровождаю их от передачи в
-            разработку до постанализа. Помог бизнесу вырасти до 90+ клиентов, выстроил работу между дизайном и
-            маркетингом, запустил процесс работы над дизайн-системой (токены, темы, компоненты, онбординг).
-          </p>
-          <div class="cta-row">
-            <a class="btn" href="case1.html">Смотреть кейс 1</a>
-            <a class="btn btn-secondary" href="case2.html">Смотреть кейс 2</a>
-          </div>
-        </div>
-
-        <div class="hero-media">
-          <!-- Положи сюда /images/avatar.jpg или замени src. Можно удалить блок, если не нужен -->
-          <img src="images/avatar.jpg" alt="Фото Олега Репина" class="avatar" />
-        </div>
+      <img class="hero__avatar" src="../assets/avatar.png" alt="Олег Репин" />
+      <div>
+        <h1>Привет! Я&nbsp;продуктовый дизайнер с&nbsp;9&#8209;летним опытом&nbsp;в&nbsp;B2B и&nbsp;B2C&#8209;продуктах.</h1>
+        <p>Последние&nbsp;6&nbsp;лет развиваю платформу UX&nbsp;Feedback: провожу исследования (интервью,&nbsp;UX‑тесты,&nbsp;бенчмаркинг), проектирую и&nbsp;запускаю решения, сопровождаю их&nbsp;от&nbsp;передачи в&nbsp;разработку до&nbsp;постанализа. Как единственный дизайнер развивал Web и&nbsp;запустил два новых продукта&nbsp;— App и&nbsp;Link‑опросы. Это помогло компании вырасти с&nbsp;~10 до&nbsp;100+&nbsp;B2B‑клиентов и&nbsp;увеличить выручку в&nbsp;10&nbsp;раз за&nbsp;5&nbsp;лет.</p>
       </div>
     </section>
 
-    <section class="grid-cases">
-      <div class="container cards">
-        <article class="card">
-          <h2 class="card-title"><a href="case1.html">Кейс 1: UX Feedback Link</a></h2>
-          <p class="card-text">Запуск нового продукта. Результаты, гипотезы, флоу, метрики, уроки.</p>
-          <a class="card-cta" href="case1.html" aria-label="Открыть кейс 1">Открыть</a>
-        </article>
+    <!-- СЕКЦИЯ «Истории…» -->
+    <section class="casecards">
+      <h2 >Истории из&nbsp;работы над&nbsp;продуктом</h2>
+      <a class="casecard" href="./case-ranking.html">
+        <div>
+          <span class="casecard__meta">Август&nbsp;2025</span>
+          <h3 class="casecard__title">Ранжирование в&nbsp;опросах: как я&nbsp;готовил новый тип вопроса к&nbsp;релизу</h3>
+          <p class="casecard__desc">Подготовил задачу от&nbsp;исследований до&nbsp;передачи в&nbsp;разработку, чтобы команда могла уверенно стартовать.</p>
+        </div>
+        <figure class="casecard__media media media--medium">
+          <img src="../assets/cover-ranking.png" alt="Ранжирование в опросах" />
+        </figure>
+      </a>
+  
+      <a class="casecard" href="./case-link.html">
+        <div>
+          <span class="casecard__meta">Февраль&nbsp;2023</span>
+          <h3 class="casecard__title">Как запускал новый продукт UX&nbsp;Feedback&nbsp;Link</h3>
+          <p class="casecard__desc">Спроектировал и&nbsp;помог запустить&nbsp;новый продукт с&nbsp;нуля, который за&nbsp;первый год добавил +10%&nbsp;к&nbsp;выручке и&nbsp;позволил сохранить ключевых клиентов.</p>
+        </div>
+        <figure class="casecard__media media media--medium">
+          <img src="../assets/cover-link.png" alt="UX Feedback Link" />
+        </figure>
+      </a>
+    </section>
 
-        <article class="card">
-          <h2 class="card-title"><a href="case2.html">Кейс 2: Вопрос «Ранжирование»</a></h2>
-          <p class="card-text">Исследования, паттерны взаимодействия, аналитика, внедрение.</p>
-          <a class="card-cta" href="case2.html" aria-label="Открыть кейс 2">Открыть</a>
-        </article>
+    <!-- СЕКЦИЯ «Другие задачи…» -->
+    <section class="other">
+      <div>
+        <h2>Другие задачи и&nbsp;решения</h2>
+        <p>Несколько решений, которые хочется подсветить, но&nbsp;не&nbsp;разворачивать в&nbsp;отдельные кейсы.</p>
+      </div>
+      
+      <div>
+        <h3>Ускорил работу с&nbsp;маркетингом</h3>
+        <p>Сделал задачи прозрачными и&nbsp;предсказуемыми: вместо месяцев они начали закрываться за&nbsp;дни. Появилась понятная коммуникация&nbsp;— кто за&nbsp;что отвечает, как оформлять задачи, когда ревьювить и&nbsp;где смотреть статусы. Менеджерил процесс: ставил задачи иллюстратору и&nbsp;маркетинг&#8209;дизайнеру, ревьювил результаты и&nbsp;помогал держать общий темп.</p>
+      </div>
+      
+      <div>
+        <h3>Работал над&nbsp;новым визуальным направлением</h3>
+        <p>Внешний дизайнер задал базу, а&nbsp;я адаптировал её под специфику&nbsp;продукта. Вместе сформировали стратегию: быстрый перекрас под концепт, развитие дизайн&#8209;системы и&nbsp;постепенный редизайн разделов через гипотезы, исследования и&nbsp;тесты.</p>
+      </div>
+      
+      <div>
+        <h3>Освежил визуал без&nbsp;редизайна</h3>
+        <p>Переработал типографику, цвета и&nbsp;скругления&nbsp;— интерфейс стал современнее без&nbsp;тяжёлых и&nbsp;долгих изменений.</p>
+      </div>
+      
+      <div>
+        <h3>Инициировал процесс работы с&nbsp;дизайн&#8209;системой</h3>
+        <p>С&nbsp;нуля собрал токены, темы и&nbsp;базовые компоненты. Вместе с&nbsp;разработкой выстроили понятный цикл: собрать компонент&nbsp;→ задокументировать в&nbsp;Storybook&nbsp;→ протестировать&nbsp;→ покрыть платформу. Это дало команде предсказуемость и&nbsp;помогло начать снижать дизайн&#8209;долг.</p>
       </div>
     </section>
+
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p class="footnote">© <span id="y"></span> Олег Репин. Все права защищены.</p>
-      <p class="footnote">
-        Контакты: <a href="mailto:hi@orepin.site">hi@orepin.site</a>
-      </p>
-    </div>
-  </footer>
+  <!-- футер -->
+  <div data-include="../partials/footer.html"></div>
 
-  <script>
-    // текущий год
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+  <!-- Лайтбокс -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox__close" aria-label="Закрыть">×</button>
+    <img id="lightboxImg" alt="" />
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script src="https://unpkg.com/instant.page@5.2.0/instantpage.min.js" type="module" defer></script>
 </body>
 </html>
