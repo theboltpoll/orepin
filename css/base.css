@@ -555,6 +555,10 @@ h3 { font-size: var(--fs-h3); }
   flex: 1 1 auto; /* описание заполняет оставшееся пространство */
   min-width: 0;   /* даём возможность тексту сжиматься без переполнения */
 }
+.case-steps ul {
+  margin:0;
+}
+
 .case-steps-links {
   display: flex;
   flex-direction: row;
