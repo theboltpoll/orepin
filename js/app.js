@@ -5,8 +5,11 @@ const once = (fn) => {
   let ran = false;
   return (...args) => {
     if (ran) return;
-    ran = true;
-    fn(...args);
+    const result = fn(...args);
+    if (result !== false) {
+      ran = true;
+    }
+    return result;
   };
 };
 
@@ -42,7 +45,7 @@ const once = (fn) => {
 // --- Lightbox (idempotent init) ---
 const initLightbox = once(function lightbox() {
   const lb = document.getElementById('lightbox');
-  if (!lb) return;
+  if (!lb) return false;
   const img = lb.querySelector('#lightboxImg');
   const closeBtn = lb.querySelector('.lightbox__close');
 
@@ -62,8 +65,10 @@ const initLightbox = once(function lightbox() {
 
   document.addEventListener('click', (e) => {
     const target = e.target;
-    if (target.matches('.media img')) {
+    // Open lightbox only for explicitly marked images
+    if (target && target.matches('img.zoomable')) {
       e.preventDefault();
+      e.stopPropagation();
       open(target.src, target.alt || '');
     }
   });
@@ -77,7 +82,7 @@ const initLightbox = once(function lightbox() {
 const initMobileMenu = once(function mobileMenu() {
   const burger = document.querySelector('.burger');
   const menu = document.querySelector('.toplinks');
-  if (!burger || !menu) return;
+  if (!burger || !menu) return false;
 
   const openMenu = () => {
     menu.classList.add('is-open');
@@ -106,15 +111,50 @@ const initMobileMenu = once(function mobileMenu() {
   });
 });
 
+// --- Home link (idempotent init) ---
+const initHomeLink = once(function homeLink() {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    // Treat brand/logo/home-marked links as "go home"
+    const isHome =
+      link.matches('a.brand') ||
+      link.matches('.brand a') ||
+      link.hasAttribute('data-home') ||
+      link.matches('a[href="/"], a[href="./"], a[href="./index.html"], a[href="/index.html"]');
+
+    if (!isHome) return;
+
+    e.preventDefault();
+
+    // Compute site root for both local dev and production (GitHub Pages + custom domain)
+    const { hostname, pathname } = window.location;
+
+    // If running locally (localhost/127.*) the first path segment is the project folder (e.g. /githubpages/)
+    if (hostname === 'localhost' || hostname.startsWith('127.')) {
+      const segments = pathname.split('/').filter(Boolean); // ["githubpages", "html", ...]
+      const projectRoot = segments.length ? `/${segments[0]}/` : '/';
+      window.location.assign(`${projectRoot}index.html`);
+      return;
+    }
+
+    // In production (custom domain or user/org pages) home is the root
+    window.location.assign('/');
+  });
+});
+
 // --- Boot sequence: init immediately (for inline markup) and after partials ---
 document.addEventListener('DOMContentLoaded', () => {
   initLightbox();
   initMobileMenu();
+  initHomeLink();
 });
 
 document.addEventListener('partials:ready', () => {
   initLightbox();
   initMobileMenu();
+  initHomeLink();
 });
 
 // Fallback: observe DOM for late-inserted header/footer once, then init
