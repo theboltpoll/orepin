@@ -163,7 +163,7 @@ a {
     align-items: center;
     justify-content: space-between; /* имя слева, меню справа */
     gap: var(--s-4);
-    padding: 24px 40px 40px 40px; /* как в макете */
+    padding: 32px 20px 16px 20px; /* как в макете */
   }
   
   .topbar__brand {
@@ -264,11 +264,28 @@ h3 { font-size: var(--fs-h3); }
   
   /* Бургер */
   .burger{
-    display:none;width:40px;height:40px;border:0;background:transparent;
-    padding:8px;border-radius:10px
+    display:none;
+    width:40px;height:40px;border:0;background:transparent;
+    padding:8px;border-radius:10px;
+    position: relative;
   }
   .burger:focus-visible{outline:2px solid var(--brand)}
-  .burger span{display:block;height:2px;background:var(--text);margin:5px 0}
+  .burger span{
+    display:block;
+    height:2px;background:var(--text);margin:5px 0;
+    transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
+    transform-origin: center;
+  }
+  /* превращаем «бургер» в крест при открытом меню */
+  .burger[aria-expanded="true"] span:nth-child(1){
+    transform: translateY(7px) rotate(45deg);
+  }
+  .burger[aria-expanded="true"] span:nth-child(2){
+    opacity: 0;
+  }
+  .burger[aria-expanded="true"] span:nth-child(3){
+    transform: translateY(-7px) rotate(-45deg);
+  }
   
   /*ЕРО-БЛОК*/
   .hero{
@@ -436,14 +453,85 @@ h3 { font-size: var(--fs-h3); }
   
   /*МОБИЛЬНОЕ МЕНЮ (верхние ссылки)*/
   @media (max-width:767px){
-    .burger{display:inline-block;justify-self:end}
-    .toplinks{
-      position:fixed;inset:var(--header-h) 0 auto 0;
-      display:grid;gap:12px;background:var(--panel);padding:16px;
-      transform:translateY(-8px);opacity:0;pointer-events:none;
-      transition:opacity .2s ease, transform .2s ease
+    .container {
+      margin-top: 32px;
     }
-    .toplinks.is-open{opacity:1;pointer-events:auto;transform:translateY(0)}
+    /* кнопка-бургер видна и поверх меню */
+    .burger{
+      display:inline-block;
+      justify-self:end;
+      position: relative;
+      z-index: 1101;
+    }
+    /* фиксируем хедер внизу экрана, он ДОЛЖЕН быть выше меню */
+    .topbar{
+      inset: auto 0 0 0;          /* bottom:0; left:0; right:0 */
+      z-index: 1100;              /* выше слоя меню */
+      background: linear-gradient(rgba(23, 22, 24, 0), rgba(23, 22, 24, 1) 65%);
+    }
+    .topbar__row{
+      padding: 32px 20px 16px 20px;
+    }
+
+    /* слой меню ниже хедера + контент выравнен СНИЗУ */
+    .toplinks{
+      position: fixed;
+      inset: 0;                   /* на весь экран */
+      z-index: 1000;              /* НИЖЕ .topbar (1100) → градиент/крестик сверху */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;  /* пункты прижаты к низу */
+      gap: 12px;
+      padding: 24px 24px 96px;    /* низ = высота хедера + запас */
+      background: rgba(28,24,33,.96);
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .toplinks.is-open{
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+    }
+
+    /*точки между пунктами меню*/
+    .topLinks span[aria-hidden="true"] {
+      display: none !important;
+      pointer-events: none;
+    }
+
+    /* «пилюльные» пункты меню */
+    .toplinks a{
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 16px 24px;
+      font-size: var(--fs-body-l);
+      line-height: 1.4;
+      color: var(--text);
+      border: 2px solid var(--brand);
+      border-radius: 999px;
+      background: transparent;
+    }
+
+    [aria-hidden] {
+      display:none;
+    }
+
+    .hero h1{
+      padding-right: 0;
+    }
+
+    .casecard div {
+      padding-right: 0;
+    }
+
+    /* отступ под фикс‑хедер, чтобы контент не перекрывался */
+    body{
+      padding-bottom: 72px;
+    }
   }
 
   .media {
