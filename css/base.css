@@ -37,9 +37,9 @@
   --fs-h2: clamp(28px, 4vw, 40px);
   --fs-h3: clamp(24px, 4vw, 32px);
 
-  --fs-body-l: clamp(18px, 2.8vw, 24px);
-  --fs-body-m: clamp(16px, 2vw, 21px);
-  --fs-body-s: clamp(14px, 1.6vw, 19px);
+  --fs-body-l: clamp(20px, 2.8vw, 24px);
+  --fs-body-m: clamp(18px, 2vw, 21px);
+  --fs-body-s: clamp(16px, 1.6vw, 19px);
   --fs-body-xs: clamp(14px, 1.2vw, 14px);
 
   /* spacing scale (tailwind-like) */
@@ -398,7 +398,7 @@ h3 { font-size: var(--fs-h3); }
   }
   .casecard__desc{
     color: var(--muted);
-    font-size: var(--fs-body-s);
+    font-size: var(--fs-body-m);
     line-height: var(--lh-body);
   }
   .casecard__media{ 
@@ -659,12 +659,15 @@ h3 { font-size: var(--fs-h3); }
     }
     /* фиксируем хедер внизу экрана, он ДОЛЖЕН быть выше меню */
     .topbar{
-      inset: auto 0 0 0;          /* bottom:0; left:0; right:0 */
+      inset: 0 0 auto 0;               /* top:0; left:0; right:0 */
       z-index: 1100;              /* выше слоя меню */
-      background: linear-gradient(rgba(23, 22, 24, 0), rgba(23, 22, 24, 1) 65%);
+      background: linear-gradient(180deg,
+    rgba(38, 33, 43, 1) 65%,
+    rgba(38, 33, 43, 0) 100%
+    );
     }
     .topbar__row{
-      padding: 32px 20px 16px 20px;
+      padding: 12px 20px 20px 20px;
     }
 
     /* слой меню ниже хедера + контент выравнен СНИЗУ */
@@ -674,9 +677,9 @@ h3 { font-size: var(--fs-h3); }
       z-index: 1000;              /* НИЖЕ .topbar (1100) → градиент/крестик сверху */
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;  /* пункты прижаты к низу */
+      justify-content: center;  /* пункты по центру*/
       gap: 12px;
-      padding: 24px 24px 96px;    /* низ = высота хедера + запас */
+      padding: 96px 24px 24px;    /* верх = высота хедера + запас */
       background: rgba(28,24,33,.96);
       backdrop-filter: blur(2px);
       opacity: 0;
@@ -724,7 +727,7 @@ h3 { font-size: var(--fs-h3); }
 
     /* отступ под фикс‑хедер, чтобы контент не перекрывался */
     body{
-      padding-bottom: 72px;
+      padding-top: 56px;
     }
     .case-steps .step h3 {
       flex: 0 0 0 /* фикс. колонка заголовка как в макете */
