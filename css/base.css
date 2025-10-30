@@ -502,11 +502,14 @@ h3 { font-size: var(--fs-h3); }
 .case .text-block li {
   font-size: var(--fs-body-m);
 }
-.case .text-block li span {
+.case .text-block  span {
   color: var(--text);
 }
 .case .text-block p + p, .solution-block p + p {
   margin-top: 8px;
+}
+.case .text-block p + ul {
+  margin-top: 0;
 }
 .case .text-block h3 {
   font-size: var(--fs-body-m);
