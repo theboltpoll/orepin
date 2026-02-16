@@ -66,6 +66,9 @@ html, body {
 
   /* hobby height */
   --hobby-h: 492px;
+
+  --nav-pad-x: 24px;   /* базовый горизонтальный отступ */
+  --nav-icon-space: 20px; /* сколько добавляем под иконку */
 }
 
 @supports not (font-size: 1cqw){

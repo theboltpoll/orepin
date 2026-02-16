@@ -716,9 +716,9 @@ svg.ba__handle-icon{
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px; /* было 8 — увеличили */
 
-  padding: 8px 18px;
+  padding: 8px 24px;
   border-radius: 999px;
 
   background: rgba(242,242,240,0.01);
@@ -737,11 +737,13 @@ svg.ba__handle-icon{
     transform 200ms ease-out;
 }
 
+
+/* Иконка справа */
 .nav-link__icon{
   position: absolute;
-  right: 14px;
+  right: 24px; /* было 14 */
   top: 50%;
-  transform: translateY(-50%) translateX(-6px);
+  transform: translateY(-50%) translateX(-8px);
   opacity: 0;
   pointer-events: none;
 
@@ -750,12 +752,13 @@ svg.ba__handle-icon{
     transform 200ms ease-out;
 }
 
+/* При ховере расширяем ровно под иконку */
 .nav-link:hover,
 .nav-link:focus-visible{
   background: var(--text);
   color: var(--negative-text);
   border-color: rgba(0,0,0,0.92);
-  padding-right: 44px;
+  padding-right: 56px; /* 24 + ширина иконки + воздух */
 }
 
 .nav-link:hover .nav-link__icon,
@@ -768,20 +771,22 @@ svg.ba__handle-icon{
   transform: scale(0.98);
 }
 
+/* === Левая ссылка (brand) === */
+
 .nav-link--left{
-  padding-left: 14px;
+  padding-left: 24px;
 }
 
 .nav-link--left .nav-link__icon{
-  left: 14px;
+  left: 24px;
   right: auto;
-  transform: translateY(-50%) translateX(6px); /* выезжает слева */
+  transform: translateY(-50%) translateX(8px);
 }
 
 .nav-link--left:hover,
 .nav-link--left:focus-visible{
-  padding-left: 44px;  /* расширяем влево */
-  padding-right: 14px;
+  padding-left: 56px;
+  padding-right: 24px;
 }
 
 .nav-link--left:hover .nav-link__icon,
@@ -789,6 +794,8 @@ svg.ba__handle-icon{
   opacity: 1;
   transform: translateY(-50%) translateX(0);
 }
+
+/* ===== Header pills end ===== */
 
 .case-hero, 
 .case-text-block, 
