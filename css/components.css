@@ -521,3 +521,12 @@
   .case-card.is-bounce {
     animation: card-bounce 500ms ease-out;
   }
+
+
+  @media (max-width: 1200px) {
+    .hero,
+    .hobby-section {
+      padding-right: 40px;
+      padding-left: 40px;
+    }
+  }
