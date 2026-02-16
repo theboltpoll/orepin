@@ -1,792 +1,228 @@
-/*БАЗОВЫЕ ПЕРЕМЕННЫЕ/ТОКЕНЫ*/
-   :root{
-    --bg:#26212B;
-    --panel:#2E2735;
-    --panel-hover:#332B3B;
-    --text:#ffffff;
-    --muted:#9884AD;
-    --link:#a08ab7;
-    --hover:#b9a7cd;
-    --brand:#AB78E4;
+/* =========================
+   Base / Reset / Tokens
+   ========================= */
 
-    --header-gradient: linear-gradient(
-    180deg,
-    rgba(38, 33, 43, 1) 55%,
-    rgba(38, 33, 43, 0.2) 75%,
-    rgba(38, 33, 43, 0) 100%
-  );
-  
-    --radius:32px;
-    --shadow:0 6px 24px rgba(0,0,0,.35);
-  
-    --maxw:960px;
-    --pad:16px;
+/* 1) Predictable box model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-  --ff-headings: "Manrope", Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --ff-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+/* 2) Remove default spacing */
+html, body {
+  margin: 0;
+  padding: 0;
+}
 
-  --fw-bold: 700;
-  --fw-semi: 600;
-  --fw-regular: 400;
+/* 3) Base tokens (потом заменишь на свои) */
+:root {
+  /* Layout */
+  --container: 1200px;
+  --gutter: 24px;
+  --radius: 20px;
 
-  /* typography tokens */
-  --lh-heading: 1.2;
-  --lh-body: 1.4;
-
-  --fs-h1: clamp(32px, 4vw, 44px);
-  --fs-h2: clamp(28px, 4vw, 40px);
-  --fs-h3: clamp(24px, 4vw, 32px);
-
-  --fs-body-l: clamp(20px, 2.8vw, 24px);
-  --fs-body-m: clamp(18px, 2vw, 21px);
-  --fs-body-s: clamp(16px, 1.6vw, 19px);
-  --fs-body-xs: clamp(14px, 1.2vw, 14px);
-
-  /* spacing scale (tailwind-like) */
-  --s-0: 0;
-  --s-4: 4px;
+  /* Spacing scale */
   --s-8: 8px;
   --s-12: 12px;
   --s-16: 16px;
   --s-24: 24px;
   --s-32: 32px;
-  --s-140: 40px;
-  --s-48: 48px;
+  --s-40: 40px;
   --s-56: 56px;
   --s-80: 80px;
-  --s-112: 112px;
-  }
+  --s-120: 120px;
+
+  /* Type */
+  --font-h: "Libre Franklin", sans-serif;
+  --font-p: 'Lato', sans-serif;
+
+
+/* Fluid Type Scale (relative to container width) */
+  --fs-h1: clamp(40px, 6.333cqw, 76px); /* 76/12 = 6.333 */
+  --fs-h2: clamp(32px, 5.5cqw, 66px);   /* 66/12 = 5.5 */
+  --fs-h3: clamp(24px, 3.333cqw, 40px); /* 40/12 = 3.333 */
+  --fs-h4: clamp(20px, 2.667cqw, 32px); /* 32/12 = 2.667 */
+  --fs-h5: clamp(18px, 2.333cqw, 28px); /* 28/12 = 2.333 */
   
-  /*СБРОС / ТИПОГРАФИКА*/
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  /* базовый фон – на html */
-html { 
+  --fs-p-l:  clamp(20px, 2.667cqw, 32px); /* 32/12 = 2.667 */
+  --fs-p-m:  clamp(18px, 2.333cqw, 28px); /* 28/12 = 2.333 */
+  --fs-p-s:  clamp(16px, 2cqw,     24px); /* 24/12 = 2 */
+  --fs-p-xs: clamp(14px, 1.667cqw, 20px); /* 20/12 = 1.667 */
+
+  --lh: 1.5;
+
+  /* Colors (временные, чтобы сразу было читабельно) */
+  --bg: #F2F2F0;
+  --bg-2: #ffffff;
+  --text: #0A0A0A;
+  --muted: rgba(10, 10 ,10, 0.6);
+  --soft: rgba(10, 10 ,10, 0.05);
+  --accent: #8143F9;
+  --negative-bg: #0b0c0f;
+  --negative-text: #ffffff;
+  --negative-text-muted: rgba(255, 255 ,255, 0.6);
+  --negative-text-soft: rgba(255, 255 ,255, 0.3);
+
+  /* hobby height */
+  --hobby-h: 492px;
+}
+
+@supports not (font-size: 1cqw){
+  :root{
+    /* твой текущий вариант или фикс */
+    --fs-h1: 76px;
+    --fs-h2: 66px;
+    --fs-h3: 40px;
+    --fs-h4: 32px;
+    --fs-h5: 28px;
+
+    --fs-p-l: 32px;
+    --fs-p-m: 28px;
+    --fs-p-s: 24px;
+    --fs-p-xs: 20px;
+  }
+
+  @media (max-width: 1200px){
+    :root{
+      /* можно вернуть твои vw-clamp, если хочешь */
+      --fs-h1: clamp(40px, 4vw + 16px, 76px);
+      --fs-h2: clamp(32px, 3vw + 12px, 66px);
+      --fs-h3: clamp(24px, 2vw + 8px, 40px);
+      --fs-h4: clamp(20px, 1.5vw + 6px, 32px);
+      --fs-h5: clamp(18px, 1vw + 6px, 28px);
+
+      --fs-p-l: clamp(20px, 1vw + 10px, 32px);
+      --fs-p-m: clamp(18px, 0.8vw + 10px, 28px);
+      --fs-p-s: clamp(16px, 0.6vw + 8px, 24px);
+      --fs-p-xs: clamp(14px, 0.5vw + 6px, 20px);
+    }
+  }
+}
+
+.theme-default,
+.theme-link {
+  --accent: #8143F9;
+}
+
+.theme-ranking {
+  --accent: #9458DC;
+}
+
+.theme-other{
+  --accent: #2D43E0;
+}
+
+/* 4) Base page */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-p);
+  
+  /* p-m как дефолт */
+  font-size: var(--fs-p-m);
+  font-weight: 400;
+  line-height: 1.38;
+
   background: var(--bg);
+  color: var(--text);
 }
-body{
-  position: relative;
-  min-height: 100%;
-  margin:0;
-  color:var(--text);
-  font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-  z-index:0; /* чтобы ::after мог уйти под контент */
-}
-ul, ol {
-  padding-left: 24px;
-}
-/* градиент именно внизу страницы (а не вьюпорта) */
-body::after{
-  content: "";
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  height: 470px;
-  background: linear-gradient(to top, #1a1a1a 0, rgba(34,32,37,0) 100%);
-  z-index: -1;           /* под контентом body, но над html */
-  pointer-events: none;  /* чтобы не перекрывать клики по ссылкам у футера */
-}
+
+/* 5) Links */
 a {
-  color:var(--link);
-  text-decoration:none;
-  transition: color .2s;
-}
-  a{
-    color:var(--link);
-    text-decoration:none;
-    transition: color .2s;
-  }
-  a:hover {
-    color:var(--hover);
-  }
-  
-  /*кастомные ссылки*/
-  .external-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-    color: inherit;
-    margin-top: 8px;
-  }
-   /* Иконка после текста */
-   .external-link::after {
-    content: "";
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    background: url('../assets/arrow.svg') no-repeat center / contain;
-  }
-/* Иконка перед текстом */
-  .figma-link::before {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background: url('../assets/figma.svg') no-repeat center / contain;
-  }
-/* Иконка перед текстом */
-  .miro-link::before {
-    content: "";
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background: url('../assets/miro.svg') no-repeat center / contain;
-  }
-
-  img{
-    width: 100%;
-    max-width:100%;
-    display:block;
-    margin: 0 auto;
-  }
-  
-  /* Контейнер */
-  .container{
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    width: min(100% - 2rem, var(--maxw));
-    margin-inline: auto;
-    margin-top: 120px;
-  }
-  main{ padding-block: var(--s-8) var(--s-12); }
-  
-  /*ЕРХНЯЯ ПОЛОСА (как в макете)*/
-  .topbar{
-    position: fixed;
-    inset: 0 0 auto 0;   /* top:0; left:0; right:0; */
-    z-index: 1000;
-    background: var(--header-gradient);
-  }
-  .topbar__row {
-    margin-inline: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* имя слева, меню справа */
-    gap: var(--s-4);
-    padding: 24px 40px 40px 40px; /* как в макете */
-  }
-  
-  .topbar__brand {
-    display: inline-flex;
-    align-items: center;
-    justify-self: start;
-    font-weight: var(--fw-semi);
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body);
-    color: var(--text);
-  }
-  
-  .toplinks {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--muted);
-    font-weight: var(--fw-regular);
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body);
-  }
-
-  /* Заголовки */
-  h1, h2, h3 {
-  font-family: var(--ff-headings);
-  font-weight: var(--fw-semi);
-  letter-spacing: -0.01em;
-  line-height: var(--lh-heading);
-  margin: 0; /* отступы управляются контейнерами */
-  color: var(--text);
+  color: inherit;
+  text-decoration: none;
 }
 
-/* Текст */
-body, p, li {
-  font-family: var(--ff-body);
-  font-size: var(--fs-body-s);
-  letter-spacing: -0.01em;
-  margin: 0; /* управляем отступами только контейнерами (flex gaps / paddings) */
-  color: var(--muted);
-}
-li strong, p strong, p span {
-  color: var(--text);
+a:not(.case-card, .nav-link) {
+  transition: color 200ms ease-out;
 }
 
-/* ---------- Гибкие размеры ---------- */
-
-/* Заголовки (используют токены) */
-h1 { font-size: var(--fs-h1); color: var(--text);}
-h2 { font-size: var(--fs-h2); }
-h3 { font-size: var(--fs-h3); }
-
-/* Body — Regular (токены) */
-.body-l, p.l {
-  font-weight: var(--fw-regular);
-  font-size: var(--fs-body-l);
-  line-height: var(--lh-body);
+a:not(.case-card, .nav-link):hover {
+  color: var(--accent);
 }
 
-.body-m, p, p.m {
-  font-weight: var(--fw-regular);
-  font-size: var(--fs-body-m);
-  line-height: var(--lh-body);
+/* 6) Media defaults */
+img, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
-.body-s, p.s {
-  font-weight: var(--fw-regular);
-  font-size: var(--fs-body-s);
-  line-height: var(--lh-body);
-}
-
-.body-xs, p.xs {
-  font-weight: var(--fw-regular);
-  font-size: var(--fs-body-xs);
-  line-height: var(--lh-body);
-}
-
-/* Body — Semi-bold (токены) */
-.body-l--semi, .body-l.semi, p.l-semi {
-  font-weight: var(--fw-semi);
-  font-size: var(--fs-body-l);
-  line-height: var(--lh-body);
-}
-
-.body-m--semi, .body-m.semi, p.m-semi {
-  font-weight: var(--fw-semi);
-  font-size: var(--fs-body-m);
-  line-height: var(--lh-body);
-}
-
-/* ---------- Адаптивные утилиты ---------- */
-.only-mobile { display: block; }
-.only-desktop { display: none; }
-
-@media (min-width: 800px) {
-  .only-mobile { display: none !important; }
-  .only-desktop { display: block !important; }
-}
-  
-  /* Бургер */
-  .burger{
-    display:none;
-    width:40px;
-    height:40px;
-    border:0;
-    background:transparent;
-    padding:8px;
-    border-radius:10px;
-    position: relative;
-  }
-  .burger:focus-visible{outline:2px solid var(--brand)}
-  .burger span{
-    display:block;
-    height:2px;background:var(--text);margin:5px 0;
-    transition: transform .2s ease, opacity .2s ease, background-color .2s ease;
-    transform-origin: center;
-  }
-  /* превращаем «бургер» в крест при открытом меню */
-  .burger[aria-expanded="true"] span:nth-child(1){
-    transform: translateY(7px) rotate(45deg);
-  }
-  .burger[aria-expanded="true"] span:nth-child(2){
-    opacity: 0;
-  }
-  .burger[aria-expanded="true"] span:nth-child(3){
-    transform: translateY(-7px) rotate(-45deg);
-  }
-  
-  /*ЕРО-БЛОК*/
-  .hero{
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    padding: 0 0 var(--s-32) 0; 
-  }
-  .hero__avatar{
-    width:152px;
-    height:152px;
-    border-radius:32px;
-    object-fit:cover;
-    margin: 0;
-  }
-  .hero div {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .hero h1{
-    font-size: var(--fs-h2);
-    padding-right: 120px;
-  }
-  .hero p{
-    color:var(--muted); 
-    margin: 0 0 var(--s-8) 0; 
-  }
-  .location {
-    display: inline-flex;
-    flex-direction: row;
-    gap:4px;
-  }
-  .location:before {
-    content: "";
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background: url('../assets/location_on.svg') no-repeat center / contain;
-  }
-  
-  /* Заголовки секций */
-  .secttitle {
-    margin: var(--s-8) 0 var(--s-2);
-    font-size: clamp(24px, 4vw, 32px);
-  }
-  
-  /* стандартные вертикальные отступы секций по макету */
-  .section, .section--tight { padding-block: var(--s-8); }
-  .section--loose { padding-block: var(--s-14); }
-  .section--hero { padding-block: var(--s-28) var(--s-8); }
-  
-  /*КАРТОЧКИ / СЕТКА*/
-  /* Вертикальный список карточек кейсов (вся карточка = ссылка) */
-  .casecards{
-    display:flex;
-    flex-direction:column;
-    gap: var(--s-32);
-    margin: 0;
-  }
-  .casecards h2 {
-    font-size: var(--fs-h3);
-  }
-  .casecard{
-    display:flex;
-    flex-direction:column;
-    gap: var(--s-32);
-    padding: 32px 32px 0px 32px ;
-    border-radius: 32px;
-    background: var(--panel);
-    text-decoration:none;
-    color: inherit;
-    transition: background .2s ease, outline-color .2s ease, transform .2s ease;
-  }
-  .casecard:hover{
-    background: var(--panel-hover);
-  }
-  .casecard:active{
-    transform: translateY(1px);
-  }
-  .casecard:focus-visible{
-    outline: 2px solid var(--brand);
-    outline-offset: 2px;
-  }
-  .casecard div {
-    display:flex;
-    flex-direction:column;
-    gap: var(--s-8);
-    padding-right: 90px;
-  }
-  .casecard__meta{
-    color: var(--brand);
-    font-weight: var(--fw-semi);
-    font-size: var(--fs-body-s);
-    line-height: var(--lh-body);
-  }
-  .casecard__title{
-    font-family: var(--ff-headings);
-    font-weight: var(--fw-semi);
-    font-size: var(--fs-body-l);
-    line-height: var(--lh-body);
-    color: var(--text);
-  }
-  .casecard__desc{
-    color: var(--muted);
-    font-size: var(--fs-body-m);
-    line-height: var(--lh-body);
-  }
-  .casecard__media{ 
-    margin: 0 auto;
-  }
-
-  
-  /*БЛОК «ДРУГИЕ ЗАДАЧИ»*/
-  .other {
-    display:flex;
-    flex-direction:column;
-    gap: var(--s-32);
-    margin: 32px 0;
-  }
-  .other div {
-    display:flex;
-    flex-direction:column;
-    gap: var(--s-8);
-  }
-  .other h2 {
-    font-size: var(--fs-h3);
-  }
-  .other h3 {
-    font-size: var(--fs-body-l);
-  }
-  .other div:first-child p {
-    font-size: var(--fs-body-m);
-  }
-  .other div p {
-    font-size: var(--fs-body-s);
-  }
-  
-  /*ЛАЙТБОКС (просмотр картинок)*/
-  .lightbox{
-    position:fixed;inset:0;display:none;place-items:center;
-    background:rgba(0,0,0,.8);z-index:3000
-  }
-  .lightbox.is-open{display:grid}
-  .lightbox img{
-    max-width:min(100vw - 32px, 1200px);
-    max-height:calc(100dvh - 32px);
-    border-radius:10px;box-shadow:var(--shadow)
-  }
-  .lightbox__close{
-    position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:10px;
-    border:0;background:rgba(255,255,255,.12);color:#fff;font-size:24px;line-height:1;cursor:pointer
-  }
-
-  .media {
-    margin: 0;
-  }
-
-    /*модификатор обложки*/
-    .media--cover {
-      background: #2E2735;
-      background: linear-gradient(180deg,rgba(46, 39, 53, 1) 0%, rgba(65, 52, 79, 1) 100%);
-      border-radius: var(--radius);
-      padding: 32px 32px 0 32px;
-    }
-    
-  
-  /* модификаторы под разные размеры */
-  .media--wide img { max-width: 800px; }
-  .media--medium img { max-width: 540px; }
-  .media--full img { max-width: 100%; } /* явно если нужно */
-
-  /* модификаторы под разные скругления */
-  .media--radius img {border-radius: var(--radius)}
-
-  .media figcaption{color:var(--muted);font-size:14px;margin-top:8px}
-
-  .intro {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;  
-    padding-bottom: var(--s-32);  
-  }
-
-  .intro h2 {
-    font-size: var(--fs-body-m);
-    font-weight: var(--fw-semi);
-    color: var(--text);
-    line-height: var(--lh-body);
-  }
-
-  /*кейсы*/
-  
-.case {
-
-}
-.case .case-header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.case .text-block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.case .text-block li {
-  font-size: var(--fs-body-m);
-}
-.case .text-block  span {
-  color: var(--text);
-}
-.case .text-block p + p, .solution-block p + p {
-  margin-top: 8px;
-}
-.case .text-block p + ul {
-  margin-top: 0;
-}
-.case .text-block h3 {
-  font-size: var(--fs-body-m);
-  font-weight: var(--fw-semi);
-  line-height: var(--lh-body);
-}
-.details {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 32px 0;
-}
-
-  /*БЛОК ШАГОВ (case-steps)*/
-.case-steps {
-  display: grid;
-  gap: var(--s-8);
-}
-
-.case-steps .step {
-  position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-16);
-  background: var(--panel);
-  border-radius: var(--radius);
-  padding: var(--s-32);
-  flex-wrap: nowrap;
-}
-
-/* заголовок шага */
-.case-steps .step h3 {
+/* 7) Typography defaults (минимально) */
+h1, h2, h3, h4, h5, h6, p {
   margin: 0;
-  font-size: var(--fs-body-s);
-  font-weight: var(--fw-regular);
-  color: var(--text);
-  line-height: var(--lh-body);
-  flex: 0 0 220px; /* фикс. колонка заголовка как в макете */
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-h);
 }
 
-/* описание шага */
-.case-steps .step p, .case-steps .step li {
-  margin: 0;
-  font-size: var(--fs-body-s);
-  line-height: var(--lh-body);
-  color: var(--muted);
-  flex: 1 1 auto; /* описание заполняет оставшееся пространство */
-  min-width: 0;   /* даём возможность тексту сжиматься без переполнения */
-}
-.case-steps ul {
-  margin:0;
+/* Headings */
+h1 { font-size: var(--fs-h1); font-weight: 700; line-height: 0.98; }
+h2 { font-size: var(--fs-h2); font-weight: 700; line-height: 1.13; }
+h3 { font-size: var(--fs-h3); font-weight: 700; line-height: 1.13; }
+h4 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.13; }
+h5 { font-size: var(--fs-h5); font-weight: 700; line-height: 1.38; }
+
+@media (max-width: 1279px) {
+  h1 { line-height: 1.03; }
 }
 
-.case-steps-links {
-  display: flex;
-  flex-direction: row;
-  gap: var(--s-16);
-  padding-left: 20px;
+p {font-size: var(--fs-p-m); font-weight: 400; line-height: 1.38;  font-style: normal;}
+
+p + p {
+  margin-top: var(--s-16);
 }
 
-/*решения*/
-.case-solutions {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 32px 0;
+/* Paragraph utilities */
+.p-l { font-size: var(--fs-p-l); font-weight: 400; line-height: 1.38; }
+.p-m { font-size: var(--fs-p-m); font-weight: 400; line-height: 1.38; }
+.p-s { font-size: var(--fs-p-s); font-weight: 400; line-height: 1.38; }
+.p-xs { font-size: var(--fs-p-xs); font-weight: 400; line-height: 1.38; }
+
+/* Extra bold variants */
+.p-m-b { font-size: var(--fs-p-m); font-weight: 900; line-height: 1.38; font-style: normal;}
+.p-s-b { font-size: var(--fs-p-s); font-weight: 900; line-height: 1.38; font-style: normal;}
+
+
+/* 8) Forms (на будущее) */
+button, input, textarea, select {
+  font: inherit;
 }
 
-.case-solutions h2, .case-outro h2 {
-  font-size: var(--fs-h3);
+/* 9) Focus (доступность) */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
 }
 
-.solution-block, .case-outro {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 32px 0;  
-}
-.case-outro li + li {
-  margin-top: 16px;
-}
+/* =========================
+   A couple of useful base hooks
+   ========================= */
 
-.thanks {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-  padding: 32px 0 100px;
-  text-align: center;
-}
-
-.thanks_emoji {
-  font-size:var(--fs-h2);
-  font-weight: var(--fw-semi);
-  line-height: var(--lh-heading);
-  color: var(--text);
-}
-.thanks_title {
-  font-size:var(--fs-body-l);
-  font-weight: var(--fw-semi);
-  color: var(--text);
-}
-
-/* Пилюльная кнопка «Смотреть» */
-.pillbtn{
-  display: inline-block;
-  padding: 16px 32px;
-  border: 3px solid var(--brand);
-  border-radius: 999px;
-  background: rgba(155,135,255,0);
-  color: var(--text);
-  font-size: var(--fs-body-s);
-  font-weight: var(--fw-semi);
+/* container можно оставить в layout.css, но удобно иметь в base */
+.container {
+  max-width: var(--container);
   margin: 0 auto;
-}
-.pillbtn:hover{
-  background:rgba(171,120,228, .5);
+  container-type: inline-size;
 }
 
-/* адаптив */
-@media (max-width: 720px) {
-  .case-steps .step {
-    flex-direction: column;
-    gap: var(--s-4);
-    padding: 24px;
-  }
+/* hobby section base background (чтобы заливка точно была) */
+.hobby-section {
+  background: var(--negative-bg);
+  color: var(--negative-text);
+  padding: 40px 0 80px;
 }
 
-  /* БРЕЙКПОИНТЫ (mobile-first)*/
-  @media (min-width:480px){ /* крупные телефоны */ }
-  @media (min-width:640px){ /* маленькие планшеты */ }
-  
-  @media (min-width:768px){
-    .hero__avatar{width:152px;height:152px}
-  }
-  
-  @media (min-width:1024px){ /* десктоп */ }
-  @media (min-width:1280px){ /* большие экраны */ }
-  
-  /*МОБИЛЬНОЕ МЕНЮ (верхние ссылки)*/
-  @media (max-width:767px){
-    .container {
-      margin-top: 32px;
-    }
-    /* кнопка-бургер видна и поверх меню */
-    .burger{
-      display:inline-block;
-      justify-self:end;
-      position: relative;
-      z-index: 1101;
-    }
-    /* фиксируем хедер внизу экрана, он ДОЛЖЕН быть выше меню */
-    .topbar{
-      inset: 0 0 auto 0;               /* top:0; left:0; right:0 */
-      z-index: 1100;              /* выше слоя меню */
-      background: linear-gradient(180deg,
-    rgba(38, 33, 43, 1) 65%,
-    rgba(38, 33, 43, 0) 100%
-    );
-    }
-    .topbar__row{
-      padding: 12px 20px 20px 20px;
-    }
-
-    /* слой меню ниже хедера + контент выравнен СНИЗУ */
-    .toplinks{
-      position: fixed;
-      inset: 0;                   /* на весь экран */
-      z-index: 1000;              /* НИЖЕ .topbar (1100) → градиент/крестик сверху */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;  /* пункты по центру*/
-      gap: 12px;
-      padding: 96px 24px 24px;    /* верх = высота хедера + запас */
-      background: rgba(28,24,33,.96);
-      backdrop-filter: blur(2px);
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(4px);
-      transition: opacity .2s ease, transform .2s ease;
-    }
-    .toplinks.is-open{
-      opacity: 1;
-      pointer-events: auto;
-      transform: none;
-    }
-
-    /*точки между пунктами меню*/
-    .topLinks span[aria-hidden="true"] {
-      display: none !important;
-      pointer-events: none;
-    }
-
-    /* «пилюльные» пункты меню */
-    .toplinks a{
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 16px 24px;
-      font-size: var(--fs-body-l);
-      line-height: 1.4;
-      color: var(--text);
-      border: 2px solid var(--brand);
-      border-radius: 999px;
-      background: transparent;
-    }
-
-    [aria-hidden] {
-      display:none;
-    }
-
-    .hero h1{
-      padding-right: 0;
-    }
-
-    .casecard div {
-      padding-right: 0;
-    }
-
-    /* отступ под фикс‑хедер, чтобы контент не перекрывался */
-    body{
-      padding-top: 56px;
-    }
-    .case-steps .step h3 {
-      flex: 0 0 0 /* фикс. колонка заголовка как в макете */
-    }
-  }
-
-/*FLEX AUTO-LAYOUT UTILS*/
-.row       { display:flex; flex-direction:row; align-items:stretch; }
-.stack     { display:flex; flex-direction:column; align-items:stretch; }
-.row-wrap  { display:flex; flex-direction:row; flex-wrap:wrap; align-items:stretch; }
-
-/* main-axis distribution */
-.start   { justify-content:flex-start; }
-.center  { justify-content:center; }
-.end     { justify-content:flex-end; }
-.between { justify-content:space-between; }
-.around  { justify-content:space-around; }
-.evenly  { justify-content:space-evenly; }
-
-/* cross-axis alignment */
-.align-start  { align-items:flex-start; }
-.align-center { align-items:center; }
-.align-end    { align-items:flex-end; }
-.align-stretch{ align-items:stretch; }
-
-/* gaps */
-.gap-2  { gap: var(--s-2); }
-.gap-4  { gap: var(--s-4); }
-.gap-6  { gap: var(--s-6); }
-.gap-8  { gap: var(--s-8); }
-.gap-10 { gap: var(--s-10); }
-.gap-12 { gap: var(--s-12); }
-.gap-14 { gap: var(--s-14); }
-
-/* padding (container spacing) */
-.p-2  { padding: var(--s-2); }
-.p-4  { padding: var(--s-4); }
-.p-6  { padding: var(--s-6); }
-.p-8  { padding: var(--s-8); }
-.px-10{ padding-inline: var(--s-10); }
-.py-6 { padding-block: var(--s-6); }
-.py-8 { padding-block: var(--s-8); }
-.py-12{ padding-block: var(--s-12); }
-
-/* item sizing */
-.fill   { flex: 1 1 auto; }
-.fixed  { flex: 0 0 auto; }
-.basis-220 { flex: 0 0 220px; }
-.min-0  { min-width: 0; }
-.max-100{ max-width: 100%; }
-
-/* self alignment */
-.self-start  { align-self:flex-start; }
-.self-center { align-self:center; }
-.self-end    { align-self:flex-end; }
-.self-stretch{ align-self:stretch; }
-
-/* spacer to push siblings apart (auto spacing) */
-.spacer { flex: 1 1 auto; }
+.hobby-section::before{
+  content:"";
+  position:absolute;
+  left:0; right:0;
+  top:-40px;
+  height:40px;
+  background: var(--negative-bg);
+}

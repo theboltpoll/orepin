@@ -1,19 +1,44 @@
-<header class="topbar" data-sticky>
-    <div class="topbar__row">
-        <a class="topbar__brand" href="./index.html" rel="home">Олег Репин</a>
-  
-      <button class="burger" id="navToggle" aria-expanded="false" aria-controls="topLinks" aria-label="Открыть меню">
-        <span></span><span></span><span></span>
-      </button>
-  
-      <nav id="topLinks" class="toplinks" aria-label="Контакты и ссылки">
-        <a href="mailto:hi@orepin.site">hi@orepin.site</a>
-        <span aria-hidden="true">•</span>
-        <a href="https://t.me/olegrepin" target="_blank" rel="noreferrer">Telegram</a>
-        <span aria-hidden="true">•</span>
-        <a href="https://www.linkedin.com/in/oleg-repin/" target="_blank" rel="noreferrer">Linkedin</a>
-        <span aria-hidden="true">•</span>
-        <a href="https://orepin.site/assets/cv/oleg-repin-cv.pdf" download="oleg-repin-cv.pdf" type="application/pdf">CV</a>
-      </nav>
+<header class="site-header">
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      <a class="nav-link nav-link--left" href="../index.html" aria-current="page">
+        <span class="nav-link__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M6 18.9983H9V13.9983C9 13.4409 9.44255 12.9983 10 12.9983H14C14.5575 12.9983 15 13.4409 15 13.9983V18.9983H18V9.99834L12 5.49834L6 9.99834V18.9983ZM4 18.9983V9.99834C4 9.36501 4.3 8.76501 4.8 8.39834L10.8 3.89834C11.4971 3.36722 12.5029 3.36722 13.2 3.89834L19.2 8.39834C19.7 8.76501 20 9.36501 20 9.99834V18.9983C20 20.0899 19.0916 20.9983 18 20.9983H14C13.4425 20.9983 13 20.5558 13 19.9983V14.9983H11V19.9983C11 20.5558 10.5575 20.9983 10 20.9983H6C4.90844 20.9983 4 20.0899 4 18.9983Z" fill="white"/>
+          </svg>              
+        </span>
+        <span class="nav-link__text">Олег Репин</span>
+      </a>
     </div>
-  </header>
+
+    <nav class="site-header__nav" aria-label="Основное меню">
+      <a class="nav-link" href="mailto:hi@orepin.site">
+        <span class="nav-link__text">hi@orepin.site</span>
+        <span class="nav-link__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M9 18C7.90844 18 7 17.0916 7 16V4C7 2.90844 7.90844 2 9 2H18C19.0916 2 20 2.90844 20 4V16C20 17.0916 19.0916 18 18 18H9ZM9 16H18V4H9V16ZM5 22C3.90844 22 3 21.0916 3 20V7C3 6.44255 3.44255 6 4 6C4.55745 6 5 6.44255 5 7V20H15C15.5575 20 16 20.4425 16 21C16 21.5575 15.5575 22 15 22H5Z" fill="white"/>
+          </svg>    
+        </span>
+      </a>
+
+      <a class="nav-link" href="https://t.me/olegrepin" target="_blank" rel="noreferrer">
+        <span class="nav-link__text">Telegram</span>
+        <span class="nav-link__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M16.9984 5C17.5558 5 17.9984 5.44255 17.9984 6V16C17.9984 16.5575 17.5558 17 16.9984 17C16.4411 16.9999 15.9984 16.5574 15.9984 16V8.40039L7.09897 17.2998C6.7298 17.669 6.06776 17.669 5.69858 17.2998C5.32961 16.9307 5.32967 16.2696 5.69858 15.9004L14.599 7H6.99839C6.44105 6.99987 5.99839 6.55737 5.99839 6C5.99839 5.44263 6.44105 5.00013 6.99839 5H16.9984Z" fill="white"/>
+          </svg>                          
+        </span>
+      </a>
+
+      <a class="nav-link" href="../assets/cv/oleg-repin-cv.pdf" target="_blank" rel="noreferrer">
+        <span class="nav-link__text">CV</span>
+        <span class="nav-link__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path d="M6 20C4.90844 20 4 19.0916 4 18V16C4 15.4425 4.44255 15 5 15C5.55745 15 6 15.4425 6 16V18H18V16C18 15.4425 18.4425 15 19 15C19.5575 15 20 15.4425 20 16V18C20 19.0916 19.0916 20 18 20H6Z" fill="white"/>
+            <path d="M7.70507 11.7L11.3051 15.3C11.5051 15.5 11.7384 15.575 12.0051 15.575C12.2717 15.575 12.5051 15.5 12.7051 15.3L16.3051 11.7C16.6948 11.3103 16.6703 10.6985 16.3051 10.3C15.914 9.90893 15.2781 9.87701 14.8801 10.275L13.0051 12.15V5C13.0051 4.44255 12.5625 4 12.0051 4C11.4476 4 11.0051 4.44255 11.0051 5V12.15L9.13007 10.275C8.73209 9.87701 8.09615 9.90893 7.70507 10.3C7.33982 10.6985 7.31533 11.3103 7.70507 11.7Z" fill="white"/>
+          </svg>            
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>

@@ -1,184 +1,253 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WFYEGY36R"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    gtag('config', 'G-9WFYEGY36R');
-  </script>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Базовый favicon -->
-    <link rel="icon" type="image/x-icon" href="./my-favicon/favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="./my-favicon/favicon.svg">
-  
-    <!-- PNG разных размеров -->
-    <link rel="icon" type="image/png" sizes="96x96" href="./my-favicon/favicon-96x96.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./my-favicon/apple-touch-icon.png">
-  
-    <!-- Для PWA / Android -->
-    <link rel="manifest" href="./my-favicon/site.webmanifest">
-  
-    <!-- Цвет для адресной строки -->
-    <meta name="theme-color" content="#26212b">
-  <title>Кейс — Ранжирование</title>
-  <link rel="stylesheet" href="../css/base.css" />
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "tu39mt19vv");
-</script>
+  <title>История — Ранжирование в опросах</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/base.css" /> 
+  <link rel="stylesheet" href="../css/components.css" /> 
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet">
+
+  <!-- JS -->
+  <script defer src="../js/include.js"></script>
+  <script defer src="../js/cursor-btn.js"></script>
 </head>
-<body>
+<body class="theme-ranking">
 
-  <!-- включаем хедер -->
-  <div data-include="../partials/header.html"></div>
+<!-- Reusable header -->
+<div data-include="../partials/header.html"></div>
 
-  <main class="container">
-    <article class="case">
-      <div class="intro">
-          <span class="casecard__meta">Август&nbsp;2025</span>
-          <div class="case-header">
-            <h1>Ранжирование в&nbsp;опросах: как я&nbsp;готовил новый&nbsp;тип вопроса к&nbsp;релизу</h1>
-            <p>Ранжирование — это тип вопроса для&nbsp;UX/CX&#8209;исследований. Респонденты сортируют варианты по&nbsp;важности, а&nbsp;исследователи получают ясную картину приоритетов: рейтинг и&nbsp;распределение по&nbsp;позициям.</p>
-          </div>
-          <figure class="casecard__media media media--cover media--medium">
-            <img src="../assets/cover-ranking.png" alt="Ранжирование в опросах" />
-          </figure>
-          <p>В&nbsp;бэклоге накопилось несколько задач на&nbsp;добавление новых типов вопросов. Их&nbsp;регулярно просили клиенты через менеджеров и&nbsp;отмечали в&nbsp;наших опросах в&nbsp;личном кабинете. Блок «Ранжирование» был одним из&nbsp;частых запросов.</p>
-          <div class="text-block">
-            <h2>Бизнес&#8209;цель</h2>
-            <p>Увеличить выручку за&nbsp;счёт привлечения новых клиентов через тендеры и&nbsp;удержания существующих.</p>
-          </div>
-          <div class="text-block">
-            <h2>Гипотеза</h2>
-            <p>Если добавить ранжирование, исследователи смогут закрывать больше сценариев внутри платформы, а&nbsp;не&nbsp;уходить во&nbsp;внешние сервисы. Это повысит ценность продукта и&nbsp;упростит продажи новым клиентам.</p>
-          </div>
-          <div class="text-block">
-            <h2>Критерии успеха</h2>
-            <p>Определили вместе с&nbsp;продактом, как будем измерять результат после релиза:</p>
-            <ul>
-              <li>Доля исследований с&nbsp;этим типом вопроса</li>
-              <li>CSI&nbsp;исследователей по&nbsp;блоку ранжирования</li>
-              <li>Снижение доли внешних инструментов в&nbsp;оттоке</li>
-              <li>Влияние на&nbsp;продажи новым клиентам (через участие в&nbsp;тендерах)</li>
-            </ul>
-            <p><span>Релиз запланирован на&nbsp;конец 2025&nbsp;года</span>, поэтому метрики будут собраны позже.</br>На&nbsp;момент написания кейса я&nbsp;подготовил задачу с&nbsp;понятным виженом, сценариями, UX&#8209;обоснованием и&nbsp;измеримыми целями, передал материалы команде для&nbsp;реализации и&nbsp;последующего анализа.</p>
-          </div>       
-      </div>
-      <div class="details">
-        <h2>Теперь подробнее</h2>
-        <div class="text-block">
-          <h3>Моя роль и&nbsp;шаги</h3>
-          <p>Был продуктовым дизайнером в&nbsp;кросс&#8209;команде. Отвечал за&nbsp;исследования, UX&#8209;тесты и&nbsp;проработку сценариев в&nbsp;личном кабинете платформы, а&nbsp;также форм опросов во&nbsp;всех трёх продуктах компании. Обеспечил полную подготовку задачи к&nbsp;разработке.</p>
-        </div>
-        <section class="case-steps">
-          <div class="step">
-              <h3>Проанализировал конкурентов</h3>
-              <div>
-                <p>Разобрал реализацию ранжирования у&nbsp;конкурентов: сценарии взаимодействия, настройки и&nbsp;ограничения. На основе находок сформировал план интервью.</p>
-                <div>
-                  <a href="https://www.figma.com/design/fwWMcP2OUyUGJLtznoUmkE/Rankink_refs?node-id=1-6&t=ohFmMihXFWFatbUU-4" target="_blank" class="external-link figma-link">Бенчмаркинг</a>
-                </div>
-              </div>
-          </div>
-          <div class="step">
-              <h3>Провел интервью</h3>
-              <p>Пообщался с&nbsp;исследователями из&nbsp;крупных компаний и&nbsp;уточнил сценарии использования ранжирования.</p>
-          </div>
-          <div class="step">
-              <h3>Собрал&nbsp;User&nbsp;Story&nbsp;Map</h3>
-              <div>
-                <p>Собрал карту сценариев по&nbsp;личному кабинету и&nbsp;формам (Web, Link, App). Зафиксировал MVP&#8209;скоуп, а&nbsp;сложные или спорные&nbsp;сценарии отложил на&nbsp;следующие итерации.</p>
-                <div>
-                  <a href="https://miro.com/app/live-embed/o9J_kwwEvKg=/?focusWidget=3458764642529485279&embedMode=view_only_without_ui&embedId=540593321931" target="_blank" class="external-link miro-link">USM в&nbsp;Miro</a>
-                </div>
-              </div>
-          </div>
-          <div class="step">
-              <h3>Провел UX&#8209;тесты</h3>
-              <p>Проверил несколько сценариев взаимодействия с&nbsp;вопросом, выбрал и&nbsp;доработал самые удобные для&nbsp;респондентов.</p>
+<main class="container">
+
+<section class="case-hero">
+  <div class="chips">
+    <span>История</span>
+    <span>Август 2025</span>
+  </div>
   
-          </div>
-          <div class="step">
-              <h3>Согласовал решение</h3>
-              <p>Подготовил макеты, описал логику и&nbsp;ключевые сценарии. Через серию встреч погрузил разработку, аналитиков и&nbsp;QA в&nbsp;контекст, чтобы у&nbsp;всех было единое понимание задачи и&nbsp;цели.</p>
-          </div>
-          <div class="step">
-              <h3>Запустил в&nbsp;разработку</h3>
-              <p>На&nbsp;пару с&nbsp;аналитиком, прогруммил и&nbsp;декомпозировал задачи с&nbsp;разработкой, зафиксировал метрики для&nbsp;мониторинга после релиза.</p>
-          </div>
-        </section>
-      </div>
-      <div class="case-solutions">
-        <div class="text-block">
-          <h2>Интервью с&nbsp;исследователями</h2>
-          <p>Я&nbsp;сфокусировался на&nbsp;исследователях и&nbsp;руководителях исследовательских отделов — людях с&nbsp;опытом работы с&nbsp;приоритизацией и&nbsp;сложными опросами. За&nbsp;три дня провёл 7&nbsp;интервью с&nbsp;10&nbsp;участниками. Обсуждали, как они решают задачу ранжирования, какие данные используют и&nbsp;что мешает. С&nbsp;остальными, кто не&nbsp;смог созвониться, я&nbsp;провёл короткий онлайн&#8209;опрос, чтобы не&nbsp;потерять инсайты.</p>  
-        </div>
-        <div class="solution-block">
-          <div>
-            <p><strong>Инсайт:</strong> У&nbsp;исследователей разные подходы к&nbsp;приоритизации: в&nbsp;одних сценариях важно отранжировать все варианты, в&nbsp;других — только часть (например, топ&#8209;3). Если не&nbsp;задать чёткие правила, респонденты отвечают по&#8209;разному, и&nbsp;результаты становятся шумными и&nbsp;требуют ручной чистки.</p>
-            <p><strong>Решение:</strong> Добавил гибкие правила: минимум&nbsp;N, не&nbsp;больше&nbsp;N или все варианты. Теперь вопрос можно точно настроить под задачу, что уменьшит количество некачественных ответов.</p>
-          </div>
-          <figure class="media media--wide media--radius"><img src="../assets/image_ranking_02.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>
-        <div class="solution-block">
-          <div class="text-block">
-            <p><strong>Инсайт:</strong> Если респонденту сложно ответить или ему всё равно, он кликает наугад. У&nbsp;исследователей это искажает данные и&nbsp;мешает понять реальную картину.</p>
-            <p><strong>Решение:</strong> Добавил опцию «Затрудняюсь&nbsp;ответить». Это честный выход для респондента и&nbsp;сигнал исследователю — если таких ответов много, стоит проверить формулировку вопроса или&nbsp;сложность выбора.</p>
-          </div>
-          <figure class="media media--medium"><img src="../assets/image_ranking_03.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>
-        <div class="solution-block">
-          <div class="text-block">
-            <p><strong>Инсайт:</strong> В&nbsp;первую очередь исследователям важно быстро понять, какие варианты оказались самыми значимыми.</p>
-            <p><strong>Решение:</strong> Сделал компактный график со&nbsp;средним рангом, который сразу показывает лидеров и&nbsp;не&nbsp;требует копаться в&nbsp;цифрах.</p>
-          </div> 
-          <figure class="media media--wide media--radius"><img src="../assets/image_ranking_04.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>
-        <div class="solution-block">
-          <div class="text-block">
-            <p><strong>Инсайт:</strong> Глубокий анализ нужен не&nbsp;всегда, но&nbsp;иногда без&nbsp;него не&nbsp;обойтись — особенно когда важно понять, что чаще попадает на&nbsp;первое или последнее место.</p>
-            <p><strong>Решение:</strong> Добавил таблицу распределения по&nbsp;позициям с&nbsp;цветовой подсветкой. Она выделяет лидеров и&nbsp;позволяет быстро заметить нюансы, которые теряются в&nbsp;усреднённом графике.</p>
-          </div>
-          <figure class="media media--wide media--radius"><img src="../assets/image_ranking_05.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>  
-      </div>
-      <div class="case-solutions">
-        <div class="text-block">
-          <h2>Коридорное UX&#8209;тестирование</h2>
-          <p>Провёл три итерации коридорных тестов с&nbsp;16 участниками. На первой проверял отдельные паттерны на&nbsp;интерактивных прототипах, собранных в&nbsp;Figma&nbsp;Make. На&nbsp;второй и&nbsp;третьей использовал формы конкурентов, чтобы сравнить лидеров и&nbsp;доработать финальный сценарий не&nbsp;упарываясь в&nbsp;генерацию прототипов.</p>
-        </div>
-        <div class="solution-block">
-          <div class="text-block">
-            <p><strong>Инсайт:</strong> В&nbsp;лидеры вышли два способа взаимодействия. Tap — самый простой и&nbsp;быстрый, но&nbsp;неудобен для&nbsp;правок. Drag&#8209;and&#8209;Drop — интуитивный, особенно при малом числе вариантов, но&nbsp;часто конфликтует со&nbsp;скроллом на&nbsp;мобилках.</p>
-            <p><strong>Решение:</strong> Объединил Tap для&nbsp;быстрого ранжирования и&nbsp;DnD для&nbsp;правок. Добавил задержку и&nbsp;анимацию захвата, чтобы избежать конфликтов со&nbsp;скроллом. Подготовил пример анимации в&nbsp;<a href="https://codepen.io/yvelir2008/pen/raOPPza" target="_blank">codepen.io</a> с&nbsp;таймингами и&nbsp;вибрацией, чтобы точно передать ожидаемое поведение разработчикам.</p>
-          </div>
-          <figure class="media media--medium"><img src="../assets/image_ranking_06.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>
-      </div>
-      <div class="case-outro">
-        <div class="text-block">
-          <h2>Что я&nbsp;вынес из&nbsp;этой истории</h2>
-          <p>Для меня это хороший пример, как интервью и&nbsp;UX&#8209;тесты помогли задать команде общий контекст и&nbsp;найти ясное решение — оно родилось не&nbsp;в&nbsp;макетах, а&nbsp;в&nbsp;разговорах с&nbsp;людьми и&nbsp;внимании к&nbsp;деталям.</p>
+  <h1>Ранжирование в опросах: как я готовил новый тип вопроса к релизу</h1>
+  
+  <p>
+    Ранжирование — это тип вопроса для UX/CX‑исследований. Респонденты сортируют варианты по важности, а исследователи получают ясную картину приоритетов: рейтинг и распределение по позициям.
+  </p>
+</section>
+
+<section class="case-video">
+  <video autoplay loop muted playsinline>
+    <source src="../webM/ranking.webm" type="video/webm">
+  </video>
+</section>
+
+<section class="case-text-block">
+  <p class="p-m">В бэклоге накопилось несколько задач на добавление новых типов вопросов. Их регулярно просили клиенты через менеджеров и отмечали в наших опросах в личном кабинете. Блок «Ранжирование» был одним из частых запросов.</p>
+</section>
+
+<section class="two-col" aria-label="Цель и гипотеза">
+  <article class="two-col__item">
+    <h3>Бизнес‑цель</h3>
+    <p>Увеличить выручку за счёт привлечения новых клиентов через тендеры и удержания существующих.</p>
+  </article>
+
+  <article class="two-col__item">
+    <h3>Гипотеза</h3>
+    <p>Если добавить ранжирование, исследователи смогут закрывать больше сценариев внутри платформы, а не уходить во внешние сервисы. Это повысит ценность продукта и упростит продажи новым клиентам.</p>
+  </article>
+</section>
+
+<section class="results-block">
+  <h3>Критерии успеха</h3>
+  <p>Определили вместе с продактом, как будем измерять результат после релиза:
+    <ul>
+      <li><strong>Доля исследований с этим типом вопроса</strong></li>
+      <li><strong>CSI исследователей по блоку ранжирования</strong></li>
+      <li><strong>Снижение доли внешних инструментов в оттоке</strong></li>
+      <li><strong>Влияние на продажи новым клиентам (через участие в тендерах)</strong></li>
+    </ul>
+    Релиз запланирован на начало 2026 года, поэтому метрики будут собраны позже. На момент написания истории я подготовил задачу с понятным виженом, сценариями, UX‑обоснованием и измеримыми целями, передал материалы команде для реализации и последующего анализа.
+    </p>
+</section>
+
+<section class="steps-block">
+  <div class="steps-intro">
+    <h3>Моя роль и шаги</h3>
+    <p>Был продуктовым дизайнером в кросс‑команде. Отвечал за исследования, UX‑тесты и проработку сценариев в личном кабинете платформы, а также форм опросов во всех трёх продуктах компании. Обеспечил полную подготовку задачи к разработке.</p>
+  </div>
+
+  <div class="steps-list">
+    <article class="step-card">
+      <h5 class="step-card__title">Проанализировал конкурентов</h5>
+      <div class="step-card__content">
+        <p>Разобрал реализацию ранжирования у конкурентов: сценарии взаимодействия, настройки и ограничения. На основе находок сформировал план интервью.</p>
+        <div class="step-card__links">
+          <a class="link link--figma" href="https://www.figma.com/design/vfoIWlBaoeAdhfxqbXX81q/Discovery.-Link?node-id=0-1&t=y8GERq0k6VydjluD-1" target="_blank" rel="noreferrer">Бенчмаркинг</a>
         </div>
       </div>
     </article>
-    <!-- футер -->
-    <div data-include="../partials/footer.html"></div>
-  </main>
-  <!-- Лайтбокс -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox__close" aria-label="Закрыть">×</button>
-    <img id="lightboxImg" alt="" />
+
+    <article class="step-card">
+      <h5 class="step-card__title">Провел интервью</h5>
+      <div class="step-card__content">
+        <p>Пообщался с исследователями из крупных компаний и уточнил сценарии использования ранжирования.</p>
+      </div>
+    </article>
+
+    <article class="step-card">
+      <h5 class="step-card__title">Собрал User Story Map</h5>
+      <div class="step-card__content">
+        <p>Собрал карту сценариев по личному кабинету и формам (Web, Link, App). Зафиксировал MVP‑скоуп, а сложные или спорные сценарии отложил на следующие итерации.</p>
+        <div class="step-card__links">
+          <a class="link link--miro" href="https://miro.com/app/live-embed/o9J_kwwEvKg=/?focusWidget=3458764642529485279&embedMode=view_only_without_ui&embedId=540593321931" target="_blank" rel="noreferrer">USM в Miro</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="step-card">
+      <h5 class="step-card__title">Провел UX‑тесты</h5>
+      <div class="step-card__content">
+        <p>Проверил несколько сценариев взаимодействия с вопросом, выбрал и доработал самые удобные для респондентов.</p>
+      </div>
+    </article>
+
+    <article class="step-card">
+      <h5 class="step-card__title">Согласовал решение</h5>
+      <div class="step-card__content">
+        <p>Подготовил макеты, описал логику и ключевые сценарии. Через серию встреч погрузил разработку, аналитиков и QA в контекст, чтобы у всех было единое понимание задачи и цели.</p>
+      </div>
+    </article>
+
+    <article class="step-card">
+      <h5 class="step-card__title">Запустил в разработку</h5>
+      <div class="step-card__content">
+        <p>На пару с аналитиком, прогруммил и декомпозировал задачи с разработкой, зафиксировал метрики для мониторинга после релиза.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+</section>
+<section class="details">
+  <h2>Теперь подробнее</h2>
+</section>
+<section class="solution-block">
+  <header class="solution-block__head">
+    <h3>Интервью с исследователями</h3>
+    <p>Я сфокусировался на исследователях и руководителях исследовательских отделов — людях с опытом работы с приоритизацией и сложными опросами. За три дня провёл 7 интервью с 10 участниками. Выяснил, как они решают задачу ранжирования, какие данные используют и что мешает. С остальными, кто не смог созвониться, я провёл короткий онлайн‑опрос, чтобы не потерять инсайты.</p>
+  </header>
+
+  <div class="solution-list">
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Инсайт:</strong> У исследователей разные подходы к приоритизации: в одних сценариях важно отранжировать все варианты, в других — только часть (например, топ‑3). Если не задать чёткие правила, респонденты отвечают по‑разному, и результаты становятся шумными и требуют ручной чистки.</p>
+        <p><strong>Решение:</strong> Добавил гибкие правила: минимум N, не больше N или все варианты. Теперь вопрос можно точно настроить под задачу, что уменьшит количество некачественных ответов.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-ranking-01.png" alt="Настройка правил ранжирования">
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Инсайт:</strong> Если респонденту сложно ответить или ему всё равно, он кликает наугад. У исследователей это искажает данные и мешает понять реальную картину.</p>
+        <p><strong>Решение:</strong> Добавил опцию «Затрудняюсь ответить». Это честный выход для респондента и сигнал исследователю — если таких ответов много, стоит проверить формулировку вопроса или сложность выбора.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-ranking-02.png" alt="Мобильная форма с возможностью выбрать «Затрудняюсь ответить»">
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Инсайт:</strong> В первую очередь исследователям важно быстро понять, какие варианты оказались самыми значимыми.</p>
+        <p><strong>Решение:</strong> Сделал компактный график со средним рангом, который сразу показывает лидеров и не требует копаться в цифрах.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-ranking-03.png" alt="Простой график, отображающий лидирующие позиции">
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Инсайт:</strong> Глубокий анализ нужен не всегда, но иногда без него не обойтись — особенно когда важно понять, что чаще попадает на первое или последнее место.</p>
+        <p><strong>Решение:</strong> Добавил таблицу распределения по позициям с цветовой подсветкой. Она выделяет лидеров и позволяет быстро заметить нюансы, которые теряются в усреднённом графике.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-ranking-04.png" alt="Табличный график, позволяющий копнуть глубже в аналитику ответов">
+      </figure>
+    </article>
+  </div>
+</section>
+
+<section class="solution-block">
+  <header class="solution-block__head">
+    <h3>Коридорное UX‑тестирование</h3>
+    <p>Провёл три итерации коридорных тестов с 16 участниками. На первой проверял отдельные паттерны на интерактивных прототипах, собранных в Figma Make. На второй и третьей использовал формы конкурентов, чтобы сравнить лидеров и доработать финальный сценарий не упарываясь в генерацию прототипов.</p>
+  </header>
+
+  <div class="solution-list">
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Инсайт:</strong> В лидеры вышли два способа взаимодействия. Tap — самый простой и быстрый, но неудобен для правок. Drag‑and‑Drop — интуитивный, особенно при малом числе вариантов, но часто конфликтует со скроллом на мобилках.</p>
+        <p><strong>Решение:</strong> Объединил Tap для быстрого ранжирования и DnD для правок. Добавил задержку и анимацию захвата, чтобы избежать конфликтов со скроллом. Подготовил пример анимации в codepen.io с таймингами и вибрацией, чтобы точно передать ожидаемое поведение разработчикам.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-ranking-05.png" alt="Два лидирующих способа ответа на вопрос с ранжированием: тап и DnD">
+      </figure>
+    </article>
+  </div>
+</section>
+
+<section class="case-reflection single">
+  <h3>Что я вынес из этой истории</h3>
+  <p>Для меня это хороший пример, как интервью и UX‑тесты помогли задать команде общий контекст и найти ясное решение — оно родилось не в макетах, а в разговорах с людьми и внимании к деталям.</p>
+</section>
+
+<section class="case-end" aria-label="Навигация по проектам">
+  <!-- Десктоп: кликабельные половины -->
+  <a class="case-end__hit case-end__hit--prev" href="./case-copying-campaigns.html" aria-label="Предыдущий проект"></a>
+  <a class="case-end__hit case-end__hit--next" href="./case-marketing-design.html" aria-label="Следующий проект"></a>
+
+  <div data-include="../partials/footer.html"></div>
+
+  <div class="cursor-btn" aria-hidden="true">
+    <!-- сюда вставишь свой SVG, можно один и просто поворачивать -->
+    <svg width="50" height="50" viewBox="0 0 50 50">
+      <path d="M0 20C0 8.9543 8.95431 0 20 0H30C41.0457 0 50 8.95431 50 20V30C50 41.0457 41.0457 50 30 50H20C8.9543 50 0 41.0457 0 30V20Z" fill="#0A0A0A"/>
+      <path d="M23.7969 25.0008L27.6969 28.9008C27.8802 29.0841 27.9719 29.3174 27.9719 29.6008C27.9719 29.8841 27.8802 30.1174 27.6969 30.3008C27.5135 30.4841 27.2802 30.5758 26.9969 30.5758C26.7135 30.5758 26.4802 30.4841 26.2969 30.3008L21.6969 25.7008C21.5969 25.6008 21.526 25.4924 21.4844 25.3758C21.4427 25.2591 21.4219 25.1341 21.4219 25.0008C21.4219 24.8674 21.4427 24.7424 21.4844 24.6258C21.526 24.5091 21.5969 24.4008 21.6969 24.3008L26.2969 19.7008C26.4802 19.5174 26.7135 19.4258 26.9969 19.4258C27.2802 19.4258 27.5135 19.5174 27.6969 19.7008C27.8802 19.8841 27.9719 20.1174 27.9719 20.4008C27.9719 20.6841 27.8802 20.9174 27.6969 21.1008L23.7969 25.0008Z" fill="white"/>
+    </svg> 
   </div>
 
-  <script src="../js/app.js"></script>
+  <!-- Мобилка: две кнопки -->
+  <nav class="case-end__mobile-nav" aria-label="Переключение проектов">
+    <a class="case-end__btn" href="./case-copying-campaigns.html" aria-label="Предыдущий проект">
+      ← <span class="case-end__btn-text">Предыдущий</span>
+    </a>
+    <a class="case-end__btn" href="./case-marketing-design.html" aria-label="Следующий проект">
+      <span class="case-end__btn-text">Следующий</span> →
+    </a>
+  </nav>
+</section>
+
+</main>
+
 </body>
 </html>

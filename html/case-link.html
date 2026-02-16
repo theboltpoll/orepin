@@ -1,184 +1,281 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9WFYEGY36R"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    gtag('config', 'G-9WFYEGY36R');
-  </script>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Базовый favicon -->
-    <link rel="icon" type="image/x-icon" href="./my-favicon/favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="./my-favicon/favicon.svg">
-  
-    <!-- PNG разных размеров -->
-    <link rel="icon" type="image/png" sizes="96x96" href="./my-favicon/favicon-96x96.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./my-favicon/apple-touch-icon.png">
-  
-    <!-- Для PWA / Android -->
-    <link rel="manifest" href="./my-favicon/site.webmanifest">
-  
-    <!-- Цвет для адресной строки -->
-    <meta name="theme-color" content="#26212b">
   <title>Кейс — UX Feedback Link</title>
-  <link rel="stylesheet" href="../css/base.css" />
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "tu39mt19vv");
-</script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/base.css" /> 
+  <link rel="stylesheet" href="../css/components.css" /> 
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet">
+
+  <!-- JS -->
+  <script defer src="../js/include.js"></script>
+  <script defer src="../js/ba-slider.js"></script>
+  <script defer src="../js/cursor-btn.js"></script>
 </head>
-<body>
+<body class="theme-link">
 
-  <!-- включаем хедер -->
-  <div data-include="../partials/header.html"></div>
+<!-- Reusable header -->
+<div data-include="../partials/header.html"></div>
 
-  <main class="container">
-    <article class="case">
-      <div class="intro">
-        <span class="casecard__meta">Февраль&nbsp;2023</span>
-        <div class="case-header">
-          <h1>Как&nbsp;запускал новый&nbsp;продукт UX&nbsp;Feedback&nbsp;Link</h1>
-          <p>Это инструмент для сбора фидбека по&nbsp;ссылке для&nbsp;UX/CX-исследований и&nbsp;HR&#8209;опросов.</p>        
-        </div>
-        <figure class="casecard__media media media--cover media--medium">
-          <img src="../assets/cover-link.png" alt="UX Feedback Link" />
-        </figure>
-        <p>До&nbsp;Link у&nbsp;нас было два продукта — опросы на&nbsp;сайте (Web) и&nbsp;в&nbsp;мобильном приложении&nbsp;(App). Они отлично работали для&nbsp;коротких опросов в&nbsp;моменте, но&nbsp;не&nbsp;покрывали сценарии с&nbsp;длинными анкетами. Когда у&nbsp;клиентов появлялась необходимость в&nbsp;глубинных исследованиях, они&nbsp;уходили во&nbsp;внешние сервисы. В&nbsp;итоге ответы оказывались в&nbsp;разных инструментах, их&nbsp;приходилось собирать вручную, а&nbsp;анализ становился сложнее. Это влияло и&nbsp;на&nbsp;удержание.</p>
-        <div class="text-block">
-          <h2>Бизнес&#8209;цель</h2>
-          <p>Увеличить выручку за&nbsp;счёт удержания клиентов и&nbsp;расширения сценариев использования.</p>
-        </div>
-        <div class="text-block">
-          <h2>Гипотеза</h2>
-          <p>Если дать возможность проводить большие опросы в&nbsp;платформе,&nbsp;Link станет дополнительным источником выручки.</p>
-        </div>
-        <div class="text-block">
-          <h2>Результаты за&nbsp;первый год работы продукта</h2>
-          <ul>
-            <li><span>+15% expansion&nbsp;MRR</span> за&nbsp;счёт подключения Link как отдельного продукта</li>
-            <li><span>+10% всей&nbsp;выручки</span> по&nbsp;итогам первого года</li>
-            <li><span>8 клиентов</span> подключили Link как дополнительный продукт</li>
-            <li><span>Продукт помог удержать ключевых клиентов</span> и&nbsp;стал&nbsp;аргументом в&nbsp;тендерах</li>
-            <li><span>Сохранили выручку в&nbsp;переговорах</span> когда скидки были бы&nbsp;единственной альтернативой</li>
-          </ul>
-        </div>
-      </div>
-      <div class="details">
-        <h2>Теперь подробнее</h2>
-        <div class="text-block">
-          <h3>Моя роль и&nbsp;шаги</h3>
-          <p>Был единственным дизайнером в&nbsp;кросс&#8209;команде с&nbsp;<s>продактом</s> CPO, аналитиком, проджектом, разработкой и&nbsp;тестировщиком. Вёл задачу от&nbsp;дискавери до&nbsp;запуска и&nbsp;последующего развития продукта.</p>
-        </div>
-        <section class="case-steps">
-          <div class="step">
-              <h3>Проанализировал входящие&nbsp;данные</h3>
-              <div>
-                <ul>
-                  <li>Изучил интервью от&nbsp;CPO:&nbsp;зафиксировал паттерны, боли, обходные пути.</li>
-                  <li>Провёл конкурентный бенчмаркинг:&nbsp;личные кабинеты, формы, логика.</li>
-                  <li>Собрал mind map возможностей и&nbsp;user&nbsp;story&nbsp;map по&nbsp;ролям (менеджер по&nbsp;работе клиентами, исследователь, респондент), что&nbsp;легло в&nbsp;основу&nbsp;MVP.</li>
-                </ul>
-                <div class="case-steps-links">
-                  <a href="https://miro.com/app/live-embed/o9J_kwwEvKg=/?focusWidget=3458764635511669634&embedMode=view_only_without_ui&embedId=113995896815" target="_blank" class="external-link miro-link">Детали в&nbsp;Miro</a>
-                  <a href="https://www.figma.com/design/vfoIWlBaoeAdhfxqbXX81q/Discovery.-Link?node-id=0-1&t=y8GERq0k6VydjluD-1" target="_blank" class="external-link figma-link">Бенчмаркинг</a>
-                </div>
-              </div>
-          </div>
-          <div class="step">
-              <h3>Собрал и&nbsp;защитил решение</h3>
-              <ul>
-                  <li><p>Вынес&nbsp;гипотезу, определил фичи на&nbsp;первый релиз.</p></li>
-                  <li><p>Подготовил документацию с&nbsp;юзерстори и&nbsp;макетами в&nbsp;Confluence.</p></li>
-                  <li><p>Презентовал решение команде, провёл техническое ревью с&nbsp;разработкой.</p></li>
-              </ul>  
-          </div>
-          <div class="step">
-              <h3>Запустил в&nbsp;разработку</h3>
-              <ul>
-                  <li><p>Провёл груминг для команды на&nbsp;пару с&nbsp;аналитиком, уточнили и&nbsp;закрыли мелкие вопросы по&nbsp;сторям.</p></li>
-                  <li><p>Совместно с&nbsp;командой декомпозировали задачи, оценили и&nbsp;зафиксировали их в&nbsp;Jira.</p></li>
-                  <li><p>Сопровождал разработку, провел дизайн&#8209;ревью после&nbsp;QA.</p></li>
-              </ul>
-          </div>
-          <div class="step">
-              <h3>Подготовился к&nbsp;релизу</h3>
-              <ul>
-                  <li><p>После пилотов получил через менеджеров обратную связь по&nbsp;продукту.</p></li>
-                  <li><p>На&nbsp;основе фидбека сформировал список улучшений в&nbsp;беклог для&nbsp;скоринга.</p></li>
-              </ul>
-          </div>
-        </section>
-      </div>
-      <div class="case-solutions">
-        <div class="text-block">
-          <h2>Мои решения</h2>
-          <p>В&nbsp;основу MVP легли решения, которые закрывали главные сценарии клиентов и&nbsp;позволяли быстрее вывести продукт на&nbsp;рынок.</p>
-        </div>
-        <div class="solution-block">
-          <div class="text-block">
-            <h3>Базовые типы&nbsp;вопросов</h3>
-            <p>Решил переиспользовать типы вопросов из&nbsp;основного продукта — опросов на&nbsp;сайте&nbsp;(Web). По&nbsp;словам клиентов, этого хватает в&nbsp;90% случаев. Основная боль была в&nbsp;ограниченном формате всплывающих форм: в&nbsp;них невозможно разместить длинный опрос.</p>
-            <p>На старте оставил только шкалы, открытые вопросы и&nbsp;выбор вариантов. Более сложные форматы (ранжирование, семантический дифференциал, матрицы) заложил на&nbsp;следующие итерации — они требовали больше ресурсов и&nbsp;замедлили бы запуск.</p>
-          </div>
-          <figure class="media media--wide"><img src="../assets/image_link_02.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>
+<main class="container">
+
+<section class="case-hero">
+  <div class="chips">
+    <span>Кейс</span>
+    <span>Февраль 2023</span>
+  </div>
   
-        <div class="solution-block">
-          <div class="text-block">
-            <h3>Кастомизация под&nbsp;бренд</h3>
-            <p>При проектировании Link заложил возможность переиспользования стилей&nbsp;из Web&#8209;продукта. Менеджеры могут в&nbsp;один клик перенести фирменное оформление клиента в&nbsp;новый проект — без ручных правок. Это ускоряет запуск нового клиентского проекта и&nbsp;сохраняет визуальную консистентность. Формы при этом можно легко адаптировать под события или&nbsp;промо-кампании.</p>
-          </div>
-          <figure class="media media--wide media--radius"><img src="../assets/image_link_03.gif" alt="обложка кейса" class="zoomable"></figure>
-        </div>
+  <h1>Как запускал новый продукт UX Feedback Link</h1>
+  
+  <p>
+    Это инструмент для сбора фидбека по ссылке для UX/CX‑исследований и HR‑опросов.
+  </p>
+</section>
 
-        
-        <div class="solution-block">
-          <div class="text-block"> 
-          <h3>Интеграция в&nbsp;Web</h3>
-          <p>Web и&nbsp;App изначально развивались как&nbsp;отдельные продукты, и&nbsp;исследователям с&nbsp;продактами приходилось постоянно переключаться между проектами. </p>
-          <p>Запуская Link, я&nbsp;встроил его именно в&nbsp;Web — основной продукт платформы с&nbsp;наибольшей долей выручки. Это позволило объединить два продукта в&nbsp;одном проекте и&nbsp;работать с&nbsp;ними через общую аналитику, дашборды и&nbsp;правила обработки ответов.</p>
-          <p>Такой подход стал первым шагом к более связанной архитектуре платформы, где пользователю не&nbsp;нужно переключаться между продуктами. App пока работает отдельно, и&nbsp;его интеграция — следующий шаг.</p>
-          </div>
-          <figure class="media media--wide media--radius"><img src="../assets/image_link_04.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>
+<section class="case-video">
+  <video autoplay loop muted playsinline>
+    <source src="../webM/link.webm" type="video/webm">
+  </video>
+</section>
 
-        <div class="solution-block">
-          <div class="text-block"> 
-            <h3>Улучшение&nbsp;логики в&nbsp;формах опроса</h3>
-            <p>Раньше логика показа (правила, по&nbsp;которым блоки отображаются в&nbsp;зависимости от&nbsp;ответов) работала только на&nbsp;одной странице. Для сложных сценариев приходилось подключать логику переходов — вручную прописывать, на&nbsp;какую страницу вести пользователя при каждой комбинации ответов. Когда вариантов становилось много, число условий росло экспоненциально, и&nbsp;настройка превращалась в&nbsp;громоздкую схему.</p>
-            <p>Я переработал логику показа на&nbsp;уровень всего опроса. Блок отображается по&nbsp;условиям из любых предыдущих вопросов. Это упростило настройку и&nbsp;сделало большие анкеты гибче.</p>
-          </div>
-          <figure class="media media--wide media--radius"><img src="../assets/image_link_05.png" alt="обложка кейса" class="zoomable"></figure>
-          <figure class="media media--wide media--radius"><img src="../assets/image_link_06.png" alt="обложка кейса" class="zoomable"></figure>
-        </div>
-      </div>
-      <div class="case-outro">
-        <div class="text-block">
-          <h2>Что я&nbsp;вынес из этой истории</h2>
-          <p><span>Link подтвердил ценность проведения глубоких исследований внутри платформы.</span></br>Клиенты были готовы платить не&nbsp;просто за&nbsp;возможность проводить длинные опросы, а&nbsp;за&nbsp;то, что&nbsp;теперь могут делать это в&nbsp;том же&nbsp;пространстве, где собирают инмомент-фидбек. Единое хранилище данных упростило аналитику и&nbsp;повысило вовлечённость, а&nbsp;для нас стало новым источником выручки.</p>
-          <p><span>MVP с&nbsp;базовым функционалом дал быстрый выход на&nbsp;рынок, но&nbsp;не&nbsp;закрыл все потребности.</span></br>Запуск без сложных типов вопросов помог быстро подтвердить ценность и&nbsp;начать продажи. Дальнейшее развитие отложили из&#8209;за приоритетов других стримов и&nbsp;нехватки ресурсов. Не&nbsp;все&nbsp;потенциальныеклиенты подключили Link — им&nbsp;не&nbsp;хватало привычных для&nbsp;глубинных исследований типов вопросов: ранжирования, матриц, семантического дифференциала и&nbsp;карточной сортировки. С&nbsp;ними Link мог бы&nbsp;вырасти сильнее.</p>
+<section class="case-text-block">
+  <p class="p-m">До Link у нас было два продукта — опросы на сайте (Web) и в мобильном приложении (App). Они отлично работали для коротких опросов в моменте, но не покрывали сценарии с длинными анкетами. Когда у клиентов появлялась необходимость в глубинных исследованиях, они уходили во внешние сервисы. В итоге ответы оказывались в разных инструментах, их приходилось собирать вручную, а анализ становился сложнее. Это влияло и на удержание.</p>
+</section>
+
+<section class="two-col" aria-label="Цель и гипотеза">
+  <article class="two-col__item">
+    <h3>Бизнес‑цель</h3>
+    <p>Увеличить выручку за счёт удержания клиентов и расширения сценариев использования.</p>
+  </article>
+
+  <article class="two-col__item">
+    <h3>Гипотеза</h3>
+    <p>Если дать возможность проводить большие опросы в платформе, Link станет дополнительным источником выручки.</p>
+  </article>
+</section>
+
+<section class="results-block">
+  <h3>Результаты за первый год работы продукта</h3>
+
+  <ul>
+    <li><strong>+15% expansion MRR</strong> за счёт подключения Link как отдельного продукта</li>
+    <li><strong>+10% всей выручки</strong> по итогам первого года</li>
+    <li><strong>8 клиентов подключили Link</strong> как дополнительный продукт</li>
+    <li><strong>Продукт помог удержать ключевых клиентов</strong> и стал аргументом в тендерах</li>
+    <li><strong>Сохранили выручку в переговорах</strong> когда скидки были бы единственной альтернативой</li>
+  </ul>
+</section>
+
+<section class="steps-block">
+  <div class="steps-intro">
+    <h3>Моя роль и шаги</h3>
+    <p>Был единственным дизайнером в кросс‑команде с <s>продактом</s> CPO, аналитиком, проджектом, разработкой и тестировщиком. Вёл задачу от дискавери до запуска и последующего развития продукта.</p>
+  </div>
+
+  <div class="steps-list">
+    <article class="step-card">
+      <h5 class="step-card__title">Проанализировал входящие данные</h5>
+      <div class="step-card__content">
+        <ul>
+          <li>Изучил интервью от CPO: зафиксировал паттерны, боли, обходные пути.</li>
+          <li>Провёл конкурентный бенчмаркинг: личные кабинеты, формы, логика.</li>
+          <li>Собрал mind map возможностей и user story map по ролям (менеджер по работе клиентами, исследователь, респондент), что легло в основу MVP.</li>
+        </ul>
+        <div class="step-card__links">
+          <a class="link link--miro" href="https://miro.com/app/live-embed/o9J_kwwEvKg=/?focusWidget=3458764635511669634&embedMode=view_only_without_ui&embedId=113995896815" target="_blank" rel="noreferrer">Детали в Miro</a>
+          <a class="link link--figma" href="https://www.figma.com/design/vfoIWlBaoeAdhfxqbXX81q/Discovery.-Link?node-id=0-1&t=y8GERq0k6VydjluD-1" target="_blank" rel="noreferrer">Бенчмаркинг</a>
         </div>
       </div>
     </article>
-  </main>
 
-  <!-- футер -->
+    <article class="step-card">
+      <h5 class="step-card__title">Собрал и защитил решение</h5>
+      <div class="step-card__content">
+        <ul>
+          <li>Вынес гипотезу, определил фичи на первый релиз.</li>
+          <li>Подготовил документацию с юзерстори и макетами в Confluence.</li>
+          <li>Презентовал решение команде, провёл техническое ревью с разработкой.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step-card">
+      <h5 class="step-card__title">Запустил в разработкуе</h5>
+      <div class="step-card__content">
+        <ul>
+          <li>Провёл груминг для команды на пару с аналитиком, уточнили и закрыли мелкие вопросы по сторям.</li>
+          <li>Совместно с командой декомпозировали задачи, оценили и зафиксировали их в Jira.</li>
+          <li>Сопровождал разработку, провел дизайн‑ревью после QA.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="step-card">
+      <h5 class="step-card__title">Подготовился к релизу</h5>
+      <div class="step-card__content">
+        <ul>
+          <li>После пилотов получил через менеджеров обратную связь по продукту.</li>
+          <li>На основе фидбека сформировал список улучшений в беклог для скоринга.</li>
+        </ul>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+</section>
+<section class="details">
+  <h2>Теперь подробнее</h2>
+</section>
+<section class="solution-block">
+  <header class="solution-block__head">
+    <h3>Мои решения</h3>
+    <p>В основу MVP легли решения, которые закрывали главные сценарии клиентов и позволяли быстрее вывести продукт на рынок.</p>
+  </header>
+
+  <div class="solution-list">
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Что сделал:</strong> Переиспользовал типы вопросов из основного продукта с веб‑опросами: шкалы, открытые вопросы и выбор вариантов. Более сложные форматы отложил на следующие итерации.</p>
+        <p><strong>Зачем:</strong> Расширенные форматы (ранжирование, семантический дифференциал, матрицы) требовали больше ресурсов и замедляли бы запуск MVP. При этом по словам клиентов, текущих типов хватает в 90% случаев.</p>
+        <p><strong>Итог:</strong> Сокращение набора сократило время разработки и ускорило выход MVP.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <video autoplay loop muted playsinline>
+          <source src="../webM/link-2.webm" type="video/webm"  alt="Типы блоков фопросов добавленные в link">
+        </video>
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Что сделал:</strong> Встроил Link в основной продукт с веб‑опросами вместо отдельного приложения.</p>
+        <p><strong>Зачем:</strong> Раньше веб‑опросы и опросы в мобильном приложении развивались отдельно. Исследователям приходилось переключаться между проектами, а данные были разбросаны. Интеграция Link в веб‑опросы решала эту проблему: давала возможность работать с длинными анкетами через те же отчёты, аналитику и правила обработки.</p>
+        <p><strong>Итог:</strong> Управление стало проще. Link стал частью общей экосистемы, а переход между продуктами — прозрачным. Это первый шаг к цельной архитектуре, где исследователю не нужно прыгать между инструментами. Интеграция опросов из мобильного приложения — следующий этап.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-link-campaign.png" alt="Единое пространство для веб‑опросов и опросов по ссылке">
+      </figure>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-link-analytics.png" alt="Сводная аналитика">
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Что сделал:</strong> Перенёс интерфейс конструктора из веб‑опросов в Link.</p>
+        <p><strong>Зачем:</strong> Чтобы снизить порог входа и не тратить ресурсы на переобучение и разработку.</p>
+        <p><strong>Итог:</strong> Команды сразу работают в знакомом интерфейсе и быстрее запускают опросы в Link.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <div class="ba" data-ba>
+          <figure class="ba__before">
+            <img src="../assets/case-link-web.png" alt="До: Web">
+          </figure>
+          <figure class="ba__after">
+            <img src="../assets/case-link-link.png" alt="После: Link">
+          </figure>
+        
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение: до и после">
+          <div class="ba__handle" aria-hidden="true">
+            <svg class="ba__handle-icon" width="64" height="64" viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="32" fill="#9563F8"/>
+              <path d="M37.75 32.6H32.575V30.6H37.75L35.875 28.725C35.6917 28.525 35.5958 28.2875 35.5875 28.0125C35.5792 27.7375 35.675 27.5 35.875 27.3C36.075 27.1 36.3083 27 36.575 27C36.8417 27 37.075 27.1 37.275 27.3L40.875 30.9C40.975 31 41.0458 31.1083 41.0875 31.225C41.1292 31.3417 41.15 31.4667 41.15 31.6C41.15 31.7333 41.1292 31.8583 41.0875 31.975C41.0458 32.0917 40.975 32.2 40.875 32.3L37.275 35.9C37.075 36.1 36.8417 36.2 36.575 36.2C36.3083 36.2 36.075 36.1 35.875 35.9C35.675 35.7 35.575 35.4625 35.575 35.1875C35.575 34.9125 35.675 34.675 35.875 34.475L37.75 32.6ZM25.4 32.6L27.275 34.475C27.4583 34.675 27.5542 34.9125 27.5625 35.1875C27.5708 35.4625 27.475 35.7 27.275 35.9C27.075 36.1 26.8417 36.2 26.575 36.2C26.3083 36.2 26.075 36.1 25.875 35.9L22.275 32.3C22.175 32.2 22.1042 32.0917 22.0625 31.975C22.0208 31.8583 22 31.7333 22 31.6C22 31.4667 22.0208 31.3417 22.0625 31.225C22.1042 31.1083 22.175 31 22.275 30.9L25.875 27.3C26.075 27.1 26.3083 27 26.575 27C26.8417 27 27.075 27.1 27.275 27.3C27.475 27.5 27.575 27.7375 27.575 28.0125C27.575 28.2875 27.475 28.525 27.275 28.725L25.4 30.6H30.575V32.6H25.4Z" fill="white"/>
+            </svg>                         
+          </div>
+        </div>
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Что сделал:</strong> Расширил логику показа блоков с уровня одной страницы на весь опрос. Теперь условия можно задавать от любых предыдущих ответов.</p>
+        <p><strong>Зачем:</strong> Старый формат упирался в переходы между страницами. В сложных анкетах число условий росло экспоненциально, и настройка превращалась в громоздкую схему. Нужно было упростить процесс и сделать логику гибкой.</p>
+        <p><strong>Итог:</strong> Большие анкеты стало проще настраивать. Команды строят гибкие, ветвящиеся сценарии без множества ручных переходов.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <div class="ba" data-ba>
+          <figure class="ba__before">
+            <img src="../assets/case-link-before.png" alt="До: Web">
+          </figure>
+          <figure class="ba__after">
+            <img src="../assets/case-link-after.png" alt="После: Link">
+          </figure>
+        
+          <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение: до и после">
+          <div class="ba__handle" aria-hidden="true">
+            <svg class="ba__handle-icon" width="64" height="64" viewBox="0 0 64 64">
+              <circle cx="32" cy="32" r="32" fill="#9563F8"/>
+              <path d="M37.75 32.6H32.575V30.6H37.75L35.875 28.725C35.6917 28.525 35.5958 28.2875 35.5875 28.0125C35.5792 27.7375 35.675 27.5 35.875 27.3C36.075 27.1 36.3083 27 36.575 27C36.8417 27 37.075 27.1 37.275 27.3L40.875 30.9C40.975 31 41.0458 31.1083 41.0875 31.225C41.1292 31.3417 41.15 31.4667 41.15 31.6C41.15 31.7333 41.1292 31.8583 41.0875 31.975C41.0458 32.0917 40.975 32.2 40.875 32.3L37.275 35.9C37.075 36.1 36.8417 36.2 36.575 36.2C36.3083 36.2 36.075 36.1 35.875 35.9C35.675 35.7 35.575 35.4625 35.575 35.1875C35.575 34.9125 35.675 34.675 35.875 34.475L37.75 32.6ZM25.4 32.6L27.275 34.475C27.4583 34.675 27.5542 34.9125 27.5625 35.1875C27.5708 35.4625 27.475 35.7 27.275 35.9C27.075 36.1 26.8417 36.2 26.575 36.2C26.3083 36.2 26.075 36.1 25.875 35.9L22.275 32.3C22.175 32.2 22.1042 32.0917 22.0625 31.975C22.0208 31.8583 22 31.7333 22 31.6C22 31.4667 22.0208 31.3417 22.0625 31.225C22.1042 31.1083 22.175 31 22.275 30.9L25.875 27.3C26.075 27.1 26.3083 27 26.575 27C26.8417 27 27.075 27.1 27.275 27.3C27.475 27.5 27.575 27.7375 27.575 28.0125C27.575 28.2875 27.475 28.525 27.275 28.725L25.4 30.6H30.575V32.6H25.4Z" fill="white"/>
+            </svg>                         
+          </div>
+        </div>
+      </figure>
+    </article>
+
+  </div>
+</section>
+
+<section class="case-reflection">
+  <h3>Что я вынес из этой истории</h3>
+
+  <article class="insight">
+    <h4 class="p-m-b">Link подтвердил ценность проведения глубоких исследований внутри платформы.</h4>
+    <p>Клиенты были готовы платить не просто за возможность проводить длинные опросы, а за то, что теперь могут делать это в том же пространстве, где собирают инмомент‑фидбек. Единое хранилище данных упростило аналитику и повысило вовлечённость, а для нас стало новым источником выручки.</p>
+  </article>
+  
+  <article class="insight">
+    <h4 class="p-m-b">MVP с базовым функционалом дал быстрый выход на рынок, но не закрыл все потребности.</h4>
+    <p>Запуск без сложных типов вопросов помог быстро подтвердить ценность и начать продажи. Дальнейшее развитие отложили из‑за приоритетов других стримов и нехватки ресурсов. Не все потенциальные клиенты подключили Link — им не хватало привычных для глубинных исследований типов вопросов: ранжирования, матриц, семантического дифференциала и карточной сортировки. С ними Link мог бы вырасти сильнее.</p>
+  </article>
+</section>
+
+<section class="case-end" aria-label="Навигация по проектам">
+  <!-- Десктоп: кликабельные половины -->
+  <a class="case-end__hit case-end__hit--prev" href="./case-marketing-design.html" aria-label="Предыдущий проект"></a>
+  <a class="case-end__hit case-end__hit--next" href="./case-regular-surveys.html" aria-label="Следующий проект"></a>
+
   <div data-include="../partials/footer.html"></div>
 
-  <!-- Лайтбокс -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <button class="lightbox__close" aria-label="Закрыть">×</button>
-    <img id="lightboxImg" alt="" />
+  <div class="cursor-btn" aria-hidden="true">
+    <!-- сюда вставишь свой SVG, можно один и просто поворачивать -->
+    <svg width="50" height="50" viewBox="0 0 50 50">
+      <path d="M0 20C0 8.9543 8.95431 0 20 0H30C41.0457 0 50 8.95431 50 20V30C50 41.0457 41.0457 50 30 50H20C8.9543 50 0 41.0457 0 30V20Z" fill="#0A0A0A"/>
+      <path d="M23.7969 25.0008L27.6969 28.9008C27.8802 29.0841 27.9719 29.3174 27.9719 29.6008C27.9719 29.8841 27.8802 30.1174 27.6969 30.3008C27.5135 30.4841 27.2802 30.5758 26.9969 30.5758C26.7135 30.5758 26.4802 30.4841 26.2969 30.3008L21.6969 25.7008C21.5969 25.6008 21.526 25.4924 21.4844 25.3758C21.4427 25.2591 21.4219 25.1341 21.4219 25.0008C21.4219 24.8674 21.4427 24.7424 21.4844 24.6258C21.526 24.5091 21.5969 24.4008 21.6969 24.3008L26.2969 19.7008C26.4802 19.5174 26.7135 19.4258 26.9969 19.4258C27.2802 19.4258 27.5135 19.5174 27.6969 19.7008C27.8802 19.8841 27.9719 20.1174 27.9719 20.4008C27.9719 20.6841 27.8802 20.9174 27.6969 21.1008L23.7969 25.0008Z" fill="white"/>
+    </svg> 
   </div>
 
-  <script src="../js/app.js"></script>
+  <!-- Мобилка: две кнопки -->
+  <nav class="case-end__mobile-nav" aria-label="Переключение проектов">
+    <a class="case-end__btn" href="./case-marketing-design.html" aria-label="Предыдущий проект">
+      ← <span class="case-end__btn-text">Предыдущий</span>
+    </a>
+    <a class="case-end__btn" href="./case-regular-surveys.html" aria-label="Следующий проект">
+      <span class="case-end__btn-text">Следующий</span> →
+    </a>
+  </nav>
+</section>
+
+</main>
+
 </body>
 </html>

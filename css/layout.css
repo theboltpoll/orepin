@@ -1,0 +1,822 @@
+/* ============================= */
+/* БАЗА                         */
+/* ============================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.hobby-section .container {
+  background: none;
+}
+
+/* ============================= */
+/* ШАПКА                        */
+/* ============================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.site-header__inner {
+  margin: 0 auto;
+  padding: 24px 24px 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-header__nav {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+/* ============================= */
+/* ГЛАВНАЯ                      */
+/* ============================= */
+
+.hero{
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hero h1 .w{
+  color: var(--muted); /* стартовый серый */
+  color: color-mix(in srgb, var(--muted) calc((1 - var(--w, 0)) * 100%), var(--text));
+}
+
+
+
+/* ============================= */
+/* ФУТЕР                        */
+/* ============================= */
+
+.site-footer {
+  position: relative;
+  bottom: 0;
+  padding: 80px 0 120px;
+  text-align: center;
+}
+
+.footer-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.location{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--s-40);
+}
+
+.location__icon{
+  width: 24px;
+  height: 24px;
+}
+
+/* ============================= */
+/* ХОББИ (ЗАНАВЕС)              */
+/* ============================= */
+
+.hobby-section {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: var(--hobby-h);
+  padding: 80px 24px;
+  z-index: 0;
+}
+
+.main-content {
+  position: relative;
+  z-index: 2;
+  background: var(--bg);
+  border-radius: 0 0 40px 40px;
+  margin-bottom: var(--hobby-h);
+}
+
+/* По умолчанию блок виден */
+.hobby-section .container{
+  opacity: 1;
+  transform: none;
+}
+
+html.js .hobby-section .container {
+  --reveal: 0; /* 0..1 */
+  opacity: var(--reveal);
+  transform: translateY(calc((1 - var(--reveal)) * -40px));
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .hobby-section .container {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ============================= */
+/* СТРАНИЦА КЕЙСА               */
+/* ============================= */
+
+.case-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-video {
+  width: 100%;
+  margin: 80px 0;
+}
+
+.case-video video {
+  width: 100%;
+  display: block;
+}
+
+/*  отступ в секции  */
+.case-hero,
+.case-text-block,
+.results-block,
+.steps-block,
+.solution-block,
+.solution-item 
+ {
+  margin: 80px 0;
+}
+
+.step-card__title {
+  flex: 0 0 260px;
+}
+
+.step-card__content {
+  flex: 1;
+}
+
+.solution-media {
+  margin-top: 40px;
+}
+
+/* ============================= */
+/* БЛОК СПАСИБО                 */
+/* ============================= */
+
+.case-end {
+  position: relative;
+  padding: 120px 0;
+  text-align: center;
+}
+
+.case-end__nav-area {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  cursor: pointer;
+}
+
+.case-end__nav-area--prev {
+  left: 0;
+}
+
+.case-end__nav-area--next {
+  right: 0;
+}
+
+/* ============================= */
+/* АДАПТИВ                      */
+/* ============================= */
+
+@media (max-width: 900px) {
+
+  .cases-grid {
+    flex-direction: column;
+  }
+
+  .case-card {
+    flex: 1 1 100%;
+  }
+
+  .step-card {
+    flex-direction: column;
+  }
+
+  .step-card__title {
+    flex: auto;
+  }
+
+  .case-end__nav-area {
+    display: none;
+  }
+}
+
+/* ====== CASES GRID (DESKTOP LIKE MOCK) ====== */
+
+.cases-grid{
+  --gap: 16px;
+  --row: 370px;
+
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: var(--row);
+  gap: var(--gap);
+}
+
+/* База карточки — без декора */
+.case-card{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  height: 370px;
+  min-height: 0;
+  padding: 40px;
+  text-decoration: none;
+  overflow: hidden;
+  border-radius: 32px;
+}
+
+.case-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Заглушка под медиа (картинка/видео/скрин) */
+/* main cards */
+.case-card { position: relative; overflow: hidden; }
+.case-card__content { position: relative; z-index: 2; }
+
+.case-card__media{
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 220px;
+  height: 220px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.media-svg{
+  position: absolute;
+  transition: transform 220ms ease-out, opacity 220ms ease-out;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.case-card__media img.media-svg{
+  max-width: none;
+  height: auto; /* или фиксируй height как ты делаешь */
+}
+
+.card-anim{ width: 100%; height: 100%; display: block; }
+
+
+
+/* Статы */
+.case-card__stats{
+  margin-top: auto;
+  display: grid;
+  gap: 8px;
+}
+
+/* ====== РАСКЛАДКА КАК В МАКЕТЕ ====== */
+/* верхний ряд: слева большой (8/12), справа две маленькие (4/12) */
+
+.case-card--link{
+  grid-column: 1 / span 8;
+  grid-row: 1 / span 2;  /* занимает высоту двух рядов */
+}
+
+.case-card--reg{
+  grid-column: 9 / span 4;
+  grid-row: 1 / span 1;
+}
+
+.case-card--copy{
+  grid-column: 9 / span 4;
+  grid-row: 2 / span 1;
+}
+
+/* нижний блок: слева две маленькие (4/12), справа большой (8/12) */
+
+.case-card--marketing{
+  grid-column: 1 / span 4;
+  grid-row: 3 / span 1;
+}
+
+.case-card--ds{
+  grid-column: 1 / span 4;
+  grid-row: 4 / span 1;
+}
+
+.case-card--ranking{
+  grid-column: 5 / span 8;
+  grid-row: 3 / span 2;  /* два ряда вниз */
+}
+
+/* ====== RESPONSIVE ====== */
+
+@media (max-width: 900px){
+  .cases-grid{
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  /* убираем ручное позиционирование — карточки идут по DOM */
+  .case-card--link,
+  .case-card--reg,
+  .case-card--copy,
+  .case-card--marketing,
+  .case-card--ds,
+  .case-card--ranking{
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+/* Интерактивность карточек: hover/focus без декоративных цветов */
+.case-card {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Видимый фокус для клавиатуры */
+.case-card:focus-visible {
+  outline: 2px solid;
+  outline-offset: 3px;
+}
+
+/* Hover animation placeholder: add your own interactions here later */
+
+/* Curtain effect: main content can shift a bit near the end */
+.main-content {
+  will-change: transform;
+}
+
+/* если пользователь выключил анимации — ничего не двигаем */
+@media (prefers-reduced-motion: reduce) {
+  .main-content {
+    transform: none !important;
+  }
+}
+
+/* ====== CASE END (THANKS + PREV/NEXT) ====== */
+
+.case-end{
+  position: relative;
+  padding: 120px 0;
+  text-align: center;
+}
+
+/* Контент поверх хит-зон */
+.case-end__content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0; /* подгони как надо */
+}
+
+.case-end__content > *{
+  margin: 0;
+}
+
+/* Десктоп хит-зоны: две половины */
+.case-end__hit{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  text-decoration: none;
+}
+
+/* Левая / правая половина */
+.case-end__hit--prev{ left: 0; }
+.case-end__hit--next{ right: 0; }
+
+/* Курсор-подсказка */
+.case-end__hit--prev{ cursor: w-resize; }
+.case-end__hit--next{ cursor: e-resize; }
+
+/* Фокус для клавиатуры (важно) */
+.case-end__hit:focus-visible,
+.case-end__btn:focus-visible{
+  outline: 2px solid;
+  outline-offset: 4px;
+}
+
+/* Мобильная навигация: скрыта на десктопе */
+.case-end__mobile-nav{
+  display: none;
+  margin-top: 24px;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Кнопки мобилки: без стилей, только кликабельность */
+.case-end__btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border: 1px solid;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* На очень узких экранах можно скрыть текст и оставить стрелки */
+@media (max-width: 420px){
+  .case-end__btn-text{ display: none; }
+}
+
+/* На мобилке: показываем кнопки, скрываем хит-зоны */
+@media (max-width: 900px){
+  .case-end__hit{ display: none; }
+  .case-end__mobile-nav{ display: flex; }
+}
+
+/* ===== Floating cursor button ===== */
+.cursor-btn{
+  position: fixed;
+  left: 0;
+  top: 0;
+  transform: translate3d(-9999px, -9999px, 0);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 9999;
+  will-change: transform, opacity;
+}
+
+.cursor-btn.is-visible{
+  opacity: 1;
+}
+
+/* на хит-зонах скрываем системный курсор */
+.case-end__hit{
+  cursor: none;
+}
+
+/* базово */
+.cursor-btn svg{
+  transform-origin: 50% 50%;
+  transition: transform 160ms ease-out;
+}
+
+/* вправо */
+.cursor-btn.is-next svg{
+  transform: rotate(180deg);
+}
+
+/* нажатие */
+.cursor-btn.is-pressed svg{
+  transform: scale(0.92);
+}
+
+/* вправо + нажатие */
+.cursor-btn.is-next.is-pressed svg{
+  transform: rotate(180deg) scale(0.92);
+}
+
+/* мобилка: не надо */
+@media (max-width: 900px){
+  .cursor-btn{ display: none; }
+  .case-end__hit{ cursor: auto; }
+}
+
+
+
+/* ====== мои шаги карточка ====== */
+.steps-list{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.step-card{
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 40px;
+  padding: 38px 40px;
+}
+
+.step-card__title{
+  margin: 0;
+}
+
+.step-card__content > :first-child{
+  margin-top: 0;
+}
+
+.step-card__content ul {
+  margin: 0;
+}
+
+.step-card__links {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.step-card__links .link{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+/* базовая иконка */
+.step-card__links .link::before{
+  content: "";
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex: 0 0 24px;
+}
+
+/* конкретные иконки */
+.link--miro::before{
+  background-image: url("../assets/miro.svg");
+}
+
+.link--figma::before{
+  background-image: url("../assets/figma.svg");
+}
+
+@media (max-width: 900px){
+  .step-card{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+/* ====== Решенич ====== */
+
+.solution-item {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: start;
+}
+
+.solution-item__media {
+  margin: 0;
+  width: 100%;
+}
+
+.solution-item__media img{
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+/* ====== Two columns block (Goal + Hypothesis) ====== */
+
+.two-col{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin: 80px 0;
+}
+
+.two-col__item > :first-child{
+  margin-top: 0;
+}
+
+@media (max-width: 900px){
+  .two-col{
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* гипотеза на всю ширину */
+.two-col__item--full{
+  grid-column: 1 / -1;
+}
+
+/* ===== Before / After slider ===== */
+.ba{
+  width: 100%;
+  aspect-ratio: 1200 / 820;
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px;
+  --pos: 50%;
+}
+
+.ba__before,
+.ba__after{
+  position: absolute;
+  inset: 0;
+  margin: 0;
+}
+
+.ba img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ba__after{
+  clip-path: inset(0 0 0 var(--pos));
+}
+
+/* Рейндж поверх всего для ввода */
+.ba__range{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+/* Ручка */
+.ba__handle{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 64px;
+  left: var(--pos);
+  pointer-events: none;
+  z-index: 6; /* поверх картинок */
+}
+
+/* твой SVG-хендл */
+svg.ba__handle-icon{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%); /* центрируем на линии */
+  filter:
+  drop-shadow(0 16px 32px rgba(98,10,227,0.27))
+  drop-shadow(0 3px 6px rgba(98,10,227,0.43));
+  z-index: 11;
+}
+
+/* линия разделителя */
+.ba__handle::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: #E4D8F2;
+  opacity: 0.5;
+}
+
+/* ===== Header pills ===== */
+
+.site-header__nav{
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* общий вид пилюли */
+.nav-link{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 18px;
+  border-radius: 999px;
+
+  background: rgba(242,242,240,0.01);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+
+  text-decoration: none;
+  color: inherit;
+
+  transition:
+    padding-right 200ms ease-out,
+    padding-left 200ms ease-out,
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    border-color 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+.nav-link__icon{
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%) translateX(-6px);
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    opacity 200ms ease-out,
+    transform 200ms ease-out;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible{
+  background: var(--text);
+  color: var(--negative-text);
+  border-color: rgba(0,0,0,0.92);
+  padding-right: 44px;
+}
+
+.nav-link:hover .nav-link__icon,
+.nav-link:focus-visible .nav-link__icon{
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.nav-link:active{
+  transform: scale(0.98);
+}
+
+.nav-link--left{
+  padding-left: 14px;
+}
+
+.nav-link--left .nav-link__icon{
+  left: 14px;
+  right: auto;
+  transform: translateY(-50%) translateX(6px); /* выезжает слева */
+}
+
+.nav-link--left:hover,
+.nav-link--left:focus-visible{
+  padding-left: 44px;  /* расширяем влево */
+  padding-right: 14px;
+}
+
+.nav-link--left:hover .nav-link__icon,
+.nav-link--left:focus-visible .nav-link__icon{
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+.case-hero, 
+.case-text-block, 
+.two-col, 
+.results-block, 
+.steps-intro, 
+.solution-block__head, 
+.solution-item__text, 
+.case-reflection,
+.details {
+  padding-left: 40px;
+  padding-right:40px;
+}
+
+.solution-block__head,
+.steps-intro,
+.two-col__item {
+  display: flex;
+  flex-direction: column;
+  gap:8px;
+}
+
+.case-reflection {
+  display: flex;
+  flex-direction: column;
+  gap:32px;
+}
+/* исключение, если один инсайт */
+.single {
+  gap:8px;
+}

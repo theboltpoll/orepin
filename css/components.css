@@ -1,0 +1,523 @@
+/* chips */
+
+.chips {
+    display: flex;
+    gap: 8px;
+}
+
+.chips span {
+    background: var(--soft);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: var(--fs-p-s);
+}
+
+/* case-card */
+
+.case-card--negative {
+    color: var(--negative-text);
+    height: 756px;
+}
+
+.case-card--link{
+    background: var(--accent);
+
+}
+  
+.case-card--reg{
+    background: var(--bg-2);
+}
+  
+.case-card--copy{
+    background: var(--bg-2);
+}
+  
+  
+.case-card--marketing{
+    background: var(--bg-2);
+}
+  
+.case-card--ds{
+    background: var(--bg-2);
+}
+  
+.case-card--ranking{
+    background: var(--accent);
+}
+
+/* анимация типа */
+
+.case-card__top{
+    display: grid;
+    grid-template-rows: 0fr auto; /* тип схлопнут + заголовок */
+    row-gap: 8px;
+}
+
+.case-card__type{
+    overflow: hidden;        /* чтобы 0fr реально скрывал */
+    font-size: var(--fs-p-xs);
+    color: var(--muted);
+    min-height: 0;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+  
+/* важный хак для 0fr -> 1fr: нужен внутренний врап */
+.case-card__type > * { margin: 0; } /* если внутри будут спаны */
+  
+@media (hover: hover){
+    .case-card:hover .case-card__top,
+    .case-card:focus-visible .case-card__top{
+        grid-template-rows: 1fr auto; /* тип раскрывается */
+    }
+  
+    .case-card:hover .case-card__type,
+    .case-card:focus-visible .case-card__type{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+  
+/* чтобы grid-template-rows анимировался */
+.case-card__top{
+    transition: grid-template-rows 200ms ease-out;
+}
+
+/* меняем цвет текста типа в больших карточках */
+
+.case-card--negative .case-card__type {
+    color: var(--negative-text-muted);
+}
+
+.case-card__stats {
+    font-size: var(--fs-p-s);
+}
+
+.case-card__stats strong {
+    font-weight: 900;
+    color: var(--accent);
+}
+
+.case-card--negative .case-card__stats strong {
+    font-size: var(--fs-h3);
+    color: var(--negative-text);
+    font-family: var(--font-h);
+    font-weight: 700;
+}
+
+.case-card--negative .case-card__stats {
+    gap: var(--s-40);
+}
+
+.case-card--negative .case-card__stats div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* animation cards */
+
+/* 1) Большой слева */
+.case-card--link .svg-a{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 566px;
+    height: 506px;
+    transform: scale(1);
+}
+  
+.case-card--link .svg-b{
+    position: absolute;
+    right: -49px;
+    bottom: 543px;
+    width: 113px;
+    height: 113px;
+    transform: translate(0, 0) rotate(-16deg);
+}
+
+.case-card--link .svg-c{
+    position: absolute;
+    right: 724px;
+    bottom: 293px;
+    width: 91px;
+    height: 91px;
+    transform: translate(0, 0) rotate(36deg);
+}
+  
+@media (hover: hover){
+    .case-card--link:hover .svg-a{
+        transform: scale(1.05);
+    }
+  
+    .case-card--link:hover .svg-b{
+        transform: translate(-27px, 0) rotate(-28deg);
+    }
+
+    .case-card--link:hover .svg-c{
+        transform: translate(34px, 0) rotate(46deg);
+    }
+}
+
+/* 2) Маленькая справа-1 */
+.case-card--reg .svg-a{
+    position: absolute;
+    right: -24px;
+    bottom: 66px;
+    width: 123px;
+    height: 67px;
+    transform: translate(0, 0) rotate(-7.14deg);
+}
+  
+.case-card--reg .svg-b{
+    position: absolute;
+    right: 25px;
+    bottom: 103px;
+    width: 95px;
+    height: 52px;
+    transform: translate(0, 0) rotate(10deg);
+}
+
+@media (hover: hover){
+    .case-card--reg:hover .svg-a{
+      transform: translate(-3px,-8px) rotate(-6deg);
+    }
+  
+    .case-card--reg:hover .svg-b{
+      transform: translate(-8px,-10px) rotate(12deg);
+    }
+}
+
+  /* 3) Маленькая справа-2 */
+.case-card--copy .svg-a{
+    position: absolute;
+    right: 4px;
+    bottom: 36px;
+    width: 50px;
+    height: 50px;
+    transform: translate(0, 0) rotate(12deg);
+}
+  
+.case-card--copy .svg-b{
+    position: absolute;
+    right: -21px;
+    bottom: 108px;
+    width: 61px;
+    height: 61px;
+    transform: translate(0, 0) rotate(-8deg);
+}
+
+.case-card--copy .svg-c{
+    position: absolute;
+    right: 21px;
+    bottom: 61px;
+    width: 79px;
+    height: 79px;
+    transform: translate(0, 0) rotate(329deg);
+}
+  
+@media (hover: hover){
+    .case-card--copy:hover .svg-a{
+        transform: translate(-7px, -5px) rotate(2deg);
+    }
+  
+    .case-card--copy:hover .svg-b{
+        transform: translate(-19px, -7px) rotate(-13deg);
+    }
+
+    .case-card--copy:hover .svg-c{
+        transform: translate(-10px, -4px) rotate(328deg);
+      }
+}
+
+  /* 4) Большой справа снизу */
+.case-card--ranking .svg-a{
+    position: absolute;
+    left: 142px;
+    top: -103px;
+    width: 354px;
+    height: 354px;
+    transform: translate(0, 0) rotate(211deg);
+}
+  
+.case-card--ranking .svg-b{
+    position: absolute;
+    right: -62px;
+    top: 31px;
+    width: 217px;
+    height: 217px;
+    transform: translate(0, 0) rotate(109deg);
+}
+
+.case-card--ranking .svg-c{
+    position: absolute;
+    left: 167px;
+    bottom: -66px;
+    width: 195px;
+    height: 195px;
+    transform: translate(0, 0) rotate(279deg);
+}
+
+.case-card--ranking .svg-d{
+    position: absolute;
+    left: -104px;
+    bottom: 239px;
+    width: 270px;
+    height: 270px;
+    transform: translate(0, 0) rotate(299deg);
+}
+
+.case-card--ranking .svg-e{
+    position: absolute;
+    right: 181px;
+    bottom: -39px;
+    width: 308px;
+    height: 505px;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+}
+
+.case-card--ranking .svg-f{
+    position: absolute;
+    right: 0px;
+    bottom: -26px;
+    width: 254px;
+    height: 538px;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+}
+  
+@media (hover: hover){
+    .case-card--ranking:hover .svg-a{
+        transform: translate(-20px, 30px) rotate(211deg);
+    }
+  
+    .case-card--ranking:hover .svg-b{
+        transform: translate(-10px, 10px) rotate(109deg);
+    }
+
+    .case-card--ranking:hover .svg-c{
+        transform: translate(1px, -10px) rotate(279deg);
+    }
+
+    .case-card--ranking:hover .svg-d{
+        transform: translate(20px, -20px) rotate(299deg);
+    }
+
+    .case-card--ranking:hover .svg-e{
+        transform: translate(0, 0) rotate(0deg) scale(1.05);
+    }
+
+    .case-card--ranking:hover .svg-f{
+        transform: translate(0, 0) rotate(0deg) scale(1.05);
+    }
+}
+
+  /* 5) Маленькая слева снизу-1 */
+.case-card--marketing .svg-a{
+    position: absolute;
+    left: -187px;
+    bottom: 117px;
+    width: 85px;
+    height: 68px;
+    transform: translate(0, 0) rotate(0deg);
+}
+  
+.case-card--marketing .svg-b{
+    position: absolute;
+    right: -17px;
+    bottom: 34px;
+    width: 113px;
+    height: 66px;
+    transform: translate(0, 0) rotate(0deg);
+}
+  
+@media (hover: hover){
+    .case-card--marketing:hover .svg-a{
+       transform: translate(28px, 10px) rotate(0deg);
+    }
+  
+    .case-card--marketing:hover .svg-b{
+      transform: translate(-28px,-10px) rotate(0deg);
+    }
+}
+
+  /* 6) Маленькая слева снизу-2 */
+.case-card--ds .svg-a{
+    position: absolute;
+    left: -35px;
+    bottom: 35px;
+    width: 105px;
+    height: auto;
+    transform: translate(0,0) rotate(7deg);
+}
+  
+.case-card--ds .svg-b{
+    position: absolute;
+    left: 25px;
+    bottom: 75px;
+    width: 85px;
+    height: auto;
+    transform: translate(0,0) rotate(-9deg);
+}
+  
+@media (hover: hover){
+    .case-card--ds:hover .svg-a{
+      transform: translate(6px,-8px) rotate(9deg);
+    }
+  
+    .case-card--ds:hover .svg-b{
+      transform: translate(12px,-14px) rotate(-6deg);
+    }
+}
+
+.case-card--marketing {
+    background: var(--bg-2) url("../assets/card-pattern.png") 25px 25px repeat;
+}
+
+.case-card__negative {
+    width:100%;
+    height: 100%;
+}
+
+.case-card--link {
+    background-image: url("../assets/card-link-bg.png");
+}
+
+.case-card--ranking {
+    background-image: url("../assets/card-ranking-bg.png");
+}
+
+/* hobby */
+  /* Заголовок */
+  .hobby-section h3{
+    margin: 0 0 28px;
+  }
+  
+  /* Сетка */
+  .hobby-grid{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  
+  /* Карточка */
+  .hobby-item{
+    display:flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0; /* чтобы текст нормально переносился */
+  }
+  
+  .hobby-item__img{
+    width: 100%;
+    object-fit: cover;
+    border-radius: 32px;
+    display: block;
+  }
+  
+  /* Текст */
+  .hobby-item__text{
+    margin: 16px 0 0;
+    font-size: var(--fs-p-s);
+    font-weight: 400;
+  }
+  
+  .hobby-item__title{
+    display: block;
+    color: var(--negative-text);
+  }
+  
+  .hobby-item__desc{
+    display: block;
+    color: var(--negative-text-soft);
+  }
+  
+  /* Адаптив */
+  @media (max-width: 900px){
+    .hobby-grid{
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+
+/* case case case case case case case case */
+
+/* radius 40 */
+.case-video video, 
+.results-block, 
+.step-card, 
+.solution-item__media video,
+.solution-item__media img,
+.case-img img {
+    border-radius: var(--s-40);
+}
+
+/* results */
+.results-block {
+    display: flex;
+    flex-direction: column;
+    gap:8px;
+    border: 6px solid var(--accent);
+    padding: 38px 40px;
+}
+
+.results-block h3 {
+    color: var(--accent);
+}
+
+.results-block ul {
+    margin:0;
+}
+
+/* steps */
+.step-card {
+    background: var(--bg-2);
+}
+
+/* reflection */
+.insight h4 {
+    font-size: var(--fs-p-m);
+    font-weight: 800;
+}
+
+.case-text-block--compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+.case-text-block--compact h3{
+    margin: 0 0 8px;
+}
+  
+.case-text-block--compact ul,
+.case-text-block--compact p{
+    margin: 0 0 80px 0;
+}
+
+.case-text-block--compact p:last-child{
+    margin: 0;
+}
+
+
+/* Анимация тряски */
+.case-card--disabled {
+  cursor: not-allowed;
+}
+
+@keyframes card-bounce {
+    0%   { transform: translateX(0); }
+    20%  { transform: translateX(-10px); }
+    40%  { transform: translateX(8px); }
+    60%  { transform: translateX(-5px); }
+    80%  { transform: translateX(3px); }
+    100% { transform: translateX(0); }
+  }
+  
+  .case-card.is-bounce {
+    animation: card-bounce 500ms ease-out;
+  }

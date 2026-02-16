@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Мини-кейс — Регулярные исследования</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/layout.css" />
+  <link rel="stylesheet" href="../css/base.css" /> 
+  <link rel="stylesheet" href="../css/components.css" /> 
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet">
+
+  <!-- JS -->
+  <script defer src="../js/include.js"></script>
+  <script defer src="../js/cursor-btn.js"></script>
+</head>
+<body class="theme-other">
+
+<!-- Reusable header -->
+<div data-include="../partials/header.html"></div>
+
+<main class="container">
+
+<section class="case-hero">
+  <div class="chips">
+    <span>Мини‑кейс</span>
+    <span>Март 2025</span>
+  </div>
+  <h1>Автоматизировал регулярные исследования</h1>
+</section>
+
+<section class="case-video">
+  <video autoplay loop muted playsinline>
+    <source src="../webM/regular-surveys.webm" type="video/webm">
+  </video>
+</section>
+
+<section class="case-text-block">
+  <p>Исследователи запускают регулярные опросы раз в квартал и ожидают, что пользователи увидят их повторно.</p>
+  <p>Но в нашей системе опрос показывался человеку только один раз. Новые кампании перетягивали на себя весь трафик, а исследователи были вынуждены создавать новые кампании каждый период. </p>
+  <p>Кабинеты крупных клиентов быстро разрастались до сотен дублей, сравнивать периоды становилось сложно, а большая часть времени уходила на рутину вместо анализа.</p>
+</section>
+
+<section class="two-col">
+  <article class="two-col__item">
+    <h3>Бизнес‑цель</h3>
+    <p>Облегчить регулярные исследования для крупных клиентов, чтобы снизить их операционные затраты, повысить лояльность и удержание, и сократить риск перехода на сторонние инструменты.</p>
+  </article>
+
+  <article class="two-col__item">
+    <h3>Продуктовая цель</h3>
+    <p>Увеличить adoption новой настройки — чтобы исследователи действительно пользовались регулярным показом, а не продолжали создавать десятки дублей.</p>
+  </article>
+
+  <article class="two-col__item two-col__item--full">
+    <h3>Гипотеза</h3>
+    <p>Если дать исследователям возможность настроить повторный показ в одной кампании и подсветить это изменение в интерфейсе, то они перестанут плодить дубли и начнут использовать фичу регулярно.</p>
+  </article>
+</section>
+
+<section class="results-block">
+  <h3>Результаты</h3>
+
+  <ul>
+    <li>Через месяц после релиза: <strong>13 клиентов / 40 кампаний</strong></13> с настройкой.</li>
+    <li>Через два месяца: <strong>53 клиента / 554 кампаний</strong> с настройкой.</li>
+    <li>Переходы к шагу «Другие» настройки выросли примерно на <strong>+25%.</strong></li>
+    <li>Исследователи перестали создавать дубль‑кампании.</li>
+  </ul>
+</section>
+
+<section class="solution-block">
+  <header class="solution-block__head">
+    <h3>Мои решения</h3>
+  </header>
+
+  <div class="solution-list">
+    <article class="solution-item" style="margin-top: 8px;">
+      <div class="solution-item__text">
+        <p><strong>Что сделал:</strong> Сделал возможность запускать один и тот же опрос повторно с заданным интервалом. Пользователь один раз включает регулярность — дальше опрос сам возвращается к респондентам через выбранный период.</p>
+        <p><strong>Зачем:</strong> Клиентам важно сравнивать ответы во времени, а не пересобирать опрос каждый квартал.</p>
+        <p><strong>Итог:</strong> Исследователи стали вести регулярные замеры в одной кампании, не дублируя опросы.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-regular-surveys-01.png" alt="«Другие настройки» с возможностью включить регулярность в опросах">
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Что сделал:</strong> Решил конфликт с многократным показом. Добавил предупреждение и короткое пояснение, когда включены несовместимые настройки.</p>
+        <p><strong>Зачем:</strong> Чтобы пользователь сразу видел конфликт и не удивлялся, почему вторая настройка перестала работать.</p>
+        <p><strong>Итог:</strong> Настройки воспринимаются предсказуемо и не вызывают вопросов.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-regular-surveys-02.png" alt="Подсветка конфликтующих функций, расположенных в разных местах">
+      </figure>
+    </article>
+
+    <article class="solution-item">
+      <div class="solution-item__text">
+        <p><strong>Что сделал:</strong> Заложил онбординг в релиз новой настройки. Подсветил шаг, где она появляется, добавил бейдж и точечную рекомендацию для релевантных пользователей.</p>
+        <p><strong>Зачем:</strong> Настройка спрятана глубоко. Без подсказки большинство пользователей её бы не нашли.</p>
+        <p><strong>Итог:</strong> Пользователи быстрее находят настройку и включают её без лишних вопросов. Онбординг срабатывает в моменте и не мешает работе.</p>
+      </div>
+
+      <figure class="solution-item__media">
+        <img src="../assets/case-regular-surveys-03.png" alt="Онбординг фичи">
+      </figure>
+    </article>
+
+  </div>
+</section>
+
+<section class="case-end" aria-label="Навигация по проектам">
+  <!-- Десктоп: кликабельные половины -->
+  <a class="case-end__hit case-end__hit--prev" href="./case-link.html" aria-label="Предыдущий проект"></a>
+  <a class="case-end__hit case-end__hit--next" href="./case-copying-campaigns.html" aria-label="Следующий проект"></a>
+
+  <div data-include="../partials/footer.html"></div>
+
+  <div class="cursor-btn" aria-hidden="true">
+    <!-- сюда вставишь свой SVG, можно один и просто поворачивать -->
+    <svg width="50" height="50" viewBox="0 0 50 50">
+      <path d="M0 20C0 8.9543 8.95431 0 20 0H30C41.0457 0 50 8.95431 50 20V30C50 41.0457 41.0457 50 30 50H20C8.9543 50 0 41.0457 0 30V20Z" fill="#0A0A0A"/>
+      <path d="M23.7969 25.0008L27.6969 28.9008C27.8802 29.0841 27.9719 29.3174 27.9719 29.6008C27.9719 29.8841 27.8802 30.1174 27.6969 30.3008C27.5135 30.4841 27.2802 30.5758 26.9969 30.5758C26.7135 30.5758 26.4802 30.4841 26.2969 30.3008L21.6969 25.7008C21.5969 25.6008 21.526 25.4924 21.4844 25.3758C21.4427 25.2591 21.4219 25.1341 21.4219 25.0008C21.4219 24.8674 21.4427 24.7424 21.4844 24.6258C21.526 24.5091 21.5969 24.4008 21.6969 24.3008L26.2969 19.7008C26.4802 19.5174 26.7135 19.4258 26.9969 19.4258C27.2802 19.4258 27.5135 19.5174 27.6969 19.7008C27.8802 19.8841 27.9719 20.1174 27.9719 20.4008C27.9719 20.6841 27.8802 20.9174 27.6969 21.1008L23.7969 25.0008Z" fill="white"/>
+    </svg> 
+  </div>
+
+  <!-- Мобилка: две кнопки -->
+  <nav class="case-end__mobile-nav" aria-label="Переключение проектов">
+    <a class="case-end__btn" href="./case-link.html" aria-label="Предыдущий проект">
+      ← <span class="case-end__btn-text">Предыдущий</span>
+    </a>
+    <a class="case-end__btn" href="./case-copying-campaigns.html" aria-label="Следующий проект">
+      <span class="case-end__btn-text">Следующий</span> →
+    </a>
+  </nav>
+</section>
+
+</main>
+
+</body>
+</html>
