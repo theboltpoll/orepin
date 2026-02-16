@@ -820,3 +820,38 @@ svg.ba__handle-icon{
 .single {
   gap:8px;
 }
+
+.mobile-lock {
+  display: none;
+}
+
+/* Блокировка на мобильной версии */
+@media (max-width: 980px) {
+  body > *:not(.mobile-lock) {
+    display: none !important;
+  }
+
+  .mobile-lock {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    color: var(--text);
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    text-align: center;
+    z-index: 99999;
+  }
+
+  .mobile-lock__content {
+    max-width: 420px;
+  }
+  .mobile-lock__content span {
+    font-size: var(--fs-h1);
+  }
+
+  .mobile-lock h2 {
+    margin-bottom: 16px;
+  }
+}
