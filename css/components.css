@@ -530,3 +530,99 @@
       padding-left: 40px;
     }
   }
+
+  .free {
+    margin-top:32px;
+  }
+
+
+ /* ===== Hover slider ===== */
+.hover-slider{
+    position: relative;
+    overflow: hidden;
+    border-radius: 40px;
+    cursor: pointer; /* общий pointer */
+  }
+  
+  /* фокус с клавиатуры */
+  .hover-slider:focus{
+    outline: none;
+  }
+  .hover-slider__hit:focus{
+    outline: none;
+  }
+
+  .hover-slider:focus-visible{
+    outline: 2px solid rgba(0,0,0,0.35);
+    outline-offset: 8px;
+  }
+  
+  .hover-slider__img{
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none; /* клики ловят хит-зоны */
+  }
+  
+  /* две половины: кликаем по картинке */
+  .hover-slider__hit{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    z-index: 5;
+  }
+  .hover-slider__hit--prev{ left: 0; }
+  .hover-slider__hit--next{ right: 0; }
+  
+  /* визуальные кнопки */
+  .hover-slider__nav{
+    position: absolute;
+    inset: 0;
+    pointer-events: none; /* важно: чтобы клики шли в hit-зоны */
+    z-index: 10;
+  }
+  
+  .hover-slider__btn{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) scale(1);
+    width: 50px;
+    height: 50px;
+  
+    opacity: 0;
+    transition: opacity 160ms ease-out, transform 160ms ease-out;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.25));
+  }
+  
+  /* позиции */
+  .hover-slider__btn--prev{ left: 24px; }
+  .hover-slider__btn--next{ right: 24px; }
+  
+  /* развернуть стрелку для next */
+  .hover-slider__btn--next .hover-slider__icon{
+    transform: rotate(180deg);
+    transform-origin: 50% 50%;
+  }
+  
+  /* показываем нужную кнопку при наведении на половину */
+  .hover-slider__hit--prev:hover ~ .hover-slider__nav .hover-slider__btn--prev{
+    opacity: 1;
+    transform: translateY(-50%) scale(1.04);
+  }
+  .hover-slider__hit--next:hover ~ .hover-slider__nav .hover-slider__btn--next{
+    opacity: 1;
+    transform: translateY(-50%) scale(1.04);
+  }
+  
+/* клик-эффект всегда */
+.hover-slider__btn.is-pressed{
+    transform: translateY(-50%) scale(0.96) !important;
+  }
+  
