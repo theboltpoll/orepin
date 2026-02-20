@@ -22,6 +22,7 @@
 
   <!-- JS -->
   <script defer src="../js/include.js"></script>
+  <script defer src="../js/video-loader.js"></script>
   <script defer src="../js/ba-slider.js"></script>
   <script defer src="../js/cursor-btn.js"></script>
 </head>
@@ -46,9 +47,13 @@
 </section>
 
 <section class="case-video">
-  <video autoplay loop muted playsinline>
-    <source src="../webM/link.webm" type="video/webm">
-  </video>
+  <div class="case-video__inner">
+    <div class="case-video__skeleton"></div>
+
+    <video autoplay loop muted playsinline preload="metadata">
+      <source src="../webM/link.webm" type="video/webm">
+    </video>
+  </div>
 </section>
 
 <section class="case-text-block">
