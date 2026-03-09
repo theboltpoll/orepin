@@ -7,7 +7,7 @@
 
 .chips span {
     background: var(--soft);
-    padding: 10px 20px;
+    padding: 4px 16px;
     border-radius: 25px;
     font-size: var(--fs-p-s);
 }
@@ -16,7 +16,6 @@
 
 .case-card--negative {
     color: var(--negative-text);
-    height: 756px;
 }
 
 .case-card--link{
@@ -113,6 +112,12 @@
 .case-card--negative .case-card__stats div {
     display: flex;
     flex-direction: column;
+}
+
+.case-card__stats strong,
+.case-card__stats{
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
 /* animation cards */
@@ -370,7 +375,7 @@
 }
 
 .case-card--marketing {
-    background: var(--bg-2) url("../assets/card-pattern.png") 25px 25px repeat;
+    background: var(--bg-2) url("../assets/card-pattern.webp") 25px 25px repeat;
 }
 
 .case-card__negative {
@@ -379,81 +384,118 @@
 }
 
 .case-card--link {
-    background-image: url("../assets/card-link-bg.png");
+    background-image: url("../assets/card-link-bg.webp");
 }
 
 .case-card--ranking {
-    background-image: url("../assets/card-ranking-bg.png");
+    background-image: url("../assets/card-ranking-bg.webp");
 }
 
-/* hobby */
-  /* Заголовок */
-  .hobby-section h3{
-    margin: 0 0 28px;
-  }
-  
-  /* Сетка */
-  .hobby-grid{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
-  
-  /* Карточка */
-  .hobby-item{
-    display:flex;
-    flex-direction: column;
-    gap: 16px;
-    min-width: 0; /* чтобы текст нормально переносился */
-  }
-  
-  .hobby-item__img{
-    width: 100%;
-    object-fit: cover;
-    border-radius: 32px;
-    display: block;
-  }
-  
-  /* Текст */
-  .hobby-item__text{
-    margin: 16px 0 0;
-    font-size: var(--fs-p-s);
-    font-weight: 400;
-  }
-  
-  .hobby-item__title{
-    display: block;
-    color: var(--negative-text);
-  }
-  
-  .hobby-item__desc{
-    display: block;
-    color: var(--negative-text-soft);
-  }
-  
-  /* Адаптив */
-  @media (max-width: 900px){
-    .hobby-grid{
-      grid-template-columns: 1fr;
-      gap: 20px;
+
+/* --- mobile cards --- */
+
+@media (max-width: 600px){
+
+    .case-card__content {
+        color: var(--negative-text);
     }
-  }
+    .case-card__type {
+        color: rgba(255,255,255,0.6);
+    }
+
+    /* медиа компактнее */
+    .case-card__media{
+        display: none;
+      }
+  
+      /* для больших карточек даём больше воздуха снизу */
+      .case-card--negative .case-card__content{
+        padding-bottom: 140px;
+      }
+  
+      /* статы в мобильной карточке */
+      .case-card .case-card__stats{
+        margin-top: 32px;
+        display: flex;
+        gap: 16px;
+        flex-flow: row;
+      }
+
+      .case-card__stats {
+        font-size: var(--fs-p-s);
+        line-height: var(--lh-p-s);
+      }
+
+     .case-card__stats strong, .case-card__stats span strong {
+        font-size: var(--fs-h4);
+        line-height: var(--lh-h4);
+        color: var(--negative-text);
+     }
+
+     .case-card__stats div {
+        display: flex;
+        flex-flow: column;
+        gap:0;
+     }
+     
+     .case-card__stats div:nth-child(3) {
+        display: none;
+     }
+
+     .case-card--marketing .case-card__content,
+     .case-card--ds .case-card__content {
+        color: var(--text);
+     }
+     
+     .case-card--marketing .case-card__content .case-card__type, 
+     .case-card--ds .case-card__content  .case-card__type {
+        color: var(--muted);
+     }
+
+     .case-card--marketing strong, 
+     .case-card--ds strong {
+        color: var(--accent);
+     }
+
+      .case-card--link { background:#8A53F6 url("../assets/mob-card-001.webp") center bottom / cover no-repeat; }
+
+      .case-card--reg { background:#263CE0 url("../assets/mob-card-002.webp") center bottom / cover no-repeat; }
+
+      .case-card--copy { background:#263CE0 url("../assets/mob-card-003.webp") center bottom / cover no-repeat; }
+    
+      .case-card--ranking { background:#9458DC url("../assets/mob-card-004.webp") center bottom / cover no-repeat; }
+
+      .case-card--marketing { background:#FFFFFF url("../assets/mob-card-005.webp") center bottom / cover no-repeat; }
+      
+      .case-card--ds { background:#FFFFFF; }
+
+      .case-card__top{
+        grid-template-rows: auto auto;
+        transition: none;
+      }
+    
+      .case-card__type{
+        opacity: 1;
+        transform: none;
+        min-height: auto;
+        transition: none;
+      }
+         
+}
+/* --- end mobile cards --- */
 
 
 /* case case case case case case case case */
 
-/* radius 40 */
+/* radius */
 .case-video video, 
 .results-block, 
 .step-card, 
 .solution-item__media video,
 .solution-item__media img,
-.case-img img {
-    border-radius: var(--s-40);
+.case-img img,
+.more-work-card {
+    border-radius: var(--s-32);
 }
 
 /* results */
@@ -462,7 +504,7 @@
     flex-direction: column;
     gap:8px;
     border: 6px solid var(--accent);
-    padding: 38px 40px;
+    padding: 38px 28px;
 }
 
 .results-block h3 {
@@ -522,15 +564,6 @@
     animation: card-bounce 500ms ease-out;
   }
 
-
-  @media (max-width: 1200px) {
-    .hero,
-    .hobby-section {
-      padding-right: 40px;
-      padding-left: 40px;
-    }
-  }
-
   .free {
     margin-top:32px;
   }
@@ -540,7 +573,7 @@
 .hover-slider{
     position: relative;
     overflow: hidden;
-    border-radius: 40px;
+    border-radius: 32px;
     cursor: pointer; /* общий pointer */
   }
   
@@ -625,4 +658,160 @@
 .hover-slider__btn.is-pressed{
     transform: translateY(-50%) scale(0.96) !important;
   }
+
+
+
+/* --- cases --- */
+@media (max-width: 600px){ 
+    .case-video video, .results-block, .step-card, .solution-item__media video, .solution-item__media img, .case-img img, .ba, .more-work-card {
+        border-radius: var(--s-24);
+    }
+
+    .results-block, .step-card {
+        padding: 32px 22px;
+    }
+
+    .results-block ul, .step-card__content ul, .case-text-block ul {
+        padding-inline-start: 24px;
+    }
+
+    .results-block ul li, .step-card__content ul li, .case-text-block ul li {
+        margin-top: 12px;
+    }
+
+    .case-text-block--compact ul, .case-text-block--compact p {
+        margin: 0 0 40px 0;
+    }
+
+    .step-card__links {
+        gap: 24px;
+        margin-top: 24px;
+    }
+
+    h5 {
+        font-size: var(--fs-h4);
+        line-height: var(--lh-h4);
+    }
+
+}
+
+
+/* =============================
+   MORE WORK
+   ============================= */
+
+  .more-work__head{
+    margin-bottom: 24px;
+  }
   
+  .more-work__grid{
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  
+  .more-work-card{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-height: 150px;
+    padding: 32px;
+    background: var(--bg-2);
+    color: var(--text);
+    text-decoration: none;
+    overflow: hidden;
+    transition:
+      transform 160ms ease-out,
+      background-color 160ms ease-out,
+      color 160ms ease-out;
+  }
+  
+  .more-work-card:hover,
+  .more-work-card:focus-visible{
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  .more-work-card:active{
+    transform: scale(0.98);
+  }
+  
+  .more-work-card__type{
+    font-size: var(--fs-p-xs);
+    line-height: var(--lh-p-xs);
+    color: var(--muted);
+  }
+  
+  .more-work-card__title{
+    font-size: var(--fs-p-s);
+    line-height: var(--lh-p-s);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  
+  .more-work-card--negative{
+    color: var(--negative-text);
+  }
+  
+  .more-work-card--negative .more-work-card__type{
+    color: var(--negative-text-muted);
+  }
+  
+  /* фоны-заглушки, потом заменишь своими bg-image/bg-color */
+  .more-work-card--link{
+    background: var(--accent);
+  }
+  
+  .more-work-card--ranking{
+    background: #9458DC;
+  }
+  
+  .more-work-card--reg,
+  .more-work-card--copy,
+  .more-work-card--marketing,
+  .more-work-card--ds{
+    background: var(--bg-2);
+  }
+  
+  /* планшет */
+  @media (max-width: 900px){
+    .more-work__grid{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  
+    .more-work-card{
+      min-height: 140px;
+      padding: 20px;
+      border-radius: 24px;
+    }
+  }
+  
+  /* мобилка */
+  @media (max-width: 600px){
+    .more-work__head{
+      margin-bottom: 16px;
+    }
+  
+    .more-work__grid{
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  
+    .more-work-card{
+      min-height: 132px;
+      padding: 20px;
+    }
+  
+    .more-work-card__title{
+      font-size: var(--fs-p-m);
+      line-height: var(--lh-p-m);
+    }
+  }
+
+  .more-work-card--link{
+    background: #8A53F6 url("../assets/nav-card-bg-link.webp") center / cover no-repeat;
+  }
+  
+  .more-work-card--ranking{
+    background: #9458DC url("../assets/nav-card-bg-ranking.webp") center / cover no-repeat;
+  }

@@ -8,21 +8,17 @@
   <!-- CSS -->
   <link rel="stylesheet" href="./css/layout.css" />
   <link rel="stylesheet" href="./css/base.css" /> 
-  <link rel="stylesheet" href="../css/components.css" /> 
+  <link rel="stylesheet" href="./css/components.css" /> 
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Libre+Franklin:wght@400;700&display=swap&subset=latin,cyrillic" rel="stylesheet">
   
   <!-- JS -->
   <script defer src="./js/include.js"></script>
+  <script defer src="./js/mobile-menu.js"></script>
   <script defer src="./js/hobbies-reveal.js"></script>
-  <script defer src="./js/title-reveal.js"></script>
 </head>
 <body class="theme-link">
 
@@ -33,11 +29,12 @@
     <div class="container">
 
       <section class="hero">
-        <h1 class="hero-title" data-word-reveal>
-          Продуктовый дизайнер.<br>
-          Соединяю цели бизнеса и опыт пользователей
+        <h1 class="hero-title">
+          Продуктовый<br>дизайнер
         </h1>
-        <p>6 лет развивал B2B SaaS‑платформу по сбору и анализу фидбека. Как единственный дизайнер, вел основной продукт с Web‑опросами и запустил два новых: опросы по ссылке и в мобильных приложениях. За это время, компания выросла примерно в 10 раз по клиентам и выручке.</p>
+        <p class="p-l">6 лет отвечал за развитие B2B SaaS‑платформы UX Feedback.<br>
+          Как единственный дизайнер вел основной продукт и запустил два новых.<br>
+          За это время компания выросла в 10× по клиентам и выручке.</p>
       </section>
 
       <section class="cases-grid" aria-label="Кейсы">
@@ -47,7 +44,7 @@
           <div class="case-card__content">
             <div class="case-card__top">
               <p class="case-card__type">Кейс</p>
-              <h3 class="case-card__title">Как я запускал новый продукт UX Feedback Link</h3>
+              <h4 class="case-card__title">Как я запускал новый продукт UX Feedback Link</h4>
             </div>
       
             <div class="case-card__stats">
@@ -75,7 +72,7 @@
               <path d="M33.945 50.2656C39.0641 50.2656 43.1058 54.3026 43.1065 59.4178C43.1065 64.5498 38.9722 68.7163 33.9027 68.6398C28.1859 68.5539 24.6574 63.7655 24.76 59.3326C24.8774 54.2892 28.8507 50.2656 33.945 50.2656Z" fill="#171615"/>
               <path d="M55.7697 82.8004C51.2289 82.6287 46.8564 81.1304 43.6069 77.141C42.8338 76.1969 42.2469 75.1145 41.8775 73.9514C41.6152 73.1255 41.9527 72.3546 42.6711 72.0057C43.3896 71.6568 44.1905 71.8789 44.6836 72.6021C46.8162 75.7475 49.9234 77.3081 53.5466 77.8925C57.5172 78.5326 61.2893 77.8985 64.7105 75.663C65.8639 74.9049 66.8583 73.929 67.638 72.79C68.2746 71.8715 69.0548 71.6192 69.8578 72.0627C70.6077 72.4767 70.8211 73.261 70.4293 74.2768C69.191 77.4973 66.8162 79.6202 63.7955 81.1009C61.4013 82.2757 58.8481 82.7615 55.7697 82.8004Z" fill="#171615"/>
             </svg>  
-            <img class="media-svg svg-a" src="./assets/card-link-ipad.png">    
+            <img class="media-svg svg-a" src="./assets/card-link-ipad.webp">    
           </div>
         </a>
       
@@ -83,7 +80,7 @@
         <a class="case-card case-card--reg" href="./html/case-regular-surveys.html">
           <div class="case-card__content">
             <div class="case-card__top">
-              <p class="case-card__type">Мини-кейс</p>
+              <p class="case-card__type">Мини‑кейс</p>
               <h4 class="case-card__title">Автоматизировал регулярные исследования</h4>
             </div>
       
@@ -111,13 +108,13 @@
         <a class="case-card case-card--copy" href="./html/case-copying-campaigns.html">
           <div class="case-card__content">
             <div class="case-card__top">
-              <p class="case-card__type">Мини-кейс</p>
+              <p class="case-card__type">Мини‑кейс</p>
               <h4 class="case-card__title">Реализовал копирование между проектами</h4>
             </div>
       
             <div class="case-card__stats">
               <div><strong>2 666</strong> копий</div>
-              <div>В <strong>2.6</strong> раза популярнее</div>
+              <div><strong>2.6×</strong> популярнее</div>
             </div>
           </div>
       
@@ -153,17 +150,17 @@
           <div class="case-card__content">
             <div class="case-card__top">
               <p class="case-card__type">История</p>
-              <h3 class="case-card__title">Ранжирование в опросах: как я готовил новый тип вопроса к релизу</h3>
+              <h4 class="case-card__title">Ранжирование в опросах: как я готовил новый тип вопроса к релизу</h4>
             </div>
       
             <div class="case-card__stats">
               <div>
                 <strong>7</strong>
-                <span>интервью<br>с исследователями</span>
+                <span>глубинных<br>интервью</span>
               </div>
               <div>
                 <strong>3</strong>
-                <span>итерации<br>UX-тестов</span>
+                <span>итерации<br>UX‑тестов</span>
               </div>
             </div>
           </div>
@@ -181,17 +178,16 @@
             <svg class="media-svg svg-d" viewBox="0 0 270 270">
               <path d="M181.969 146.252H56.25C53.0625 146.252 50.3906 145.174 48.2344 143.017C46.0781 140.861 45 138.189 45 135.002C45 131.814 46.0781 129.142 48.2344 126.986C50.3906 124.83 53.0625 123.752 56.25 123.752H181.969L126.844 68.6267C124.594 66.3767 123.516 63.7517 123.609 60.7517C123.703 57.7517 124.875 55.1267 127.125 52.8767C129.375 50.8142 132 49.7361 135 49.6423C138 49.5486 140.625 50.6267 142.875 52.8767L217.125 127.127C218.25 128.252 219.047 129.47 219.516 130.783C219.984 132.095 220.219 133.502 220.219 135.002C220.219 136.502 219.984 137.908 219.516 139.22C219.047 140.533 218.25 141.752 217.125 142.877L142.875 217.127C140.812 219.189 138.234 220.22 135.141 220.22C132.047 220.22 129.375 219.189 127.125 217.127C124.875 214.877 123.75 212.205 123.75 209.111C123.75 206.017 124.875 203.345 127.125 201.095L181.969 146.252Z" fill="white" fill-opacity="0.05"/>
             </svg> 
-            <img class="media-svg svg-f" src="./assets/card-rank-iphone-2.png">                
-            <img class="media-svg svg-e" src="./assets/card-rank-iphone-1.png">
+            <img class="media-svg svg-f" src="./assets/card-rank-iphone-2.webp">                
+            <img class="media-svg svg-e" src="./assets/card-rank-iphone-1.webp">
           </div>
-          <!-- <img src="./200.png" style="position: absolute;z-index: 0;top: 0;left: 0;width: 795px;height: 756px;"> -->
         </a>
       
         <!-- 5) Маленькая слева снизу-1 -->
         <a class="case-card case-card--marketing" href="./html/case-marketing-design.html">
           <div class="case-card__content">
             <div class="case-card__top">
-              <p class="case-card__type">Мини-история</p>
+              <p class="case-card__type">Мини‑история</p>
               <h4 class="case-card__title">Настроил процесс и ускорил работу с маркетингом</h4>
             </div>
       
@@ -234,67 +230,11 @@
       
           <div class="case-card__media" aria-hidden="true"></div>
         </a>
-      
       </section>
 
-      <footer class="site-footer">
-        <div class="footer-nav">
-          <a href="mailto:hi@orepin.site" target="_blank">hi@orepin.site</a>
-          <span>•</span>
-          <a href="https://www.linkedin.com/in/oleg-repin/" target="_blank">Linkedin</a>
-          <span>•</span>
-          <a href="https://t.me/olegrepin" target="_blank">Telegram</a>
-          <span>•</span>
-          <a href="./assets/cv/oleg-repin-cv.pdf" target="_blank">CV</a>
-        </div>
-
-        <p class="location">
-          <svg class="location__icon"
-               viewBox="0 0 24 24"
-               aria-hidden="true">
-            <path d="M12 21.325C11.7667 21.325 11.5333 21.2833 11.3 21.2C11.0667 21.1167 10.8583 20.9917 10.675 20.825C9.59167 19.825 8.63333 18.85 7.8 17.9C6.96667 16.95 6.27083 16.0292 5.7125 15.1375C5.15417 14.2458 4.72917 13.3875 4.4375 12.5625C4.14583 11.7375 4 10.95 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 10.95 19.8542 11.7375 19.5625 12.5625C19.2708 13.3875 18.8458 14.2458 18.2875 15.1375C17.7292 16.0292 17.0333 16.95 16.2 17.9C15.3667 18.85 14.4083 19.825 13.325 20.825C13.1417 20.9917 12.9333 21.1167 12.7 21.2C12.4667 21.2833 12.2333 21.325 12 21.325ZM12 12C12.55 12 13.0208 11.8042 13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12Z"
-                  fill="currentColor"/>
-          </svg>
-          <span id="locationText">Краснодар</span>
-        </p>
-      </footer>
+      <div data-include="./partials/footer.html"></div>
 
     </div>
   </main>
-
-  <!-- Curtain / sticky bottom hobby block -->
-  <section class="hobby-section" id="hobbies" aria-labelledby="hobbies-title">
-    <div class="container">
-      <h3 id="hobbies-title">Хобби</h3>
-  
-      <ul class="hobby-grid">
-        <li class="hobby-item">
-          <img class="hobby-item__img" src="./assets/hobby-01.png" alt="Рисунок: старый город">
-          <p class="hobby-item__text">
-            <span class="hobby-item__title">Рисую графику</span>
-            <span class="hobby-item__desc">старые города, архитектуру и улочки с характером.</span>
-          </p>
-        </li>
-  
-        <li class="hobby-item">
-          <img class="hobby-item__img" src="./assets/hobby-02.png" alt="Дорога в горах">
-          <p class="hobby-item__text">
-            <span class="hobby-item__title">Люблю автопутешествия</span>
-            <span class="hobby-item__desc">наблюдать, как меняются места и ритм дороги.</span>
-          </p>
-        </li>
-  
-        <li class="hobby-item">
-          <img class="hobby-item__img" src="./assets/hobby-03.png" alt="MIDI-клавиатура и наушники">
-          <p class="hobby-item__text">
-            <span class="hobby-item__title">Увлекаюсь музыкой</span>
-            <span class="hobby-item__desc">пробую писать хаус в Ableton.</span>
-          </p>
-        </li>
-      </ul>
-    </div>
-  </section>
-  <div data-include="./partials/mobile-lock.html"></div>
-  <script defer src="./js/case-disabled.js"></script>
 </body>
 </html>

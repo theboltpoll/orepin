@@ -14,16 +14,13 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;900&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Libre+Franklin:wght@400;700&display=swap&subset=latin,cyrillic" rel="stylesheet">
 
   <!-- JS -->
   <script defer src="../js/include.js"></script>
   <script defer src="../js/video-loader.js"></script>
   <script defer src="../js/cursor-btn.js"></script>
+  <script defer src="../js/image-lightbox.js"></script>
 </head>
 <body class="theme-other">
 
@@ -97,7 +94,7 @@
       </div>
 
       <figure class="solution-item__media">
-        <img src="../assets/case-copying-campaigns-01.png" alt="Поп-овер с возможностью выбора места копирования">
+        <img src="../assets/case-copying-campaigns-01.webp" alt="Поп-овер с возможностью выбора места копирования">
       </figure>
     </article>
 
@@ -109,7 +106,7 @@
       </div>
 
       <figure class="solution-item__media">
-        <img src="../assets/case-copying-campaigns-02.png" alt="Онбординг фичи">
+        <img src="../assets/case-copying-campaigns-02.webp" alt="Онбординг фичи">
       </figure>
     </article>
 
@@ -124,33 +121,43 @@
   </div>
 </section>
 
-<section class="case-end" aria-label="Навигация по проектам">
-  <!-- Десктоп: кликабельные половины -->
-  <a class="case-end__hit case-end__hit--prev" href="./case-regular-surveys.html" aria-label="Предыдущий проект"></a>
-  <a class="case-end__hit case-end__hit--next" href="./case-ranking.html" aria-label="Следующий проект"></a>
-
-  <div data-include="../partials/footer.html"></div>
-
-  <div class="cursor-btn" aria-hidden="true">
-    <!-- сюда вставишь свой SVG, можно один и просто поворачивать -->
-    <svg width="50" height="50" viewBox="0 0 50 50">
-      <path d="M0 20C0 8.9543 8.95431 0 20 0H30C41.0457 0 50 8.95431 50 20V30C50 41.0457 41.0457 50 30 50H20C8.9543 50 0 41.0457 0 30V20Z" fill="#0A0A0A"/>
-      <path d="M23.7969 25.0008L27.6969 28.9008C27.8802 29.0841 27.9719 29.3174 27.9719 29.6008C27.9719 29.8841 27.8802 30.1174 27.6969 30.3008C27.5135 30.4841 27.2802 30.5758 26.9969 30.5758C26.7135 30.5758 26.4802 30.4841 26.2969 30.3008L21.6969 25.7008C21.5969 25.6008 21.526 25.4924 21.4844 25.3758C21.4427 25.2591 21.4219 25.1341 21.4219 25.0008C21.4219 24.8674 21.4427 24.7424 21.4844 24.6258C21.526 24.5091 21.5969 24.4008 21.6969 24.3008L26.2969 19.7008C26.4802 19.5174 26.7135 19.4258 26.9969 19.4258C27.2802 19.4258 27.5135 19.5174 27.6969 19.7008C27.8802 19.8841 27.9719 20.1174 27.9719 20.4008C27.9719 20.6841 27.8802 20.9174 27.6969 21.1008L23.7969 25.0008Z" fill="white"/>
-    </svg> 
+<section class="more-work theme-link" aria-labelledby="more-work-title">
+  <div class="more-work__head">
+    <h3 id="more-work-title">Что ещё посмотреть</h3>
   </div>
 
-  <!-- Мобилка: две кнопки -->
-  <nav class="case-end__mobile-nav" aria-label="Переключение проектов">
-    <a class="case-end__btn" href="./case-regular-surveys.html" aria-label="Предыдущий проект">
-      ← <span class="case-end__btn-text">Предыдущий</span>
+  <div class="more-work__grid">
+    <a class="more-work-card more-work-card--link more-work-card--negative" href="../html/case-link.html">
+      <span class="more-work-card__type">Кейс</span>
+      <h3 class="more-work-card__title">Как я запускал новый продукт UX Feedback Link</h3>
     </a>
-    <a class="case-end__btn" href="./case-ranking.html" aria-label="Следующий проект">
-      <span class="case-end__btn-text">Следующий</span> →
+
+    <a class="more-work-card more-work-card--ranking more-work-card--negative" href="../html/case-ranking.html">
+      <span class="more-work-card__type">История</span>
+      <h3 class="more-work-card__title">Ранжирование в опросах: как я готовил новый тип вопроса к релизу</h3>
     </a>
-  </nav>
+
+    <a class="more-work-card more-work-card--reg" href="../html/case-regular-surveys.html">
+      <span class="more-work-card__type">Мини-кейс</span>
+      <h3 class="more-work-card__title">Автоматизировал регулярные исследования</h3>
+    </a>
+
+    <a class="more-work-card more-work-card--marketing" href="../html/case-marketing-design.html">
+      <span class="more-work-card__type">Мини-история</span>
+      <h3 class="more-work-card__title">Настроил процесс и ускорил работу с маркетингом</h3>
+    </a>
+  </div>
 </section>
+
+<div data-include="../partials/footer.html"></div>
 
 </main>
 <div data-include="../partials/mobile-lock.html"></div>
+
+<div class="image-lightbox" id="imageLightbox" hidden>
+  <div class="image-lightbox__backdrop"></div>
+  <img class="image-lightbox__img" id="imageLightboxImg" alt="">
+</div>
+
 </body>
 </html>

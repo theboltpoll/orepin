@@ -42,42 +42,6 @@ const once = (fn) => {
   }
 })();
 
-// --- Lightbox (idempotent init) ---
-const initLightbox = once(function lightbox() {
-  const lb = document.getElementById('lightbox');
-  if (!lb) return false;
-  const img = lb.querySelector('#lightboxImg');
-  const closeBtn = lb.querySelector('.lightbox__close');
-
-  const open = (src, alt = '') => {
-    img.src = src;
-    img.alt = alt || '';
-    lb.classList.add('is-open');
-    lb.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  };
-  const close = () => {
-    lb.classList.remove('is-open');
-    lb.setAttribute('aria-hidden', 'true');
-    img.src = '';
-    document.body.style.overflow = '';
-  };
-
-  document.addEventListener('click', (e) => {
-    const target = e.target;
-    // Open lightbox only for explicitly marked images
-    if (target && target.matches('img.zoomable')) {
-      e.preventDefault();
-      e.stopPropagation();
-      open(target.src, target.alt || '');
-    }
-  });
-
-  if (closeBtn) closeBtn.addEventListener('click', close);
-  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-});
-
 // --- Mobile menu (idempotent init) ---
 const initMobileMenu = once(function mobileMenu() {
   const burger = document.querySelector('.burger');

@@ -35,22 +35,21 @@ html, body {
 
   /* Type */
   --font-h: "Libre Franklin", sans-serif;
-  --font-p: 'Lato', sans-serif;
+  --font-p: "IBM Plex Sans", sans-serif;
 
+  /* Headings */
+  --fs-h1: 88px;  --lh-h1: 96px;  
+  --fs-h2: 60px;  --lh-h2: 64px;  
+  --fs-h3: 40px;  --lh-h3: 48px;  
+  --fs-h4: 32px;  --lh-h4: 40px;  
+  --fs-h5: 24px;  --lh-h5: 32px;
 
-/* Fluid Type Scale (relative to container width) */
-  --fs-h1: clamp(40px, 6.333cqw, 76px); /* 76/12 = 6.333 */
-  --fs-h2: clamp(32px, 5.5cqw, 66px);   /* 66/12 = 5.5 */
-  --fs-h3: clamp(24px, 3.333cqw, 40px); /* 40/12 = 3.333 */
-  --fs-h4: clamp(20px, 2.667cqw, 32px); /* 32/12 = 2.667 */
-  --fs-h5: clamp(18px, 2.333cqw, 28px); /* 28/12 = 2.333 */
-  
-  --fs-p-l:  clamp(20px, 2.667cqw, 32px); /* 32/12 = 2.667 */
-  --fs-p-m:  clamp(18px, 2.333cqw, 28px); /* 28/12 = 2.333 */
-  --fs-p-s:  clamp(16px, 2cqw,     24px); /* 24/12 = 2 */
-  --fs-p-xs: clamp(14px, 1.667cqw, 20px); /* 20/12 = 1.667 */
+  /* Paragraphs */
+  --fs-p-l: 28px;  --lh-p-l: 36px; 
+  --fs-p-m: 24px;  --lh-p-m: 32px;
+  --fs-p-s: 20px; --lh-p-s: 28px;
+  --fs-p-xs: 16px;  --lh-p-xs: 24px; 
 
-  --lh: 1.5;
 
   /* Colors (временные, чтобы сразу было читабельно) */
   --bg: #F2F2F0;
@@ -64,43 +63,8 @@ html, body {
   --negative-text-muted: rgba(255, 255 ,255, 0.6);
   --negative-text-soft: rgba(255, 255 ,255, 0.3);
 
-  /* hobby height */
-  --hobby-h: 492px;
-
   --nav-pad-x: 24px;   /* базовый горизонтальный отступ */
   --nav-icon-space: 20px; /* сколько добавляем под иконку */
-}
-
-@supports not (font-size: 1cqw){
-  :root{
-    /* твой текущий вариант или фикс */
-    --fs-h1: 76px;
-    --fs-h2: 66px;
-    --fs-h3: 40px;
-    --fs-h4: 32px;
-    --fs-h5: 28px;
-
-    --fs-p-l: 32px;
-    --fs-p-m: 28px;
-    --fs-p-s: 24px;
-    --fs-p-xs: 20px;
-  }
-
-  @media (max-width: 1200px){
-    :root{
-      /* можно вернуть твои vw-clamp, если хочешь */
-      --fs-h1: clamp(40px, 4vw + 16px, 76px);
-      --fs-h2: clamp(32px, 3vw + 12px, 66px);
-      --fs-h3: clamp(24px, 2vw + 8px, 40px);
-      --fs-h4: clamp(20px, 1.5vw + 6px, 32px);
-      --fs-h5: clamp(18px, 1vw + 6px, 28px);
-
-      --fs-p-l: clamp(20px, 1vw + 10px, 32px);
-      --fs-p-m: clamp(18px, 0.8vw + 10px, 28px);
-      --fs-p-s: clamp(16px, 0.6vw + 8px, 24px);
-      --fs-p-xs: clamp(14px, 0.5vw + 6px, 20px);
-    }
-  }
 }
 
 .theme-default,
@@ -125,14 +89,15 @@ html {
 body {
   min-height: 100vh;
   font-family: var(--font-p);
-  
-  /* p-m как дефолт */
-  font-size: var(--fs-p-m);
-  font-weight: 400;
-  line-height: 1.38;
-
   background: var(--bg);
   color: var(--text);
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  text-rendering: optimizeLegibility;
+}
+
+p, li{
+  text-wrap: pretty;
 }
 
 /* 5) Links */
@@ -141,11 +106,11 @@ a {
   text-decoration: none;
 }
 
-a:not(.case-card, .nav-link) {
+a:not(.case-card, .nav-link, .more-work-card ) {
   transition: color 200ms ease-out;
 }
 
-a:not(.case-card, .nav-link):hover {
+a:not(.case-card, .nav-link, .more-work-card):hover {
   color: var(--accent);
 }
 
@@ -164,38 +129,50 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-h);
 }
 
-/* Headings */
-h1 { font-size: var(--fs-h1); font-weight: 700; line-height: 0.98; }
-h2 { font-size: var(--fs-h2); font-weight: 700; line-height: 1.13; }
-h3 { font-size: var(--fs-h3); font-weight: 700; line-height: 1.13; }
-h4 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.13; }
-h5 { font-size: var(--fs-h5); font-weight: 700; line-height: 1.38; }
-
-@media (max-width: 1279px) {
-  h1 { line-height: 1.03; }
+@media (max-width: 600px){ 
+  h1 {
+    hyphens: auto;
+  }
 }
 
-p {font-size: var(--fs-p-m); font-weight: 400; line-height: 1.38;  font-style: normal;}
+/* Headings */
+h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: -0.025em;}
+h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: -0.02em;}
+h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: -0.015em;}
+h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: -0.01em;}
+h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); letter-spacing: -0.005em;}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+}
 
 p + p {
   margin-top: var(--s-16);
 }
 
 /* Paragraph utilities */
-.p-l { font-size: var(--fs-p-l); font-weight: 400; line-height: 1.38; }
-.p-m { font-size: var(--fs-p-m); font-weight: 400; line-height: 1.38; }
-.p-s { font-size: var(--fs-p-s); font-weight: 400; line-height: 1.38; }
-.p-xs { font-size: var(--fs-p-xs); font-weight: 400; line-height: 1.38; }
+body{ font-size: var(--fs-p-m); line-height: var(--lh-p-m); }
+.p-l{ font-size: var(--fs-p-l); line-height: var(--lh-p-l); }
+.p-s{ font-size: var(--fs-p-s); line-height: var(--lh-p-s); }
+.p-xs{ font-size: var(--fs-p-xs); line-height: var(--lh-p-xs); }
+
+.p-l, .p-m, .p-s, .p-xs{
+  font-weight: 400;
+}
+
+p, .p-l, .p-m{ letter-spacing: 0; }
+.p-s, .p-xs{ letter-spacing: 0.01em; }
 
 /* Extra bold variants */
-.p-m-b { font-size: var(--fs-p-m); font-weight: 900; line-height: 1.38; font-style: normal;}
-.p-s-b { font-size: var(--fs-p-s); font-weight: 900; line-height: 1.38; font-style: normal;}
+.p-m-b { font-size: var(--fs-p-m);}
+.p-s-b { font-size: var(--fs-p-s);}
 
-
-/* 8) Forms (на будущее) */
-button, input, textarea, select {
-  font: inherit;
+.p-m-b , .p-s-b {
+  font-weight: 600; 
+  line-height: 1.38; 
+  font-style: normal;
 }
+
 
 /* 9) Focus (доступность) */
 :focus-visible {
@@ -203,29 +180,76 @@ button, input, textarea, select {
   outline-offset: 3px;
 }
 
-/* =========================
-   A couple of useful base hooks
-   ========================= */
 
-/* container можно оставить в layout.css, но удобно иметь в base */
 .container {
   max-width: var(--container);
   margin: 0 auto;
   container-type: inline-size;
 }
 
-/* hobby section base background (чтобы заливка точно была) */
-.hobby-section {
-  background: var(--negative-bg);
-  color: var(--negative-text);
-  padding: 40px 0 80px;
+
+/*@media (min-width: 601px) and (max-width: 1199px) {*/
+
+@media (min-width: 601px) and (max-width: 999px) {
+  :root{
+    /* H1: 28 -> 76, LH: 32 -> 80 */
+    --fs-h1: clamp(40px, calc(8vw - 20px), 108px);
+    --lh-h1: clamp(46px, calc(8vw - 16px), 108px);
+
+    /* H2: 24 -> 60, LH: 32 -> 64 */
+    --fs-h2: clamp(24px, calc(6vw - 12px), 60px);
+    --lh-h2: clamp(32px, calc(5.333vw + 0px), 64px);
+
+    /* H3: 20 -> 40, LH: 28 -> 48 */
+    --fs-h3: clamp(20px, calc(3.333vw + 0px), 40px);
+    --lh-h3: clamp(28px, calc(3.333vw + 8px), 48px);
+
+    /* H4: 18 -> 32, LH: 24 -> 40 */
+    --fs-h4: clamp(18px, calc(2.333vw + 4px), 32px);
+    --lh-h4: clamp(24px, calc(2.667vw + 8px), 40px);
+
+    /* H5: 16 -> 24, LH: 24 -> 32 */
+    --fs-h5: clamp(16px, calc(1.333vw + 8px), 24px);
+    --lh-h5: clamp(24px, calc(1.333vw + 16px), 32px);
+
+    /* P-L: 18 -> 32 */
+    --fs-p-l: clamp(18px, calc(18px + (28 - 18) * ((100vw - 601px) / 598)), 28px);
+    --lh-p-l: clamp(26px, calc(26px + (36 - 26) * ((100vw - 601px) / 598)), 36px);
+
+    /* P-M: 16 -> 28 */
+    --fs-p-m: clamp(16px, calc(16px + (24 - 16) * ((100vw - 601px) / 598)), 24px);
+    --lh-p-m: clamp(24px, calc(24px + (32 - 24) * ((100vw - 601px) / 598)), 32px);
+
+    /* P-S: 14 -> 24 */
+    --fs-p-s: clamp(14px, calc(14px + (20 - 14) * ((100vw - 601px) / 598)), 20px);
+    --lh-p-s: clamp(20px, calc(20px + (28 - 20) * ((100vw - 601px) / 598)), 28px);
+
+    /* P-XS: 13 -> 20 */
+    --fs-p-xs: clamp(13px, calc(13px + (16 - 13) * ((100vw - 601px) / 598)), 16px);
+    --lh-p-xs: clamp(18px, calc(18px + (24 - 18) * ((100vw - 601px) / 598)), 24px);
+}
 }
 
-.hobby-section::before{
-  content:"";
-  position:absolute;
-  left:0; right:0;
-  top:-40px;
-  height:40px;
-  background: var(--negative-bg);
+@media (max-width: 600px) {
+  :root{
+      --gutter: 16px;
+      --radius: 18px;
+
+      --fs-h1: 40px; --lh-h1: 46px; /* 4*8 */
+      --fs-h2: 24px; --lh-h2: 32px; /* 4*8 */
+      --fs-h3: 20px; --lh-h3: 28px; /* не кратно 8, но норм */
+      --fs-h4: 18px; --lh-h4: 24px; /* 3*8 */
+      --fs-h5: 16px; --lh-h5: 24px; /* 3*8 */
+  
+      --fs-p-l: 20px; --lh-p-l: 28px;
+      --fs-p-m: 18px; --lh-p-m: 26px;
+      --fs-p-s: 16px; --lh-p-s: 24px;
+      --fs-p-xs: 14px; --lh-p-xs: 20px;
+  }
+  h1{ letter-spacing: -0.015em; }
+  h2{ letter-spacing: -0.01em; }
+  h3{ letter-spacing: -0.005em; }
+  h4, h5{ letter-spacing: 0em; }
 }
+
+

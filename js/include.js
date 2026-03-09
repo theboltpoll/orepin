@@ -3,12 +3,8 @@
   if (!nodes.length) return;
 
   const stripLiveServer = (html) => {
-    // Remove the exact block Live Server injects
     html = html.replace(/<!--\s*Code injected by live-server\s*-->[\s\S]*?<\/script>/gi, '');
-
-    // Some versions inject a different marker; be defensive
     html = html.replace(/<!--\s*Code injected\s*-->[\s\S]*?<\/script>/gi, '');
-
     return html;
   };
 
@@ -28,7 +24,10 @@
       const tpl = document.createElement('template');
       tpl.innerHTML = html;
 
-      node.replaceWith(tpl.content);
+      // ✅ Надёжная вставка фрагмента
+      const frag = tpl.content.cloneNode(true);
+      node.after(frag);
+      node.remove();
     } catch (e) {
       console.error('Include failed:', url.toString(), e);
     }
