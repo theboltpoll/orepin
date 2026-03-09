@@ -17,7 +17,7 @@
     let i = 1;
 
     const set = () => {
-      img.src = `${prefix}${pad2(i)}.png`;
+      img.src = `${prefix}${pad2(i)}.webp`;
     };
 
     const press = (el) => {
