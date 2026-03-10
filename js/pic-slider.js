@@ -16,14 +16,34 @@
 
     let i = 1;
 
+    // Кэш заранее загруженных картинок
+    const cache = new Map();
+
+    const getSrc = (index) => `${prefix}${pad2(index)}.webp`;
+
+    // предзагрузка всех слайдов
+    const preloadAll = () => {
+      for (let n = 1; n <= count; n++) {
+        const src = getSrc(n);
+        const preImg = new Image();
+        preImg.src = src;
+        cache.set(src, preImg);
+
+        // если браузер поддерживает decode — просим декодировать заранее
+        if (preImg.decode) {
+          preImg.decode().catch(() => {});
+        }
+      }
+    };
+
     const set = () => {
-      img.src = `${prefix}${pad2(i)}.webp`;
+      img.src = getSrc(i);
     };
 
     const press = (el) => {
       if (!el) return;
       el.classList.remove("is-pressed");
-      void el.offsetWidth; // форсим перезапуск анимации
+      void el.offsetWidth;
       el.classList.add("is-pressed");
       setTimeout(() => el.classList.remove("is-pressed"), 140);
     };
@@ -40,11 +60,9 @@
       press(visNext);
     };
 
-    // Клики по половинам
     hitPrev.addEventListener("click", prev);
     hitNext.addEventListener("click", next);
 
-    // Клавиатура (только если фокус внутри слайдера)
     root.setAttribute("tabindex", "0");
 
     root.addEventListener("keydown", (e) => {
@@ -58,6 +76,10 @@
       }
     });
 
+    // сначала ставим первый кадр
     set();
+
+    // потом предзагружаем остальные
+    preloadAll();
   });
 })();

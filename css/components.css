@@ -126,7 +126,7 @@
 .case-card--link .svg-a{
     position: absolute;
     bottom: 0px;
-    right: 0px;
+    right: -60px;
     width: 566px;
     height: 506px;
     transform: scale(1);
@@ -319,8 +319,8 @@
   /* 5) Маленькая слева снизу-1 */
 .case-card--marketing .svg-a{
     position: absolute;
-    left: -187px;
-    bottom: 117px;
+    left: -16px;
+    bottom: 87px;
     width: 85px;
     height: 68px;
     transform: translate(0, 0) rotate(0deg);
