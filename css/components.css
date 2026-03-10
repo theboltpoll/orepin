@@ -426,7 +426,7 @@
         line-height: var(--lh-p-s);
       }
 
-     .case-card__stats strong, .case-card__stats span strong {
+     .case-card__stats strong, .case-card__stats span strong, .case-card--negative .case-card__stats strong {
         font-size: var(--fs-h4);
         line-height: var(--lh-h4);
         color: var(--negative-text);
