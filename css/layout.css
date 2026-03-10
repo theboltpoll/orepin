@@ -52,12 +52,10 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  text-align: center;
 }
 
-.hero h1 .w{
-  color: var(--muted); /* стартовый серый */
-  color: color-mix(in srgb, var(--muted) calc((1 - var(--w, 0)) * 100%), var(--text));
-}
+
 
 
 
@@ -764,8 +762,9 @@ svg.ba__handle-icon{
   
     /* hero компактнее */
     .hero{
-      padding: 32px;
+      padding: 32px 24px;
       gap: 16px;
+      text-align: left;
     }
   
     /* мобильная витрина кейсов */
@@ -780,7 +779,6 @@ svg.ba__handle-icon{
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       overscroll-behavior-x: contain;
-      touch-action: pan-x;
     }
 
     .cases-grid::-webkit-scrollbar{

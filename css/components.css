@@ -437,10 +437,6 @@
         flex-flow: column;
         gap:0;
      }
-     
-     .case-card__stats div:nth-child(3) {
-        display: none;
-     }
 
      .case-card--marketing .case-card__content,
      .case-card--ds .case-card__content {
