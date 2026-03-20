@@ -127,9 +127,9 @@
     position: absolute;
     bottom: 0px;
     right: -60px;
-    width: 566px;
+    width: 588px;
     height: 506px;
-    transform: scale(1);
+    transform: translate(15px, 27px);
 }
   
 .case-card--link .svg-b{
@@ -152,7 +152,7 @@
   
 @media (hover: hover){
     .case-card--link:hover .svg-a{
-        transform: scale(1.05);
+      transform: translate(3px, 6px);
     }
   
     .case-card--link:hover .svg-b{
@@ -274,19 +274,10 @@
 
 .case-card--ranking .svg-e{
     position: absolute;
-    right: 181px;
-    bottom: -39px;
-    width: 308px;
+    right: -49px;
+    bottom: -43px;
+    width: 518px;
     height: 505px;
-    transform: translate(0, 0) rotate(0deg) scale(1);
-}
-
-.case-card--ranking .svg-f{
-    position: absolute;
-    right: 0px;
-    bottom: -26px;
-    width: 254px;
-    height: 538px;
     transform: translate(0, 0) rotate(0deg) scale(1);
 }
   
@@ -308,11 +299,7 @@
     }
 
     .case-card--ranking:hover .svg-e{
-        transform: translate(0, 0) rotate(0deg) scale(1.05);
-    }
-
-    .case-card--ranking:hover .svg-f{
-        transform: translate(0, 0) rotate(0deg) scale(1.05);
+        transform: translate(-31px, -14px);
     }
 }
 
