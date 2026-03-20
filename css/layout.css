@@ -48,7 +48,7 @@ body {
 /* ============================= */
 
 .hero{
-  padding: 160px 32px;
+  padding: 80px 32px;
   display: flex;
   flex-direction: column;
   gap: 24px;
