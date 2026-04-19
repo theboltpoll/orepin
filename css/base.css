@@ -10,7 +10,8 @@
 }
 
 /* 2) Remove default spacing */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
@@ -38,33 +39,44 @@ html, body {
   --font-p: "IBM Plex Sans", sans-serif;
 
   /* Headings */
-  --fs-h1: 72px;  --lh-h1: 76px;  
-  --fs-h2: 60px;  --lh-h2: 64px;  
-  --fs-h3: 40px;  --lh-h3: 48px;  
-  --fs-h4: 32px;  --lh-h4: 40px;  
-  --fs-h5: 24px;  --lh-h5: 32px;
+  --fs-h1: 72px;
+  --lh-h1: 76px;
+  --fs-h2: 60px;
+  --lh-h2: 64px;
+  --fs-h3: 40px;
+  --lh-h3: 48px;
+  --fs-h4: 32px;
+  --lh-h4: 40px;
+  --fs-h5: 24px;
+  --lh-h5: 32px;
 
   /* Paragraphs */
-  --fs-p-l: 28px;  --lh-p-l: 36px; 
-  --fs-p-m: 24px;  --lh-p-m: 32px;
-  --fs-p-s: 20px; --lh-p-s: 28px;
-  --fs-p-xs: 16px;  --lh-p-xs: 24px; 
+  --fs-p-l: 28px;
+  --lh-p-l: 36px;
+  --fs-p-m: 24px;
+  --lh-p-m: 32px;
+  --fs-p-s: 20px;
+  --lh-p-s: 28px;
+  --fs-p-xs: 16px;
+  --lh-p-xs: 24px;
 
 
   /* Colors (временные, чтобы сразу было читабельно) */
   --bg: #F2F2F0;
   --bg-2: #ffffff;
   --text: #0A0A0A;
-  --muted: rgba(10, 10 ,10, 0.6);
-  --soft: rgba(10, 10 ,10, 0.05);
+  --muted: rgba(10, 10, 10, 0.6);
+  --soft: rgba(10, 10, 10, 0.05);
   --accent: #8143F9;
   --negative-bg: #0b0c0f;
   --negative-text: #ffffff;
-  --negative-text-muted: rgba(255, 255 ,255, 0.6);
-  --negative-text-soft: rgba(255, 255 ,255, 0.3);
+  --negative-text-muted: rgba(255, 255, 255, 0.6);
+  --negative-text-soft: rgba(255, 255, 255, 0.3);
 
-  --nav-pad-x: 24px;   /* базовый горизонтальный отступ */
-  --nav-icon-space: 20px; /* сколько добавляем под иконку */
+  --nav-pad-x: 24px;
+  /* базовый горизонтальный отступ */
+  --nav-icon-space: 20px;
+  /* сколько добавляем под иконку */
 }
 
 .theme-default,
@@ -76,7 +88,7 @@ html, body {
   --accent: #9458DC;
 }
 
-.theme-other{
+.theme-other {
   --accent: #2D43E0;
 }
 
@@ -96,7 +108,8 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-p, li{
+p,
+li {
   text-wrap: pretty;
 }
 
@@ -106,7 +119,7 @@ a {
   text-decoration: none;
 }
 
-a:not(.case-card, .nav-link, .more-work-card ) {
+a:not(.case-card, .nav-link, .more-work-card) {
   transition: color 200ms ease-out;
 }
 
@@ -115,61 +128,136 @@ a:not(.case-card, .nav-link, .more-work-card):hover {
 }
 
 /* 6) Media defaults */
-img, video, canvas, svg {
+img,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
 /* 7) Typography defaults (минимально) */
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin: 0;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-h);
 }
 
-@media (max-width: 600px){ 
+@media (max-width: 600px) {
   h1 {
-    hyphens: auto;
+    /*hyphens: auto;*/
   }
 }
 
 /* Headings */
-h1 { font-size: var(--fs-h1); line-height: var(--lh-h1); letter-spacing: -0.025em;}
-h2 { font-size: var(--fs-h2); line-height: var(--lh-h2); letter-spacing: -0.02em;}
-h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: -0.015em;}
-h4 { font-size: var(--fs-h4); line-height: var(--lh-h4); letter-spacing: -0.01em;}
-h5 { font-size: var(--fs-h5); line-height: var(--lh-h5); letter-spacing: -0.005em;}
+h1 {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: -0.025em;
+}
 
-h1, h2, h3, h4, h5 {
+h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: -0.015em;
+}
+
+h4 {
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+  letter-spacing: -0.01em;
+}
+
+h5 {
+  font-size: var(--fs-h5);
+  line-height: var(--lh-h5);
+  letter-spacing: -0.005em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-weight: 700;
 }
 
-p + p {
+p+p {
   margin-top: var(--s-16);
 }
 
 /* Paragraph utilities */
-body{ font-size: var(--fs-p-m); line-height: var(--lh-p-m); }
-.p-l{ font-size: var(--fs-p-l); line-height: var(--lh-p-l); }
-.p-s{ font-size: var(--fs-p-s); line-height: var(--lh-p-s); }
-.p-xs{ font-size: var(--fs-p-xs); line-height: var(--lh-p-xs); }
+body {
+  font-size: var(--fs-p-m);
+  line-height: var(--lh-p-m);
+}
 
-.p-l, .p-m, .p-s, .p-xs{
+.p-l {
+  font-size: var(--fs-p-l);
+  line-height: var(--lh-p-l);
+}
+
+.p-s {
+  font-size: var(--fs-p-s);
+  line-height: var(--lh-p-s);
+}
+
+.p-xs {
+  font-size: var(--fs-p-xs);
+  line-height: var(--lh-p-xs);
+}
+
+.p-l,
+.p-m,
+.p-s,
+.p-xs {
   font-weight: 400;
 }
 
-p, .p-l, .p-m{ letter-spacing: 0; }
-.p-s, .p-xs{ letter-spacing: 0.01em; }
+p,
+.p-l,
+.p-m {
+  letter-spacing: 0;
+}
+
+.p-s,
+.p-xs {
+  letter-spacing: 0.01em;
+}
 
 /* Extra bold variants */
-.p-m-b { font-size: var(--fs-p-m);}
-.p-s-b { font-size: var(--fs-p-s);}
+.p-m-b {
+  font-size: var(--fs-p-m);
+}
 
-.p-m-b , .p-s-b {
-  font-weight: 600; 
-  line-height: 1.38; 
+.p-s-b {
+  font-size: var(--fs-p-s);
+}
+
+.p-m-b,
+.p-s-b {
+  font-weight: 600;
+  line-height: 1.38;
   font-style: normal;
 }
 
@@ -191,7 +279,7 @@ p, .p-l, .p-m{ letter-spacing: 0; }
 /*@media (min-width: 601px) and (max-width: 1199px) {*/
 
 @media (min-width: 601px) and (max-width: 999px) {
-  :root{
+  :root {
     /* H1: 28 -> 76, LH: 32 -> 80 */
     --fs-h1: clamp(40px, calc(8vw - 20px), 108px);
     --lh-h1: clamp(46px, calc(8vw - 16px), 108px);
@@ -227,29 +315,54 @@ p, .p-l, .p-m{ letter-spacing: 0; }
     /* P-XS: 13 -> 20 */
     --fs-p-xs: clamp(13px, calc(13px + (16 - 13) * ((100vw - 601px) / 598)), 16px);
     --lh-p-xs: clamp(18px, calc(18px + (24 - 18) * ((100vw - 601px) / 598)), 24px);
-}
+  }
 }
 
 @media (max-width: 600px) {
-  :root{
-      --gutter: 16px;
-      --radius: 18px;
+  :root {
+    --gutter: 16px;
+    --radius: 18px;
 
-      --fs-h1: 40px; --lh-h1: 46px; /* 4*8 */
-      --fs-h2: 24px; --lh-h2: 32px; /* 4*8 */
-      --fs-h3: 20px; --lh-h3: 28px; /* не кратно 8, но норм */
-      --fs-h4: 18px; --lh-h4: 24px; /* 3*8 */
-      --fs-h5: 16px; --lh-h5: 24px; /* 3*8 */
-  
-      --fs-p-l: 20px; --lh-p-l: 28px;
-      --fs-p-m: 18px; --lh-p-m: 26px;
-      --fs-p-s: 16px; --lh-p-s: 24px;
-      --fs-p-xs: 14px; --lh-p-xs: 20px;
+    --fs-h1: 40px;
+    --lh-h1: 46px;
+    /* 4*8 */
+    --fs-h2: 24px;
+    --lh-h2: 32px;
+    /* 4*8 */
+    --fs-h3: 20px;
+    --lh-h3: 28px;
+    /* не кратно 8, но норм */
+    --fs-h4: 18px;
+    --lh-h4: 24px;
+    /* 3*8 */
+    --fs-h5: 16px;
+    --lh-h5: 24px;
+    /* 3*8 */
+
+    --fs-p-l: 20px;
+    --lh-p-l: 28px;
+    --fs-p-m: 18px;
+    --lh-p-m: 26px;
+    --fs-p-s: 16px;
+    --lh-p-s: 24px;
+    --fs-p-xs: 14px;
+    --lh-p-xs: 20px;
   }
-  h1{ letter-spacing: -0.015em; }
-  h2{ letter-spacing: -0.01em; }
-  h3{ letter-spacing: -0.005em; }
-  h4, h5{ letter-spacing: 0em; }
+
+  h1 {
+    letter-spacing: -0.015em;
+  }
+
+  h2 {
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    letter-spacing: -0.005em;
+  }
+
+  h4,
+  h5 {
+    letter-spacing: 0em;
+  }
 }
-
-
